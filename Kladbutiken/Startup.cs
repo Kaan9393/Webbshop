@@ -17,6 +17,7 @@ namespace Kladbutiken
         {
             Configuration = configuration;
             // Johannes Test!
+            // Marcus test!!!
         }
 
         public IConfiguration Configuration { get; }
@@ -25,7 +26,13 @@ namespace Kladbutiken
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
             // Hej Hopp
+
+            // Add more services
+            // Test Kaan
+            // Test Marcus (Ändrat av Pontus)
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
