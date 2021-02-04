@@ -26,7 +26,7 @@ namespace Kladbutiken
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            // Add more services
+            // Tonny
             // Test Kaan
             // Test Marcus (Ändrat av Pontus)
         }
