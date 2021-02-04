@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccess.Entities
 {
-    class Address
+    public class Address
     {
         public int ID { get; set; }
         public User UserID { get; set; }
