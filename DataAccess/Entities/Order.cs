@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace DataAccess.Entities
 {
-    class Order
+    public class Order
     {
         public int ID { get; set; }
         public User UserID { get; set; }
