@@ -16,6 +16,7 @@ namespace Kladbutiken
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            // Johannes Test!
         }
 
         public IConfiguration Configuration { get; }
