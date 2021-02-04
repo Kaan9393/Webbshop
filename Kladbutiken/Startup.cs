@@ -27,9 +27,10 @@ namespace Kladbutiken
         {
             services.AddRazorPages();
             // Hej Hopp
-            // Tonny
+
+            // Add more services
             // Test Kaan
-            // Test Marcus (Ã„ndrat av Pontus)
+            // Test Marcus (Ändrat av Pontus)
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
