@@ -17,6 +17,7 @@ namespace Kladbutiken
         {
             Configuration = configuration;
             // Johannes Test!
+            // Marcus test!!!
         }
 
         public IConfiguration Configuration { get; }
