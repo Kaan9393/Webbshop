@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -6,10 +7,19 @@ using System.Text;
 
 namespace DataAccess.Data
 {
+   
     public class MainContext : DbContext
     {
-
-        private string ConnectionString;
+        private readonly string ConnectionString; // Ändrade till readonly field
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasIndex(x => x.EmailAddress).IsUnique();
+        }
 
         public MainContext(DbContextOptions options) : base(options)
         {
@@ -23,5 +33,6 @@ namespace DataAccess.Data
         {
             optionsBuilder.UseSqlServer(ConnectionString);
         }
+       
     }
 }
