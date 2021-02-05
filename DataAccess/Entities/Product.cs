@@ -9,7 +9,7 @@ namespace DataAccess.Entities
     {
         public int ID { get; set; }
         public Category CategoryID { get; set; }
-
+        public string URLImg { get; set; }
         [DataType(DataType.Currency)]
         public double Price { get; set; }
         public int StockBalance { get; set; }
