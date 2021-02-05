@@ -16,7 +16,7 @@ namespace DataAccess.Entities
         public string Password { get; set; }
         [Required]
         [MaxLength(50)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } //S
         [Required]
         [MaxLength(50)]
         public string LastName { get; set; }
