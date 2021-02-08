@@ -20,6 +20,8 @@ namespace DataAccess.Entities
         [Required]
         [MaxLength(50)]
         public string LastName { get; set; }
+        [Required]
+        public Address address { get; set; }
         public string PhoneNumber { get; set; }// Ändrade till string
         [Required]
         public string EmailAddress { get; set; }// länka till address ?
