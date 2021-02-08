@@ -9,8 +9,12 @@ namespace DataAccess.Entities
     public class Order
     {
         public int ID { get; set; }
-        public User UserID { get; set; }
+
+        [Required]
+        public User User { get; set; }
+
         public DateTime OrderDate { get; set; }
+
         public IList<Product> ProductList { get; set; }
     }
 }

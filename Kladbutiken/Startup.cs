@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,8 +17,6 @@ namespace Kladbutiken
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            // Johannes Test!
-            // Marcus test!!!
         }
 
         public IConfiguration Configuration { get; }
@@ -26,11 +25,10 @@ namespace Kladbutiken
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            // Hej Hopp
-
-            // Add more services
-            // Test Kaan
-            // Test Marcus (Ändrat av Pontus)
+            services.AddDbContext<DataAccess.Data.MainContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("Default"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
