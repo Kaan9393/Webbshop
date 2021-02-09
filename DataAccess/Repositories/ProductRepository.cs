@@ -10,11 +10,11 @@ namespace DataAccess.Repositories
 {
     public static class ProductRepository
     {
-        public static IEnumerable<Product> GetAllProducts()
+        public static IEnumerable<Product> GetProductsByCategory(string category)
         {
             using (var db = new MainContext())
             {
-                var products = db.Products.AsEnumerable();
+                var products = db.Products.Where(p => p.Category.TypeName == category);
 
                 return products;
             }
