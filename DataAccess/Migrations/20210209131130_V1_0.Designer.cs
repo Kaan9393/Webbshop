@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20210208153833_V1_0")]
+    [Migration("20210209131130_V1_0")]
     partial class V1_0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,7 +174,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SSN")
-                        .IsRequired()
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 

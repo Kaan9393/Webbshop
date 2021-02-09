@@ -10,7 +10,7 @@ namespace DataAccess.Data
    
     public class MainContext : DbContext
     {
-        /*private readonly string ConnectionString;*/ // Ändrade till readonly field
+        private string ConnectionString;
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -18,18 +18,18 @@ namespace DataAccess.Data
         public DbSet<User> Users { get; set; }
 
 
-        public MainContext(DbContextOptions options) : base(options)
+        public MainContext() : base()
         {
-            /*var builder = new ConfigurationBuilder();
-            builder.AddJsonFile("appsettings.json", optional : false);
+            var builder = new ConfigurationBuilder();
+            builder.AddJsonFile("appsettings.json", optional: false);
             var configuration = builder.Build();
-            ConnectionString = configuration.GetConnectionString("Default");*/
+            ConnectionString = configuration.GetConnectionString("Default");
         }
 
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(ConnectionString);
-        }*/
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
