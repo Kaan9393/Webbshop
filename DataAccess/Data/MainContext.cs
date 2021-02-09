@@ -7,10 +7,10 @@ using System.Text;
 
 namespace DataAccess.Data
 {
-   
-    public class MainContext : DbContext
+
+    public class MainContext : DbContext, IMainContext
     {
-        private string ConnectionString;
+        /*private string ConnectionString;*/
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -18,23 +18,23 @@ namespace DataAccess.Data
         public DbSet<User> Users { get; set; }
 
 
-        public MainContext() : base()
+        public MainContext(DbContextOptions options) : base(options)
         {
-            var builder = new ConfigurationBuilder();
+            /*var builder = new ConfigurationBuilder();
             builder.AddJsonFile("appsettings.json", optional: false);
             var configuration = builder.Build();
-            ConnectionString = configuration.GetConnectionString("Default");
+            ConnectionString = configuration.GetConnectionString("Default");*/
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(ConnectionString);
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasIndex(x => x.EmailAddress).IsUnique();
         }
-       
+
     }
 }

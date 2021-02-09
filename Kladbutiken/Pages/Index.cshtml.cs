@@ -13,16 +13,18 @@ namespace Kladbutiken.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly IProductRepository _productRepository;
         private IEnumerable<Product> products;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, IProductRepository productRepository)
         {
             _logger = logger;
+            _productRepository = productRepository;
         }
 
         public void OnGet()
         {
-            products = ProductRepository.GetAllProducts();
+            products = _productRepository.GetProductsByCategory("");
         }
     }
 }
