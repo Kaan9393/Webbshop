@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,16 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public static class UserRepository
+    public class UserRepository : IUserRepository
     {
-        public static void CreateUser()
+        private readonly IMainContext _context;
+
+        public UserRepository(IMainContext context)
+        {
+            _context = context;
+        }
+
+        public void CreateUser()
         {
 
         }
