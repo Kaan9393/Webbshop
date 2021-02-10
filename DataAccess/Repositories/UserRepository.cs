@@ -14,6 +14,7 @@ namespace DataAccess.Repositories
             using (var db = new MainContext())
             {
                 User user = new User();
+                user.Role = "Customer";
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.EmailAddress = model.Email;
