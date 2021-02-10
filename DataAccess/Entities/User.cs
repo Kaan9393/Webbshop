@@ -9,7 +9,7 @@ namespace DataAccess.Entities
     {
         public int ID { get; set; }
 
-        [MaxLength(13,ErrorMessage ="SSN must be 12 characters YYYY-MMDDXXXX"), MinLength(13)]
+        [MaxLength(13,ErrorMessage ="SSN must be 12 characters YYYYMMDD-XXXX"), MinLength(13)]
         public string SSN { get; set; }
 
         [Required]

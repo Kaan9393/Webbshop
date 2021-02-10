@@ -11,19 +11,12 @@ namespace Kladbutiken.Pages
 {
     public class RegisterModel : PageModel
     {
-        private readonly IUserRepository _userRepository;
-
-        public RegisterModel(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
-
         [BindProperty]
         public UserModel UserModel { get; set; } = new UserModel();
 
         public void OnPost()
         {
-            _userRepository.CreateUser();
+            UserRepository.CreateUser(UserModel);
         }
     }
 }
