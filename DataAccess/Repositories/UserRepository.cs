@@ -2,26 +2,26 @@
 using DataAccess.Entities;
 using DataAccess.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DataAccess.Repositories
 {
-    public class UserRepository : IUserRepository
+    public static class UserRepository
     {
-        private readonly IMainContext _context;
-        
+        public static void CreateUser(UserModel model)
+        {
+            using (var db = new MainContext())
+            {
+                User user = new User();
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.EmailAddress = model.Email;
+                user.Password = model.Password;
+                user.RegisterDate = DateTime.Now;
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
 
-        public UserRepository(IMainContext context)
-        {
-            _context = context;
-        }
-        
-        public void CreateUser(UserModel model)
-        {
-            
         }
     }
 }
