@@ -2,6 +2,7 @@
 using DataAccess.Entities;
 using DataAccess.Models;
 using System;
+using System.Linq;
 
 
 namespace DataAccess.Repositories
@@ -22,6 +23,14 @@ namespace DataAccess.Repositories
                 db.SaveChanges();
             }
 
+        }
+
+        public static User LoginUser(UserLoginModel userLogin)
+        {
+            using (var db = new MainContext())
+            {
+                return db.Users.FirstOrDefault(u => u.EmailAddress == userLogin.UserName && u.Password == userLogin.Password);
+            }
         }
     }
 }

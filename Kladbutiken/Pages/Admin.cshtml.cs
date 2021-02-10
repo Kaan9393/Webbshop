@@ -9,8 +9,18 @@ namespace Kladbutiken.Pages
 {
     public class AdminModel : PageModel
     {
-        public void OnGet()
+
+
+        public IActionResult OnGet()
         {
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+
+            if (userDetailsCookie == null)
+            {
+                return RedirectToPage("/login");
+            }
+
+            return Page();
         }
     }
 }
