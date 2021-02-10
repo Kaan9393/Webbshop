@@ -1,7 +1,9 @@
-﻿namespace DataAccess.Repositories
+﻿using DataAccess.Models;
+
+namespace DataAccess.Repositories
 {
     public interface IUserRepository
     {
-        void CreateUser();
+        void CreateUser(UserModel model);
     }
 }

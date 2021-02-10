@@ -1,4 +1,6 @@
 ﻿using DataAccess.Data;
+using DataAccess.Entities;
+using DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +12,16 @@ namespace DataAccess.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly IMainContext _context;
+        
 
         public UserRepository(IMainContext context)
         {
             _context = context;
         }
-
-        public void CreateUser()
+        
+        public void CreateUser(UserModel model)
         {
-
+            
         }
     }
 }
