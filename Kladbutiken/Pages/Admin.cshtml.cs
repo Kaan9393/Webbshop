@@ -10,6 +10,12 @@ namespace Kladbutiken.Pages
 {
     public class AdminModel : PageModel
     {
+        private readonly IUserRepository _userRepository;
+
+        public AdminModel(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
         public string LoggedInAs { get; set; }
 
@@ -22,7 +28,7 @@ namespace Kladbutiken.Pages
                 return RedirectToPage("/login");
             }
 
-            var user = UserRepository.GetUserByEmail(userDetailsCookie);
+            var user = _userRepository.GetUserByEmail(userDetailsCookie);
 
             if (user.Role != "Admin")
             {

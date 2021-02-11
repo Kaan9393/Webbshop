@@ -25,12 +25,12 @@ namespace Kladbutiken
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            //services.AddDbContext<DataAccess.Data.MainContext>(options =>
-            //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("Default"));
-            //});
-            //services.AddScoped<DataAccess.Data.IMainContext, DataAccess.Data.MainContext>();
-            //services.AddScoped<DataAccess.Repositories.IProductRepository, DataAccess.Repositories.ProductRepository>();
+            services.AddDbContext<DataAccess.Data.MainContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("Default"));
+            });
+            services.AddScoped<DataAccess.Data.IMainContext, DataAccess.Data.MainContext>();
+            services.AddScoped<DataAccess.Repositories.IUserRepository, DataAccess.Repositories.UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

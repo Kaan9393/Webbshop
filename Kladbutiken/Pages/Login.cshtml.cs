@@ -11,12 +11,19 @@ namespace Kladbutiken.Pages
 {
     public class LoginModel : PageModel
     {
+        private readonly IUserRepository _userRepository;
+
+        public LoginModel(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
         [BindProperty]
         public UserLoginModel UserLoginModel { get; set; }
 
         public IActionResult OnPost()
         {
-            var user = UserRepository.LoginUser(UserLoginModel);
+            var user = _userRepository.LoginUser(UserLoginModel);
             if (user == null)
             {
                 return RedirectToPage("/login");
