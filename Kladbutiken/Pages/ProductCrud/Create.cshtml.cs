@@ -37,6 +37,9 @@ namespace Kladbutiken.Pages.ProductCrud
                 return Page();
             }
 
+            Product.Date = DateTime.Now;
+            Product.Sales = 0;
+
             _context.Products.Add(Product);
             await _context.SaveChangesAsync();
 
