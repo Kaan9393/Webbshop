@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class UserModel
+    public class UserRegisterModel
     {
-        [Required]
+        [Required/*(*//*ErrorMessage = "This field is required.")*/]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required/*(*//*ErrorMessage ="This field is required.")*/]
         public string LastName { get; set; }
 
         [Required]
+        [EmailAddress]
+
         public string Email { get; set; }
 
         [Required]
@@ -22,7 +24,7 @@ namespace DataAccess.Models
         public string Password { get; set; }
 
         [Required]
-        [MinLength(8, ErrorMessage = "Password must be atleast 8 characters and less than 50 "), MaxLength(50)]
+        [Compare("Password")]
         public string ConfirmPassword { get; set; }
     }
 }

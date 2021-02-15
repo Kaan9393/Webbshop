@@ -16,7 +16,7 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public void CreateUser(UserModel model)
+        public void CreateUser(UserRegisterModel model)
         {
             User user = new User
             {

@@ -6,7 +6,7 @@ namespace DataAccess.Repositories
     public interface IUserRepository
     {
         void CheckForAdmin();
-        void CreateUser(UserModel model);
+        void CreateUser(UserRegisterModel model);
         User GetUserByEmail(string email);
         User LoginUser(UserLoginModel userLogin);
     }

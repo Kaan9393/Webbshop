@@ -15,7 +15,7 @@ namespace Kladbutiken.Pages
         }
 
         [BindProperty]
-        public UserModel UserModel { get; set; } = new UserModel();
+        public UserRegisterModel UserModel { get; set; } = new UserRegisterModel();
 
         public IActionResult OnPost()
         {
