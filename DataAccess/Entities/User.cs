@@ -26,14 +26,12 @@ namespace DataAccess.Entities
         [MaxLength(50)]
         public string LastName { get; set; }
 
-        [Required]
-        public List<Address> Address { get; set; }
+        public List<Address> Addresses { get; set; }
 
         [Phone]
         public string PhoneNumber { get; set; }
 
         [Required]
-        [EmailAddress]
         public string EmailAddress { get; set; }
 
         public DateTime RegisterDate { get; set; }
