@@ -1,30 +1,34 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAccess.Entities;
-using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using DataAccess.Data;
+using DataAccess.Entities;
+using DataAccess.Repositories;
 
-namespace Kladbutiken.Pages
+namespace Kladbutiken.Pages.ProductCrud
 {
-    public class AdminModel : PageModel
+    public class IndexModel : PageModel
     {
+        private readonly DataAccess.Data.MainContext _context;
         private readonly IUserRepository _userRepository;
-        private readonly IProductRepository _productRepository;
-
-        public AdminModel(IUserRepository userRepository, IProductRepository productRepository)
-        {
-            _userRepository = userRepository;
-            _productRepository = productRepository;
-        }
 
         public string LoggedInAs { get; set; }
-        public IEnumerable<Product> AllProducts { get; set; }
 
-        public IActionResult OnGet()
+        public IndexModel(DataAccess.Data.MainContext context, IUserRepository userRepository)
         {
+            _context = context;
+            _userRepository = userRepository;
+        }
+
+        public IList<Product> Product { get;set; }
+
+        public async Task<IActionResult> OnGetAsync()
+        {
+            Product = await _context.Products.ToListAsync();
             var userDetailsCookie = Request.Cookies["UserDetails"];
 
             if (userDetailsCookie == null)
@@ -40,17 +44,8 @@ namespace Kladbutiken.Pages
             }
 
             LoggedInAs = user.EmailAddress;
-            AllProducts = _productRepository.GetAllProducts();
 
             return Page();
-        }
-
-        
-        public IActionResult OnPostLogout()
-        {
-            Response.Cookies.Delete("UserDetails");
-
-            return RedirectToPage("/index");
         }
     }
 }

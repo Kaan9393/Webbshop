@@ -58,13 +58,13 @@
                         <div class="sb-sidenav-menu-heading">Interface</div>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Layouts
+                            CRUD
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                <a class="nav-link" href="/categorycrud">Category</a>
+                                <a class="nav-link" href="/productcrud">Product</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -190,33 +190,45 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Id</th>
+                                            <th>Category</th>
+                                            <th>Date</th>
+                                            <th>Price</th>
+                                            <th>Discount</th>
+                                            <th>Sales</th>
+                                            <th>Stock balance</th>
+                                            <th>Description</th>
+                                            <th>Image url</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Id</th>
+                                            <th>Category</th>
+                                            <th>Date</th>
+                                            <th>Price</th>
+                                            <th>Discount</th>
+                                            <th>Sales</th>
+                                            <th>Stock balance</th>
+                                            <th>Description</th>
+                                            <th>Image url</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
+                                        @foreach (var product in Model.AllProducts)
+	                                    {
+                                            <tr>
+                                                <td>@product.ID</td>
+                                                <td>@product.Category</td>
+                                                <td>@product.Date</td>
+                                                <td>@product.Price</td>
+                                                <td>@product.Discount</td>
+                                                <td>@product.Sales</td>
+                                                <td>@product.StockBalance</td>
+                                                <td>@product.Description</td>
+                                                <td>@product.URLImg</td>
+                                            </tr>
+	                                    }
                                     </tbody>
                                 </table>
                             </div>
