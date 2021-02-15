@@ -9,6 +9,8 @@ namespace DataAccess.Entities
     {
         public int ID { get; set; }
 
+        public List<Product> Products { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string TypeName { get; set; }

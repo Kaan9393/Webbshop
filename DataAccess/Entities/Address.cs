@@ -11,6 +11,8 @@ namespace DataAccess.Entities
 
         public int ID { get; set; }
 
+        public User User { get; set; }
+
         [MaxLength(50)]
         public string Street { get; set; }
 

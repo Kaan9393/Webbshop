@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataAccess.Repositories;
 using DataAccess.Models;
+using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -21,9 +17,15 @@ namespace Kladbutiken.Pages
         [BindProperty]
         public UserModel UserModel { get; set; } = new UserModel();
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             _userRepository.CreateUser(UserModel);
+            return RedirectToPage("/Login");
         }
     }
 }
