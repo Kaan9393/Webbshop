@@ -8,19 +8,23 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
+        private readonly IMainContext _context;
 
+        public ProductRepository(IMainContext context)
+        {
+            _context = context;
+        }
 
-        //public IEnumerable<Product> GetProductsByCategory(string category)
-        //{
-        //    /*using (var db = new MainContext())
-        //    {
-        //        var products = db.Products.Where(p => p.Category.TypeName == category);
+        public IEnumerable<Product> GetAllProducts()
+        {
+            return _context.Products.AsEnumerable();
+        }
 
-        //        return products;
-        //    }*/
-        //    //return _context.Products.Where(p => p.Category.TypeName == category);
-        //}
+        public IEnumerable<Product> GetProductsByCategory(string category)
+        {
+            return _context.Products.Where(p => p.Category.TypeName == category);
+        }
     }
 }
