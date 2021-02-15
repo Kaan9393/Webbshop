@@ -27,7 +27,7 @@ namespace DataAccess.Entities
         public string LastName { get; set; }
 
         [Required]
-        public Address Address { get; set; }
+        public List<Address> Address { get; set; }
 
         [Phone]
         public string PhoneNumber { get; set; }
@@ -38,7 +38,9 @@ namespace DataAccess.Entities
 
         public DateTime RegisterDate { get; set; }
 
-        public IList<Product> ProductCart { get; set; }
+        public List<Product> ProductCart { get; set; }
+
+        public List<Order> Orders { get; set; }
 
     }
 }

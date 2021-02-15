@@ -15,6 +15,8 @@ namespace DataAccess.Entities
 
         public DateTime OrderDate { get; set; }
 
-        public IList<Product> ProductList { get; set; }
+        public string Status { get; set; } //Koppla till enum.
+
+        public List<Product> ProductList { get; set; }
     }
 }
