@@ -8,7 +8,7 @@ namespace DataAccess.Entities
 {
     public class Order
     {
-        public int ID { get; set; }
+        public Guid ID { get; set; }
 
         [Required]
         public User User { get; set; }
@@ -18,5 +18,11 @@ namespace DataAccess.Entities
         public string Status { get; set; } //Koppla till enum.
 
         public List<Product> ProductList { get; set; }
+
+        public Order()
+        {
+            ID = Guid.NewGuid();
+            ProductList = new();
+        }
     }
 }

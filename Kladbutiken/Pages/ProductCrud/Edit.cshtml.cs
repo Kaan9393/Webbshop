@@ -23,7 +23,7 @@ namespace Kladbutiken.Pages.ProductCrud
         [BindProperty]
         public Product Product { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
             {
@@ -69,7 +69,7 @@ namespace Kladbutiken.Pages.ProductCrud
             return RedirectToPage("./Index");
         }
 
-        private bool ProductExists(int id)
+        private bool ProductExists(Guid id)
         {
             return _context.Products.Any(e => e.ID == id);
         }
