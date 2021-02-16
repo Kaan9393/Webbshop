@@ -32,6 +32,7 @@ namespace Kladbutiken
             services.AddScoped<DataAccess.Data.IMainContext, DataAccess.Data.MainContext>();
             services.AddScoped<DataAccess.Repositories.IUserRepository, DataAccess.Repositories.UserRepository>();
             services.AddScoped<DataAccess.Repositories.IProductRepository, DataAccess.Repositories.ProductRepository>();
+            services.AddScoped<DataAccess.Repositories.ICategoryRepository, DataAccess.Repositories.CategoryRepository>();
 
         }
 
