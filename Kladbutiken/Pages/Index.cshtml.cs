@@ -16,7 +16,9 @@ namespace Kladbutiken.Pages
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
 
+        public List<Product> AllProducts { get; set; }
         public IndexModel(ILogger<IndexModel> logger, IUserRepository userRepository, IProductRepository productRepository)
+
         {
             _logger = logger;
             _userRepository = userRepository;
@@ -29,6 +31,7 @@ namespace Kladbutiken.Pages
         {
             _userRepository.CheckForAdmin();
             AllProducts = _productRepository.GetAllProducts().ToList();
+
         }
     }
 }

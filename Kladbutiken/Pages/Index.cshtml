@@ -12,9 +12,9 @@
 
             <h1 class="my-4">Empty Hanger</h1>
             <div class="list-group">
-                <a href="#" class="list-group-item">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
+                <a href="#" class="list-group-item">Tröjor</a>
+                <a href="#" class="list-group-item">T-Shirt</a>
+                <a href="#" class="list-group-item">Byxor</a>
             </div>
 
         </div>
@@ -50,6 +50,7 @@
 
             <div class="row">
 
+
                 @foreach (var product in Model.AllProducts)
 	            {		 
                 <div class="col-lg-4 col-md-6 mb-4">
@@ -63,11 +64,13 @@
                             <p class="card-text">@product.Description</p>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                             <small class="text-muted">HEJ</small>
+                            @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
                         </div>
                     </div>
                 </div>
 	            }
+
 
             </div>
             <!-- /.row -->
