@@ -14,16 +14,21 @@ namespace Kladbutiken.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IUserRepository _userRepository;
+        private readonly IProductRepository _productRepository;
 
-        public IndexModel(ILogger<IndexModel> logger, IUserRepository userRepository)
+        public IndexModel(ILogger<IndexModel> logger, IUserRepository userRepository, IProductRepository productRepository)
         {
             _logger = logger;
             _userRepository = userRepository;
+            _productRepository = productRepository;
         }
+
+        public List<Product> AllProducts { get; set; }
 
         public void OnGet()
         {
             _userRepository.CheckForAdmin();
+            AllProducts = _productRepository.GetAllProducts().ToList();
         }
     }
 }
