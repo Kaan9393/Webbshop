@@ -49,17 +49,19 @@
             </div>
 
             <div class="row">
-                @foreach (var item in Model.AllProduct)
-                {
-                <div class="col-lg-4 col-md-6 mb-5">
+
+
+                @foreach (var product in Model.AllProducts)
+	            {		 
+                <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="@item.URLImg" alt=""></a>
+                        <a href="#"><img class="card-img-top" src="@product.URLImg" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a href="#">@item.ProductName</a>
+                                <a href="#">@product.ProductName</a>
                             </h4>
-                            <h5>@item.Price :-</h5>
-                            <p class="card-text">@item.Description</p>
+                            <h5>@product.Price</h5>
+                            <p class="card-text">@product.Description</p>
                         </div>
                         <div class="card-footer">
                              <small class="text-muted">HEJ</small>
@@ -67,7 +69,8 @@
                         </div>
                     </div>
                 </div>
-                }
+	            }
+
 
             </div>
             <!-- /.row -->
