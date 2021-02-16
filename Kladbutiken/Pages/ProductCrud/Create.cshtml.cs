@@ -13,7 +13,14 @@ namespace Kladbutiken.Pages.ProductCrud
     public class CreateModel : PageModel
     {
         private readonly DataAccess.Data.MainContext _context;
-        public IEnumerable<Category> Categorys { get; set; }
+
+        public List<SelectListItem> Categories { get; set; } = new();
+
+        [BindProperty]
+        public Product Product { get; set; }
+
+        [BindProperty]
+        public Guid CategoryId { get; set; }
 
         public CreateModel(DataAccess.Data.MainContext context)
         {
@@ -22,23 +29,29 @@ namespace Kladbutiken.Pages.ProductCrud
 
         public IActionResult OnGet()
         {
-            Categorys = _context.Categories.AsEnumerable();
+            var categories = _context.Categories.ToList();
+            foreach (var category in categories)
+            {
+                Categories.Add(new SelectListItem { Value=category.ID.ToString(), Text=category.TypeName });
+            }
             return Page();
         }
 
-        [BindProperty]
-        public Product Product { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
+            var selectedCategory = _context.Categories.Single(c => c.ID == CategoryId);
             Product.Date = DateTime.Now;
             Product.Sales = 0;
+            Product.Category = selectedCategory;
+            selectedCategory.Products.Add(Product);
+
+
+            /*if (!ModelState.IsValid)
+            {
+                return Page();
+            }*/
 
             _context.Products.Add(Product);
             await _context.SaveChangesAsync();

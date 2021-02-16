@@ -7,12 +7,18 @@ namespace DataAccess.Entities
 {
     public class Category
     {
-        public int ID { get; set; }
+        public Guid ID { get; set; }
 
         public List<Product> Products { get; set; }
 
         [Required]
         [MaxLength(50)]
         public string TypeName { get; set; }
+
+        public Category()
+        {
+            ID = Guid.NewGuid();
+            Products = new();
+        }
     }
 }

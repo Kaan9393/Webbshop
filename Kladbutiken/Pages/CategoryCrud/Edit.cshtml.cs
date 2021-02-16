@@ -23,7 +23,7 @@ namespace Kladbutiken.Pages.CategoryCrud
         [BindProperty]
         public Category Category { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
             {
@@ -69,7 +69,7 @@ namespace Kladbutiken.Pages.CategoryCrud
             return RedirectToPage("./Index");
         }
 
-        private bool CategoryExists(int id)
+        private bool CategoryExists(Guid id)
         {
             return _context.Categories.Any(e => e.ID == id);
         }

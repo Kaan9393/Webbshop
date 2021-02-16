@@ -1,5 +1,6 @@
 ﻿using DataAccess.Data;
 using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return _context.Products.AsEnumerable();
+            return _context.Products.Include(p => p.Category).AsEnumerable();
         }
 
         public IEnumerable<Product> GetProductsByCategory(string category)

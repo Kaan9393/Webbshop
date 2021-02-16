@@ -9,7 +9,7 @@ namespace DataAccess.Entities
     public class Address
     {
 
-        public int ID { get; set; }
+        public Guid ID { get; set; }
 
         public User User { get; set; }
 
@@ -27,6 +27,11 @@ namespace DataAccess.Entities
 
         [MaxLength(50)]
         public string Country { get; set; }
+
+        public Address()
+        {
+            ID = Guid.NewGuid();
+        }
 
     }
 }

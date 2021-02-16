@@ -7,7 +7,7 @@ namespace DataAccess.Entities
 {
     public class User
     {
-        public int ID { get; set; }
+        public Guid ID { get; set; }
 
         public string Role { get; set; }
 
@@ -39,6 +39,13 @@ namespace DataAccess.Entities
         public List<Product> ProductCart { get; set; }
 
         public List<Order> Orders { get; set; }
+
+        public User()
+        {
+            ID = Guid.NewGuid();
+            ProductCart = new();
+            Orders = new();
+        }
 
     }
 }

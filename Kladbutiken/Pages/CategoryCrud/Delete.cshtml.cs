@@ -22,14 +22,14 @@ namespace Kladbutiken.Pages.CategoryCrud
         [BindProperty]
         public Category Category { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Category = await _context.Categories.FirstOrDefaultAsync(m => m.ID == id);
+            Category = await _context.Categories.FirstOrDefaultAsync(c => c.ID == id);
 
             if (Category == null)
             {
@@ -38,7 +38,7 @@ namespace Kladbutiken.Pages.CategoryCrud
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(Guid? id)
         {
             if (id == null)
             {

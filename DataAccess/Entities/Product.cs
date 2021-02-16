@@ -7,7 +7,7 @@ namespace DataAccess.Entities
 {
     public class Product
     {
-        public int ID { get; set; }
+        public Guid ID { get; set; }
 
         [Required]
         public Category Category { get; set; }
@@ -28,5 +28,10 @@ namespace DataAccess.Entities
         public DateTime Date { get; set; }
 
         public int Sales { get; set; }
+
+        public Product()
+        {
+            ID = Guid.NewGuid();
+        }
     }
 }
