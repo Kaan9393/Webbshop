@@ -27,5 +27,10 @@ namespace DataAccess.Repositories
         {
             return _context.Products.Where(p => p.Category.TypeName == category);
         }
+
+        public Product GetProductById(Guid ID)
+        {
+            return _context.Products.Include(p => p.Category).Single(p => p.ID == ID);
+        }
     }
 }
