@@ -25,8 +25,6 @@ namespace Kladbutiken.Pages
             _productRepository = productRepository;
         }
 
-        public List<Product> AllProducts { get; set; }
-
         public void OnGet()
         {
             _userRepository.CheckForAdmin();
