@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit</h1>s
 
 <h4>Product</h4>
 <hr />
@@ -18,6 +18,11 @@
                 <label asp-for="Product.URLImg" class="control-label"></label>
                 <input asp-for="Product.URLImg" class="form-control" />
                 <span asp-validation-for="Product.URLImg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ProductName" class="control-label"></label>
+                <input asp-for="Product.ProductName" class="form-control" />
+                <span asp-validation-for="Product.ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Price" class="control-label"></label>

@@ -38,11 +38,12 @@
             </div>
             <!-- /.card -->
 
-            <div class="card card-outline-secondary my-4">
+            @*<div class="card card-outline-secondary mt-4">*@
                 <div class="card-header">
                     Liknande produkter
                 </div>
-                @foreach (var product in Model.MatchingProducts)
+                @*<div class="row">*@
+                @foreach (var product in Model.MatchingProducts.Where(p => p.ID != Model.SelectedProduct))
                 {
                     <div class="card-body">
                         <div class="col-lg-4 col-md-6 mb-4">
@@ -52,19 +53,15 @@
                                     <h4 class="card-title">
                                         <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
                                     </h4>
-                                    <h5>@product.Price</h5>
-                                    <p class="card-text">@product.Description</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">@product.Category.TypeName</small>
-                                    @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
+                                    <h5>@product.Price :-</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
                 
-            </div>
+                </@*div*@>
+            @*</div>*@
             <!-- /.card -->
 
         </div>
