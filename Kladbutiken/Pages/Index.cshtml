@@ -61,16 +61,16 @@
                     {
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="@product.URLImg" alt=""></a>
+                                <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        <a href="#">@product.ProductName</a>
+                                        <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
                                     </h4>
                                     <h5>@product.Price</h5>
                                     <p class="card-text">@product.Description</p>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">HEJ</small>
+                                    <small class="text-muted">@product.Category</small>
                                     @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
                                 </div>
                             </div>
@@ -123,16 +123,16 @@
                     {
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="@product.URLImg" alt=""></a>
+                                <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        <a href="#">@product.ProductName</a>
+                                        <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
                                     </h4>
                                     <h5>@product.Price</h5>
                                     <p class="card-text">@product.Description</p>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">HEJ</small>
+                                    <small class="text-muted">@product.Category</small>
                                     @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
                                 </div>
                             </div>

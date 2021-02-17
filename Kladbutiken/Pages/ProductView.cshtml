@@ -1,0 +1,75 @@
+﻿@page
+@model Kladbutiken.Pages.ProductViewModel
+@{
+
+}
+
+<div class="container">
+
+    <div class="row">
+
+        @*<div class="col-lg-3">
+            <h1 class="my-4">Shop Name</h1>
+            <div class="list-group">
+                <a href="#" class="list-group-item active">Category 1</a>
+                <a href="#" class="list-group-item">Category 2</a>
+                <a href="#" class="list-group-item">Category 3</a>
+            </div>
+        </div>*@
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+            <div class="card mt-4">
+                <img class="card-img-top img-fluid" src="@Model.Product.URLImg" alt="">
+                <div class="card-body">
+                    <h3 class="card-title">@Model.Product.ProductName</h3>
+                    <h4>@Model.Product.Price :-</h4>
+                    <p class="card-text">@Model.Product.Description</p>
+                    @if (Model.Product.StockBalance == 0)
+                    {
+                        <span class="text-warning">Out of stock</span>
+                    }
+                    else
+                    {
+                        <span class="text-warning">@Model.Product.StockBalance</span>
+                    }
+                </div>
+            </div>
+            <!-- /.card -->
+
+            <div class="card card-outline-secondary my-4">
+                <div class="card-header">
+                    Liknande produkter
+                </div>
+                @foreach (var product in Model.MatchingProducts)
+                {
+                    <div class="card-body">
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
+                                    </h4>
+                                    <h5>@product.Price</h5>
+                                    <p class="card-text">@product.Description</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">@product.Category.TypeName</small>
+                                    @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                
+            </div>
+            <!-- /.card -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+
+</div>
