@@ -18,6 +18,8 @@ namespace Kladbutiken.Pages
 
         public Product Product { get; set; }
 
+        public double PriceWithDiscount { get; set; }
+
         public List<Product> MatchingProducts { get; set; }
 
         public ProductViewModel(IProductRepository productRepository)
@@ -29,6 +31,8 @@ namespace Kladbutiken.Pages
             Product = _productRepository.GetProductById(SelectedProduct);
 
             MatchingProducts = _productRepository.GetProductsByCategory(Product.Category.TypeName).ToList();
+
+            PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
         }
     }
 }

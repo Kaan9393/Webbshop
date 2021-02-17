@@ -23,6 +23,7 @@ namespace Kladbutiken.Pages
         [BindProperty(SupportsGet =true)]
         public string SelectedCategory { get; set; }
         public List<Product> AllSelectedProducts { get; set; }
+        public double PriceWithDiscount { get; set; }
         public IndexModel(ILogger<IndexModel> logger, IUserRepository userRepository, IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _logger = logger;
@@ -37,7 +38,11 @@ namespace Kladbutiken.Pages
             AllProducts = _productRepository.GetAllProducts().ToList();
             AllCategories = _categoryRepository.GetAllCategorys().ToList();
             AllSelectedProducts = _productRepository.GetProductsByCategory(SelectedCategory).ToList();
+            foreach (var product in AllProducts)
+            {
+                product.Discount = _productRepository.GetPriceWithDiscount(product.Price, product.Discount);
 
+            }
         }
         
     }

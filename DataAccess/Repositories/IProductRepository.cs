@@ -9,5 +9,6 @@ namespace DataAccess.Repositories
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Product> GetProductsByCategory(string category);
         Product GetProductById(Guid ID);
+        double GetPriceWithDiscount(double price, double discount);
     }
 }

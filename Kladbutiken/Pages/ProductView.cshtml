@@ -8,14 +8,14 @@
 
     <div class="row">
 
-        @*<div class="col-lg-3">
-            <h1 class="my-4">Shop Name</h1>
+        <div class="col-lg-3">
+            <h1 class="my-4">shop name</h1>
             <div class="list-group">
-                <a href="#" class="list-group-item active">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
+                <a href="#" class="list-group-item active">category 1</a>
+                <a href="#" class="list-group-item">category 2</a>
+                <a href="#" class="list-group-item">category 3</a>
             </div>
-        </div>*@
+        </div>
         <!-- /.col-lg-3 -->
 
         <div class="col-lg-9">
@@ -24,7 +24,18 @@
                 <img class="card-img-top img-fluid" src="@Model.Product.URLImg" alt="">
                 <div class="card-body">
                     <h3 class="card-title">@Model.Product.ProductName</h3>
-                    <h4>@Model.Product.Price :-</h4>
+                    <h4>
+                        @if (Model.Product.Discount > 0)
+                        {
+                            <span><s>@Model.Product.Price</s> :-</span>
+
+                            <span class="text-danger">@Model.PriceWithDiscount :-</span>
+                        }
+                        else
+                        {
+                            <span>@Model.Product.Price :-</span>
+                        }
+                    </h4>
                     <p class="card-text">@Model.Product.Description</p>
                     @if (Model.Product.StockBalance == 0)
                     {
@@ -32,7 +43,7 @@
                     }
                     else
                     {
-                        <span class="text-warning">@Model.Product.StockBalance</span>
+                        <span class="text-warning">Stock balance: @Model.Product.StockBalance</span>
                     }
                 </div>
             </div>
@@ -42,27 +53,39 @@
                 <div class="card-header">
                     Liknande produkter
                 </div>
-                @foreach (var product in Model.MatchingProducts)
+                <div class="row">
+
+                @foreach (var product in Model.MatchingProducts.Take(3).Where(p => p.ID != Model.SelectedProduct))
                 {
-                    <div class="card-body">
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
-                                    </h4>
-                                    <h5>@product.Price</h5>
-                                    <p class="card-text">@product.Description</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">@product.Category.TypeName</small>
-                                    @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
-                                </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
+                                </h4>
+                                <h5>
+                                    @if (product.Discount > 0)
+                                    {
+                                        <span><s>@product.Price</s> :-</span>
+
+                                        <span class="text-danger">@Model.PriceWithDiscount :-</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@product.Price :-</span>
+                                    }
+                                </h5>
+                                <p class="card-text">@product.Description</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">@product.Category.TypeName</small>
+                                @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
                             </div>
                         </div>
                     </div>
                 }
+                </div>
                 
             </div>
             <!-- /.card -->

@@ -66,11 +66,22 @@
                                     <h4 class="card-title">
                                         <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
                                     </h4>
-                                    <h5>@product.Price</h5>
+                                    <h5>
+                                        @if (product.Discount != product.Price)
+                                        {
+                                            <span><s>@product.Price</s> :-</span>
+
+                                            <span class="text-danger">@product.Discount :-</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@product.Price :-</span>
+                                        }
+                                    </h5>
                                     <p class="card-text">@product.Description</p>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">@product.Category</small>
+                                    <small class="text-muted">@product.Category.TypeName</small>
                                     @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
                                 </div>
                             </div>
@@ -128,11 +139,22 @@
                                     <h4 class="card-title">
                                         <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
                                     </h4>
-                                    <h5>@product.Price</h5>
+                                    <h5>
+                                        @if (product.Discount != product.Price)
+                                        {
+                                            <span><s>@product.Price</s> :-</span>
+
+                                            <span class="text-danger">@product.Discount :-</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@product.Price :-</span>
+                                        }
+                                    </h5>
                                     <p class="card-text">@product.Description</p>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">@product.Category</small>
+                                    <small class="text-muted">@product.Category.TypeName</small>
                                     @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
                                 </div>
                             </div>
