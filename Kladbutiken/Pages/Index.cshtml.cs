@@ -15,21 +15,30 @@ namespace Kladbutiken.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         public List<Product> AllProducts { get; set; }
-        public IndexModel(ILogger<IndexModel> logger, IUserRepository userRepository, IProductRepository productRepository)
+        public List<Category> AllCategories { get; set; }
 
+        [BindProperty(SupportsGet =true)]
+        public string SelectedCategory { get; set; }
+        public List<Product> AllSelectedProducts { get; set; }
+        public IndexModel(ILogger<IndexModel> logger, IUserRepository userRepository, IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _logger = logger;
             _userRepository = userRepository;
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public void OnGet()
         {
             _userRepository.CheckForAdmin();
             AllProducts = _productRepository.GetAllProducts().ToList();
+            AllCategories = _categoryRepository.GetAllCategorys().ToList();
+            AllSelectedProducts = _productRepository.GetProductsByCategory(SelectedCategory).ToList();
 
         }
+        
     }
 }
