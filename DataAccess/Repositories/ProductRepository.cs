@@ -32,5 +32,10 @@ namespace DataAccess.Repositories
         {
             return _context.Products.Include(p => p.Category).Single(p => p.ID == ID);
         }
+
+        public double GetPriceWithDiscount(double price, double discount)
+        {
+            return price - (price * (discount / 100));
+        }
     }
 }
