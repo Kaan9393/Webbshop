@@ -29,7 +29,7 @@
                         {
                             <span><s>@Model.Product.Price</s> :-</span>
 
-                            <span class="text-danger">@Model.PriceWithDiscount :-</span>
+                            <span class="text-danger">@Math.Round(Model.PriceWithDiscount, 0) :-</span>
                         }
                         else
                         {
@@ -39,11 +39,17 @@
                     <p class="card-text">@Model.Product.Description</p>
                     @if (Model.Product.StockBalance == 0)
                     {
-                        <span class="text-warning">Out of stock</span>
+                        <span class="text-danger">Out of stock</span>
                     }
                     else
                     {
-                        <span class="text-warning">Stock balance: @Model.Product.StockBalance</span>
+                        <div class="center mb-3">
+                            <div class="buttons d-flex flex-row">
+                                <div class="cart"><i class="fa fa-shopping-cart"></i></div> <button class="btn btn-success cart-button px-5"><span class="dot"></span>Add to cart </button>
+                            </div>
+                        </div>
+                        <span>Stock balance: </span>
+                        <span class="text-warning">@Model.Product.StockBalance</span>
                     }
                 </div>
             </div>
@@ -55,36 +61,36 @@
                 </div>
                 <div class="row">
 
-                @foreach (var product in Model.MatchingProducts.Take(3).Where(p => p.ID != Model.SelectedProduct))
-                {
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
-                                </h4>
-                                <h5>
-                                    @if (product.Discount > 0)
-                                    {
-                                        <span><s>@product.Price</s> :-</span>
+                    @foreach (var product in Model.MatchingProducts.Where(p => p.ID != Model.SelectedProduct).Take(3))
+                    {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
+                                    </h4>
+                                    <h5>
+                                        @if (product.Discount > 0)
+                                        {
+                                            <span><s>@product.Price</s> :-</span>
 
-                                        <span class="text-danger">@Model.PriceWithDiscount :-</span>
-                                    }
-                                    else
-                                    {
-                                        <span>@product.Price :-</span>
-                                    }
-                                </h5>
-                                <p class="card-text">@product.Description</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">@product.Category.TypeName</small>
-                                @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
+                                            <span class="text-danger">@Math.Round(Model.PriceWithDiscount, 0) :-</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@product.Price :-</span>
+                                        }
+                                    </h5>
+                                    <p class="card-text">@product.Description</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">@product.Category.TypeName</small>
+                                    @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
                 </div>
                 
             </div>
