@@ -67,11 +67,11 @@
                                         <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
                                     </h4>
                                     <h5>
-                                        @if (product.Discount != product.Price)
+                                        @if (product.PriceWithDiscount != product.Price)
                                         {
                                             <span><s>@product.Price</s> :-</span>
 
-                                            <span class="text-danger">@Math.Round(product.Discount, 0) :-</span>
+                                            <span class="text-danger">@Math.Round(product.PriceWithDiscount, 0) :-</span>
                                         }
                                         else
                                         {
@@ -140,11 +140,11 @@
                                         <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
                                     </h4>
                                     <h5>
-                                        @if (product.Discount != product.Price)
+                                        @if (product.PriceWithDiscount != product.Price)
                                         {
                                             <span><s>@product.Price</s> :-</span>
 
-                                            <span class="text-danger">@Math.Round(product.Discount, 0) :-</span>
+                                            <span class="text-danger">@Math.Round(product.PriceWithDiscount, 0) :-</span>
                                         }
                                         else
                                         {

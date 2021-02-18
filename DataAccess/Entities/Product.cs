@@ -18,6 +18,7 @@ namespace DataAccess.Entities
 
         [DataType(DataType.Currency)]
         public double Price { get; set; }
+        public double PriceWithDiscount { get; set; }
 
         public int StockBalance { get; set; }
 
@@ -32,6 +33,7 @@ namespace DataAccess.Entities
         public Product()
         {
             ID = Guid.NewGuid();
+            PriceWithDiscount = Price;
         }
     }
 }

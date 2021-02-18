@@ -18,7 +18,7 @@ namespace Kladbutiken.Pages
 
         public Product Product { get; set; }
 
-        public double PriceWithDiscount { get; set; }
+        //public double PriceWithDiscount { get; set; }
 
         public List<Product> MatchingProducts { get; set; }
 
@@ -31,8 +31,13 @@ namespace Kladbutiken.Pages
             Product = _productRepository.GetProductById(SelectedProduct);
 
             MatchingProducts = _productRepository.GetProductsByCategory(Product.Category.TypeName).ToList();
+            foreach (var matchedProduct in MatchingProducts)
+            {
+                matchedProduct.PriceWithDiscount = _productRepository.GetPriceWithDiscount(matchedProduct.Price,matchedProduct.Discount);
 
-            PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
+            }
+
+            Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
         }
     }
 }

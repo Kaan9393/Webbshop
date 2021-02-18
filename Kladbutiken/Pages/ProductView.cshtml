@@ -25,11 +25,11 @@
                 <div class="card-body">
                     <h3 class="card-title">@Model.Product.ProductName</h3>
                     <h4>
-                        @if (Model.Product.Discount > 0)
+                        @if (Model.Product.PriceWithDiscount != Model.Product.Price)
                         {
                             <span><s>@Model.Product.Price</s> :-</span>
 
-                            <span class="text-danger">@Math.Round(Model.PriceWithDiscount, 0) :-</span>
+                            <span class="text-danger">@Math.Round(Model.Product.PriceWithDiscount, 0) :-</span>
                         }
                         else
                         {
@@ -71,11 +71,11 @@
                                         <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
                                     </h4>
                                     <h5>
-                                        @if (product.Discount > 0)
+                                        @if (product.PriceWithDiscount != product.Price)
                                         {
                                             <span><s>@product.Price</s> :-</span>
 
-                                            <span class="text-danger">@Math.Round(Model.PriceWithDiscount, 0) :-</span>
+                                            <span class="text-danger">@Math.Round(product.PriceWithDiscount, 0) :-</span>
                                         }
                                         else
                                         {
