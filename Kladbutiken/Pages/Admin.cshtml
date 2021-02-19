@@ -192,6 +192,7 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Category</th>
+                                            <th>Product name</th>
                                             <th>Date</th>
                                             <th>Price</th>
                                             <th>Discount</th>
@@ -205,6 +206,7 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Category</th>
+                                            <th>Product name</th>
                                             <th>Date</th>
                                             <th>Price</th>
                                             <th>Discount</th>
@@ -217,17 +219,18 @@
                                     <tbody>
                                         @foreach (var product in Model.AllProducts)
 	                                    {
-                                            <tr>
-                                                <td>@product.ID</td>
-                                                <td>@product.Category.TypeName</td>
-                                                <td>@product.Date</td>
-                                                <td>@product.Price</td>
-                                                <td>@product.Discount</td>
-                                                <td>@product.Sales</td>
-                                                <td>@product.StockBalance</td>
-                                                <td>@product.Description</td>
-                                                <td>@product.URLImg</td>
-                                            </tr>
+                                        <tr>
+                                            <td>@product.ID</td>
+                                            <td>@product.Category.TypeName</td>
+                                            <td>@product.ProductName</td>
+                                            <td>@product.Date</td>
+                                            <td>@product.Price</td>
+                                            <td>@product.Discount</td>
+                                            <td>@product.Sales</td>
+                                            <td>@product.StockBalance</td>
+                                            <td>@product.Description</td>
+                                            <td>@product.URLImg</td>
+                                        </tr>
 	                                    }
                                     </tbody>
                                 </table>
