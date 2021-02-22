@@ -11,7 +11,7 @@ namespace DataAccess.Models
     {
         public string Role { get; set; }
 
-        [MaxLength(13, ErrorMessage = "SSN must be 12 characters YYYYMMDD-XXXX"), MinLength(13)]
+        [MaxLength(13, ErrorMessage = "Personnummer måste innehålla 12 siffror (YYYYMMDD-XXXX)"), MinLength(13)]
         public string SSN { get; set; }
 
         [Phone]

@@ -21,55 +21,55 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-7">
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                                <div class="card-header"><h3 class="text-center font-weight-light my-4">Skapa konto</h3></div>
                                 <div class="card-body">
                                     <form method="post" target="_self">
                                         <div class="form-row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="small mb-1" for="inputFirstName">First Name</label>
-                                                    <input class="form-control py-4" id="inputFirstName" type="text" asp-for="UserModel.FirstName" placeholder="Enter first name" />
+                                                    <label class="small mb-1" for="inputFirstName">Förnamn</label>
+                                                    <input class="form-control py-4" id="inputFirstName" type="text" asp-for="UserModel.FirstName" placeholder="Ange förnamn" />
                                                     <span asp-validation-for="UserModel.FirstName" class="text-danger"></span>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="small mb-1" for="inputLastName">Last Name</label>
-                                                    <input class="form-control py-4" id="inputLastName" type="text" asp-for="UserModel.LastName" placeholder="Enter last name" />
+                                                    <label class="small mb-1" for="inputLastName">Efternamn</label>
+                                                    <input class="form-control py-4" id="inputLastName" type="text" asp-for="UserModel.LastName" placeholder="Ange efternamn" />
                                                     <span asp-validation-for="UserModel.LastName" class="text-danger"></span>
 
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                            <input class="form-control py-4" id="inputEmailAddress" type="email" asp-for="UserModel.Email" aria-describedby="emailHelp" placeholder="Enter email address" />
+                                            <label class="small mb-1" for="inputEmailAddress">E-mail</label>
+                                            <input class="form-control py-4" id="inputEmailAddress" type="email" asp-for="UserModel.Email" aria-describedby="emailHelp" placeholder="Ange e-mailadress" />
                                             <span asp-validation-for="UserModel.Email" class="text-danger"></span>
 
                                         </div>
                                         <div class="form-row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="small mb-1" for="inputPassword">Password</label>
-                                                    <input class="form-control py-4" id="inputPassword" type="password" asp-for="UserModel.Password" placeholder="Enter password" />
+                                                    <label class="small mb-1" for="inputPassword">Lösenord</label>
+                                                    <input class="form-control py-4" id="inputPassword" type="password" asp-for="UserModel.Password" placeholder="Lösenordet måste innehålla minst 8 och max 50 tecken" />
                                                     <span asp-validation-for="UserModel.Password" class="text-danger"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="small mb-1" for="inputConfirmPassword">Confirm Password</label>
-                                                    <input class="form-control py-4" id="inputConfirmPassword" type="password" asp-for="UserModel.ConfirmPassword" placeholder="Confirm password" />
+                                                    <label class="small mb-1" for="inputConfirmPassword">Upprepa lösenord</label>
+                                                    <input class="form-control py-4" id="inputConfirmPassword" type="password" asp-for="UserModel.ConfirmPassword" placeholder="Upprepa lösenord" />
                                                     <span asp-validation-for="UserModel.ConfirmPassword" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block" type="submit">Create Account</button></div>
+                                        <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block" type="submit">Skapa konto</button></div>
                                         @*<div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block" href="login">Create Account</a></div>*@
                                     </form>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <div class="small"><a href="login">Have an account? Go to login</a></div>
+                                    <div class="small"><a href="login">Redan medlem? Gå till inloggningen!</a></div>
                                 </div>
                             </div>
                         </div>

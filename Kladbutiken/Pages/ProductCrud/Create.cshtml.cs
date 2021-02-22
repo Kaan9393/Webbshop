@@ -59,10 +59,10 @@ namespace Kladbutiken.Pages.ProductCrud
             //selectedCategory.Products.Add(Product);
 
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
             //_context.Products.Add(Product);
             await _productrepository.AddProduct(Product,CategoryId/*)selectedCategory*/);

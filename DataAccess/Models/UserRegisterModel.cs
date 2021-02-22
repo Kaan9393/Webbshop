@@ -20,7 +20,7 @@ namespace DataAccess.Models
         public string Email { get; set; }
 
         [Required]
-        [MinLength(8, ErrorMessage = "Password must be atleast 8 characters and less than 50 "), MaxLength(50)]
+        [MinLength(8, ErrorMessage = "Lösenordet måste innehålla minst 8 och max 50 tecken"), MaxLength(50)]
         public string Password { get; set; }
 
         [Required]
