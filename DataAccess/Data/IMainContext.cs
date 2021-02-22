@@ -1,5 +1,7 @@
 ﻿using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DataAccess.Data
 {
@@ -10,5 +12,7 @@ namespace DataAccess.Data
         DbSet<Order> Orders { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<User> Users { get; set; }
+        int SaveChanges();
+        Task <int> SaveChangesAsync(CancellationToken token);
     }
 }
