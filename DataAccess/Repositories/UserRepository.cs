@@ -60,5 +60,12 @@ namespace DataAccess.Repositories
                 _context.SaveChanges();
             }
         }
+
+        public void AddProductToCart(string email, Product product)
+        {
+            User user = GetUserByEmail(email);
+            user.ProductCart.Add(product);
+            _context.SaveChanges();
+        }
     }
 }
