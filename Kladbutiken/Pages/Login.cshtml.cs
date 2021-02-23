@@ -28,11 +28,15 @@ namespace Kladbutiken.Pages
             {
                 return RedirectToPage("/login");
             }
-            else
+            else/* if (user.Role == "Admin")*/
             {
                 Response.Cookies.Append("UserDetails", user.EmailAddress);
                 return RedirectToPage("/admin");
             }
+            //else
+            //{
+
+            //}
         }
     }
 }

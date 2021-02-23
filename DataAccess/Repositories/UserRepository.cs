@@ -31,12 +31,17 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
+        public void AddUserInfo(UserInfoModel model)
+        {
+
+        }
+
         public User LoginUser(UserLoginModel userLogin)
         {
             return _context.Users.FirstOrDefault(u => u.EmailAddress == userLogin.UserName && u.Password == userLogin.Password);
         }
 
-        public User GetUserByEmail(string email)
+        public User GetUserByEmail(string? email)
         {
             return _context.Users.FirstOrDefault(u => u.EmailAddress == email);
         }

@@ -66,9 +66,17 @@
 
     <div style="bottom: 0; position: fixed; width: 100%; margin-top: 50px;">
         <footer class="py-2 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Empty Hanger @DateTime.Now.Year</p>
-            </div>
+            <div>
+                @try 
+	            {	        
+                    <span class="m-0 text-left text-white">Logged in as: @Model.LoggedInAs</span>		
+	            }
+	            catch (global::System.Exception)
+	            {
+
+	            }
+                <span class="m-0 text-center text-white">Copyright &copy; Empty Hanger @DateTime.Now.Year</span>
+            </div>   
         </footer>
     </div>
 
