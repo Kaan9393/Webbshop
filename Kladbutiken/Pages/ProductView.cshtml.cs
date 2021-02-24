@@ -22,8 +22,6 @@ namespace Kladbutiken.Pages
 
         public Product Product { get; set; }
 
-        //public double PriceWithDiscount { get; set; }
-
         public List<Product> MatchingProducts { get; set; }
         
         public List<Category> AllCategories { get; set; }
@@ -50,21 +48,11 @@ namespace Kladbutiken.Pages
             }
 
             Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
-            //------------------------------------------------------------------------------------------------
-
-            //var userDetailsCookie = Request.Cookies["UserDetails"];
-
-            //if (userDetailsCookie == null)
-            //{
-            //    return RedirectToPage("/login");
-            //}
-
-            //LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
 
             return Page();
         }
 
-        public void OnPostAdd(Guid id)
+        public IActionResult OnPostAdd(Guid id)
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
 
@@ -84,24 +72,25 @@ namespace Kladbutiken.Pages
                 }
 
                 Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
-            }
-            var cart = HttpContext.Session.GetString("cart");
-            if (cart != null)
-            {
-                LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
-                LoggedInAs.ProductCart.Add(Product);
-                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
 
-                /*LoggedInAs.ProductCart = JsonConvert.DeserializeObject<List<Product>>(cart);
-                LoggedInAs.ProductCart.Add(Product);
-                HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(LoggedInAs.ProductCart));*/
+                var cart = HttpContext.Session.GetString("cart");
+                if (cart != null)
+                {
+                    LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                    LoggedInAs.ProductCart.Add(Product);
+                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
+                }
+                else
+                {
+                    LoggedInAs.ProductCart.Add(Product);
+                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
+                }
             }
             else
             {
-                LoggedInAs.ProductCart.Add(Product);
-                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
-                /*HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(LoggedInAs.ProductCart));*/
+                return RedirectToPage("/Login");
             }
+            return Redirect("/ProductView?SelectedProduct=" + id);
         }
     }
 }
