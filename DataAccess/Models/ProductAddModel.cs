@@ -10,15 +10,13 @@ namespace DataAccess.Models
 {
     public class ProductAddModel
     {
-        public Guid ID { get; set; }
-
         [Required]
-        public Category Category { get; set; }
-        [Required(ErrorMessage ="Product must have a type")]
+        public Guid Category { get; set; }
+        [Required(ErrorMessage ="Produkten måste ha ett namn")]
         public string ProductName { get; set; }
 
         public string URLImg { get; set; }
-        [Required(ErrorMessage ="Product must have a price")]
+        [Required(ErrorMessage ="Produkten måste ha ett pris")]
         public double Price { get; set; }
 
         public int StockBalance { get; set; }

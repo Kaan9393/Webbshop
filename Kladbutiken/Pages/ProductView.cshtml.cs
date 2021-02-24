@@ -13,6 +13,7 @@ namespace Kladbutiken.Pages
     {
         private readonly IProductRepository _productRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         [BindProperty (SupportsGet = true)]
         public Guid SelectedProduct { get; set; }
@@ -22,17 +23,22 @@ namespace Kladbutiken.Pages
         //public double PriceWithDiscount { get; set; }
 
         public List<Product> MatchingProducts { get; set; }
+        
+        public List<Category> AllCategories { get; set; }
 
         public User LoggedInAs { get; set; }
 
-        public ProductViewModel(IProductRepository productRepository, IUserRepository userRepository)
+        public ProductViewModel(IProductRepository productRepository, IUserRepository userRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _userRepository = userRepository;
+            _categoryRepository = categoryRepository;
         }
         public IActionResult OnGet()
         {
             Product = _productRepository.GetProductById(SelectedProduct);
+            AllCategories = _categoryRepository.GetAllCategorys().ToList();
+
 
             MatchingProducts = _productRepository.GetProductsByCategory(Product.Category.TypeName).ToList();
             foreach (var matchedProduct in MatchingProducts)

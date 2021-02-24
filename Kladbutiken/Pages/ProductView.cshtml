@@ -9,18 +9,23 @@
     <div class="row">
 
         <div class="col-lg-3">
-            <h3 class="my-4">Home</h3>
+            <h3 class="my-4">@Model.Product.Category.TypeName</h3>
             <div class="list-group">
-                <a href="#" class="list-group-item active">category 1</a>
-                <a href="#" class="list-group-item">category 2</a>
-                <a href="#" class="list-group-item">category 3</a>
+                @foreach (var category in Model.AllCategories)
+	            {
+		            @if (Model.Product.Category.TypeName != category.TypeName)
+	                {
+                        <a href=".?SelectedCategory=@category.TypeName" class="list-group-item">@category.TypeName</a>	 
+	                }
+	            }
+
             </div>
         </div>
 
         <div class="col-lg-9">
 
             <div class="card mt-4">
-                <img class="card-img-top img-fluid mx-auto" src="@Model.Product.URLImg" style="width:450px; height:550px" alt="">
+                <img class="card-img-top img-fluid mx-auto" src="@Model.Product.URLImg" style="width:450px; height:550px" alt="" title="@Model.Product.ProductName">
                 <div class="card-body">
                     <h3 class="card-title">@Model.Product.ProductName</h3>
                     <h4>
@@ -38,19 +43,19 @@
                     <p class="card-text">@Model.Product.Description</p>
                     @if (Model.Product.StockBalance == 0)
                     {
-                        <span class="text-danger">Out of stock</span>
+                        <span class="text-danger">Slutsåld!</span>
                     }
                     else
                     {
                         <div class="center mb-3">
                             <div class="buttons d-flex flex-row">
                                 <form asp-page-handler="add" method="post">
-                                     <button class="btn btn-success cart-button px-5"><span class="dot"></span>Add to cart </button>
+                                     <button class="btn btn-success cart-button px-5"><span class="dot"></span>Lägg i kundkorgen </button>
                                     <input type="hidden" name="id" value="@Model.Product.ID" />
                                 </form>
                            </div>
                         </div>
-                        <span>Stock balance: </span>
+                        <span>Lagersaldo: </span>
                         <span class="text-warning">@Model.Product.StockBalance</span>
                     }
                 </div>
@@ -67,7 +72,7 @@
                     {
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
-                                <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
+                                <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt="" title="@product.ProductName"></a>
                                 <div class="card-body">
                                     <h4 class="card-title">
                                         <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>

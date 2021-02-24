@@ -11,11 +11,11 @@ namespace DataAccess.Entities
 
         public string Role { get; set; }
 
-        [MaxLength(13,ErrorMessage ="SSN must be 12 characters YYYYMMDD-XXXX"), MinLength(13)]
+        [MaxLength(13,ErrorMessage ="Personnummer måste innehålla 12 siffror (YYYYMMDD-XXXX)"), MinLength(13)]
         public string SSN { get; set; }
 
         [Required]
-        [MinLength(8,ErrorMessage ="Password must be atleast 8 characters and less than 50 "),MaxLength(50)]
+        [MinLength(8,ErrorMessage ="Lösenordet måste innehålla minst 8 och max 50 tecken"),MaxLength(50)]
         public string Password { get; set; }
 
         [Required]
@@ -27,6 +27,8 @@ namespace DataAccess.Entities
         public string LastName { get; set; }
 
         public List<Address> Addresses { get; set; }
+
+        //public Guid ShippingAddressID { get; set; }//Använd id för att matcha rätt adress
 
         [Phone]
         public string PhoneNumber { get; set; }
