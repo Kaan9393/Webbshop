@@ -12,6 +12,7 @@ namespace Kladbutiken.Pages
     public class ProductViewModel : PageModel
     {
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         [BindProperty (SupportsGet = true)]
         public Guid SelectedProduct { get; set; }
@@ -22,13 +23,19 @@ namespace Kladbutiken.Pages
 
         public List<Product> MatchingProducts { get; set; }
 
-        public ProductViewModel(IProductRepository productRepository)
+        public List<Category> AllCategories { get; set; }
+
+
+        public ProductViewModel(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
         public void OnGet()
         {
             Product = _productRepository.GetProductById(SelectedProduct);
+            AllCategories = _categoryRepository.GetAllCategorys().ToList();
+
 
             MatchingProducts = _productRepository.GetProductsByCategory(Product.Category.TypeName).ToList();
             foreach (var matchedProduct in MatchingProducts)

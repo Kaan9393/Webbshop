@@ -20,6 +20,8 @@ namespace Kladbutiken.Pages
         public List<Product> AllProducts { get; set; }
         public List<Category> AllCategories { get; set; }
 
+        public string LoggedInAs { get; set; }
+
         [BindProperty(SupportsGet =true)]
         public string SelectedCategory { get; set; }
         public List<Product> AllSelectedProducts { get; set; }
@@ -34,6 +36,16 @@ namespace Kladbutiken.Pages
 
         public void OnGet()
         {
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+            var user = _userRepository.GetUserByEmail(userDetailsCookie);
+            if (user == null)
+            {
+                LoggedInAs = "Guest";
+            }
+            else
+            {
+                LoggedInAs = user.EmailAddress;
+            }
             _userRepository.CheckForAdmin();
             AllProducts = _productRepository.GetAllProducts().ToList();
             AllCategories = _categoryRepository.GetAllCategorys().ToList();
