@@ -10,7 +10,5 @@ namespace DataAccess.Repositories
         void CreateUser(UserRegisterModel model);
         User GetUserByEmail(string? email);
         User LoginUser(UserLoginModel userLogin);
-
-        void AddProductToCart(string email, Product product);
     }
 }

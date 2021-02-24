@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DataAccess.Entities;
 using DataAccess.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -66,6 +68,8 @@ namespace Kladbutiken.Pages
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
 
+            AllCategories = _categoryRepository.GetAllCategorys().ToList();
+
             if (userDetailsCookie != null)
             {
 
@@ -77,12 +81,26 @@ namespace Kladbutiken.Pages
                 foreach (var matchedProduct in MatchingProducts)
                 {
                     matchedProduct.PriceWithDiscount = _productRepository.GetPriceWithDiscount(matchedProduct.Price, matchedProduct.Discount);
-
                 }
 
                 Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
+            }
+            var cart = HttpContext.Session.GetString("cart");
+            if (cart != null)
+            {
+                LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                LoggedInAs.ProductCart.Add(Product);
+                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
 
-                _userRepository.AddProductToCart(LoggedInAs.EmailAddress, Product);
+                /*LoggedInAs.ProductCart = JsonConvert.DeserializeObject<List<Product>>(cart);
+                LoggedInAs.ProductCart.Add(Product);
+                HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(LoggedInAs.ProductCart));*/
+            }
+            else
+            {
+                LoggedInAs.ProductCart.Add(Product);
+                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
+                /*HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(LoggedInAs.ProductCart));*/
             }
         }
     }
