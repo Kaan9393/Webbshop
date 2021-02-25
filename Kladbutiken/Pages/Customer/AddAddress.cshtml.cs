@@ -8,51 +8,34 @@ using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Kladbutiken.Pages
+namespace Kladbutiken.Pages.Customer
 {
-    public class CustomerModel : PageModel
+    public class AddAddressModel : PageModel
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAddressRepository _addressRepository;
 
-        public CustomerModel(IUserRepository userRepository)
+        public AddAddressModel(IUserRepository userRepository, IAddressRepository addressRepository)
         {
             _userRepository = userRepository;
+            _addressRepository = addressRepository;
         }
+        public User LoggedInAs { get; set; }
         [BindProperty]
-        public UserInfoModel CustomerInfo { get; set; } = new UserInfoModel();
-
-        public User UserInfo { get; set; }
-        public string LoggedInAs { get; set; }
-
+        public AddressModel Model { get; set; } = new AddressModel();
         public void OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
             var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            UserInfo = user;
-            if (user == null)
-            {
-                LoggedInAs = "Guest";
-            }
-            else
-            {
-                LoggedInAs = user.EmailAddress;
-            }
+            LoggedInAs = user;
         }
-
         public void OnPost()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
             var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            UserInfo = user;
-            if (user == null)
-            {
-                LoggedInAs = "Guest";
-            }
-            else
-            {
-                LoggedInAs = user.EmailAddress;
-            }
-            _userRepository.AddUserInfo(CustomerInfo);
+            LoggedInAs = user;
+
+            _addressRepository.AddAddress(Model, LoggedInAs);
         }
     }
 }

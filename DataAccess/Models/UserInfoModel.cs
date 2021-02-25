@@ -20,13 +20,14 @@ namespace DataAccess.Models
 
         [MaxLength(13, ErrorMessage = "Personnummer måste innehålla 12 siffror (YYYYMMDD-XXXX)"), MinLength(6)]
         public string SSN { get; set; }
-
+        [Required]
         public string Email { get; set; }
 
         [Phone]
         public string PhoneNumber { get; set; }
 
-        public Address Address { get; set; }
+        public Address Address { get; set; } = new Address();
+
 
     }
 }

@@ -1,5 +1,5 @@
 ﻿@page
-@model Kladbutiken.Pages.CustomerModel
+@model Kladbutiken.Pages.ProfileModel
 @{
 
 }
@@ -13,17 +13,17 @@
                         <img class="img-profile img-circle img-responsive center-block" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
                         <ul class="meta list list-unstyled">
                             <li class="name">
-                                @Model.UserInfo.FirstName @Model.UserInfo.LastName
-                                <label class="label label-info">UX Designer</label>
+                                @Model.LoggedInAs.FirstName @Model.LoggedInAs.LastName
+                                @*<label class="label label-info">KUNDNUMMER?</label>*@
                             </li>
-                            <li class="email"><a href="#">Rebecca.S@website.com</a></li>
-                            <li class="activity">Last logged in: Today at 2:18pm</li>
+                            <li class="Användarnamn"><a href="#">@Model.LoggedInAs.EmailAddress</a></li>
+                            <li class="activity">Senast inloggad: @DateTime.Now.Date</li>
                         </ul>
                     </div>
                     <nav class="side-menu">
                         <ul class="nav">
-                            <li class="active"><a href="#"><span class="fa fa-user"></span> Profile</a></li>
-                            <li><a href="#"><span class="fa fa-cog"></span> Settings</a></li>
+                            <li class="active"><a href="/Customer/Profile"><span class="fa fa-user"></span> Min sida</a></li>
+                            <li><a href="/Customer/Edit"><span class="fa fa-cog"></span> Settings</a></li>
                             <li><a href="#"><span class="fa fa-credit-card"></span> Billing</a></li>
                             <li><a href="#"><span class="fa fa-envelope"></span> Messages</a></li>
 
@@ -33,8 +33,8 @@
                     </nav>
                 </div>
                 <div class="content-panel">
-                    <h2 class="title">Hej @Model.UserInfo.FirstName!</h2>
-                    <form method="post" class="form-horizontal">
+                    <h2 class="title">Hej @Model.LoggedInAs.FirstName!</h2>
+                    <form class="form-horizontal">
                         <fieldset class="fieldset">
                             <h3 class="fieldset-title">Personuppgifter</h3>
                             @*<div class="form-group">
@@ -43,18 +43,24 @@
                                     <input type="email" class="form-control" value="MODEL.E-MAIL">
                                 </div>
                             </div>*@
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Förnamn</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input asp-for="CustomerInfo.FirstName" type="text" class="form-control" value="@Model.UserInfo.FirstName">
-                                    <span asp-validation-for="CustomerInfo.FirstName"></span>
+                                    <span type="text" class="form-control" value="@Model.LoggedInAs.FirstName" readonly></span>
                                 </div>
-                            </div>
+                            </div>*@
+                        <div>
+                            <ul>
+                                <p style="text-emphasis:filled">Namn</p>
+                                @Model.LoggedInAs.FirstName @Model.LoggedInAs.LastName
+                                <br />
+                                @Model.LoggedInAs.EmailAddress
+                            </ul>
+                        </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Efternamn</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input asp-for="CustomerInfo.LastName" type="text" class="form-control" value="@Model.UserInfo.LastName">
-                                    <span asp-validation-for="CustomerInfo.LastName"></span>
+                                    <input asp-for="CustomerInfo.LastName" type="text" class="form-control" value="@Model.LoggedInAs.LastName" readonly>
 
                                 </div>
                             </div>
@@ -65,56 +71,56 @@
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">E-mail</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input asp-for="CustomerInfo.Email" type="email" class="form-control" value="@Model.UserInfo.EmailAddress">
+                                    <input asp-for="CustomerInfo.Email" type="email" class="form-control" value="@Model.LoggedInAs.EmailAddress" readonly>
                                     <p class="help-block">Det här är även ditt användarnamn</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Telefonnummer</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    @if (Model.UserInfo.PhoneNumber != null)
+                                    @if (Model.LoggedInAs.PhoneNumber != null)
                                     {
-                                        <input type="text" class="form-control" value="@Model.CustomerInfo.PhoneNumber">
+                                        <input asp-for ="CustomerInfo.PhoneNumber" class="form-control" value="@Model.LoggedInAs.PhoneNumber" readonly>
                                     }
                                     else
                                     {
-                                        <input type="text" class="form-control" value="">
+                                        <input asp-for ="CustomerInfo.PhoneNumber" class="form-control" value="" readonly>
 
                                     }
                                 </div>
                             </div>
-                            @if (Model.UserInfo.Addresses != null)
+                            @if (Model.LoggedInAs.Addresses != null)
                             {
-                                @foreach (var address in Model.UserInfo.Addresses)
+                                @foreach (var address in Model.LoggedInAs.Addresses)
                                 {
                                     <div class="form-group">
-                                        <label class="col-md-2  col-sm-3 col-xs-12 control-label">Adress</label>
+                                        <label class="col-md-2  col-sm-3 col-xs-12 control-label">Gatuadress</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" value="@address.Street">
+                                            <input asp-for="CustomerInfo.Address.Street" class="form-control" value="@address.Street" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2  col-sm-3 col-xs-12 control-label">Postkod</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" value="@address.PostalCode">
+                                            <input asp-for="CustomerInfo.Address.PostalCode" class="form-control" value="@address.PostalCode" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2  col-sm-3 col-xs-12 control-label">Postort</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" value="@address.State">
+                                            <input asp-for="CustomerInfo.Address.State" class="form-control" value="@address.State" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2  col-sm-3 col-xs-12 control-label">Stad</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" value="@address.City">
+                                            <input asp-for="CustomerInfo.Address.City" class="form-control" value="@address.City" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2  col-sm-3 col-xs-12 control-label">Land</label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" class="form-control" value="@address.Country">
+                                            <input asp-for="CustomerInfo.Address.Country" class="form-control" value="@address.Country" readonly>
                                         </div>
                                     </div>
                                 }
@@ -122,43 +128,43 @@
                             else
                             {
                                 <div class="form-group">
-                                    <label class="col-md-2  col-sm-3 col-xs-12 control-label">Adress</label>
+                                    <label class="col-md-2  col-sm-3 col-xs-12 control-label">Gatuadress</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" value="">
+                                        <input asp-for="CustomerInfo.Address.Street" class="form-control" value="" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2  col-sm-3 col-xs-12 control-label">Postkod</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" value="">
+                                        <input asp-for="CustomerInfo.Address.PostalCode" class="form-control" value="" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2  col-sm-3 col-xs-12 control-label">Postort</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" value="">
+                                        <input asp-for="CustomerInfo.Address.State" class="form-control" value="" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2  col-sm-3 col-xs-12 control-label">Stad</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" value="">
+                                        <input asp-for="CustomerInfo.Address.City" class="form-control" value="" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2  col-sm-3 col-xs-12 control-label">Land</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" value="">
+                                        <input asp-for="CustomerInfo.Address.Country" class="form-control" value="" readonly>
                                     </div>
                                 </div>
                             }
                         </fieldset>
                         <hr>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
                                 <input class="btn btn-primary" type="submit" value="Update Profile">
                             </div>
-                        </div>
+                        </div>*@
                     </form>
                 </div>
             </div>

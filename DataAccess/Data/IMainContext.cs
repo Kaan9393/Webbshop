@@ -14,5 +14,6 @@ namespace DataAccess.Data
         DbSet<User> Users { get; set; }
         int SaveChanges();
         Task <int> SaveChangesAsync(CancellationToken token);
+
     }
 }
