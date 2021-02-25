@@ -25,6 +25,10 @@ namespace Kladbutiken
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+            services.AddMemoryCache();
             services.AddDbContext<DataAccess.Data.MainContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
@@ -52,6 +56,7 @@ namespace Kladbutiken
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 
