@@ -28,8 +28,6 @@ namespace DataAccess.Entities
 
         public List<Address> Addresses { get; set; }
 
-        //public Guid ShippingAddressID { get; set; }//Använd id för att matcha rätt adress
-
         [Phone]
         public string PhoneNumber { get; set; }
 
@@ -47,6 +45,7 @@ namespace DataAccess.Entities
             ID = Guid.NewGuid();
             ProductCart = new();
             Orders = new();
+            Addresses = new();
         }
 
     }

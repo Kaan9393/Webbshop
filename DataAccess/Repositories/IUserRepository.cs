@@ -7,12 +7,11 @@ namespace DataAccess.Repositories
 {
     public interface IUserRepository
     {
-        Task<int> UpdateUser(UserInfoModel model, Guid userID);
+        Task UpdateUser(UserInfoModel model, Guid userID);
         void CheckForAdmin();
         void CreateUser(UserRegisterModel model);
-        User GetUserByEmail(string? email);
+        User GetUserByEmail(string email);
         User LoginUser(UserLoginModel userLogin);
-
         void AddProductToCart(string email, Product product);
     }
 }

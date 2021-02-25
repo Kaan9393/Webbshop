@@ -15,28 +15,21 @@ namespace Kladbutiken.Pages.ProductCrud
     public class CreateModel : PageModel
     {
         private readonly IProductRepository _productrepository;
-        private readonly IMainContext IMainContext;
         private readonly ICategoryRepository _categoryRepository;
-
-        //private readonly DataAccess.Data.MainContext _Context;
 
         public List<SelectListItem> Categories { get; set; } = new();
 
         [BindProperty]
-        public ProductAddModel Product { get; set; }//gör en product model
+        public ProductAddModel Product { get; set; }
 
         [BindProperty]
         public Guid CategoryId { get; set; }
-        public CreateModel(IProductRepository productrepository, IMainContext mainContext,ICategoryRepository categoryRepository)
+
+        public CreateModel(IProductRepository productrepository, ICategoryRepository categoryRepository)
         {
             _productrepository = productrepository;
-             IMainContext = mainContext;
             _categoryRepository= categoryRepository;
         }
-        //public CreateModel(DataAccess.Data.MainContext context)
-        //{
-        //    _context = context;
-        //}
 
         public IActionResult OnGet()
         {
@@ -52,21 +45,12 @@ namespace Kladbutiken.Pages.ProductCrud
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            //var selectedCategory = IMainContext.Categories.Single(c => c.ID == CategoryId);
-            //Product.Date = DateTime.Now;
-            //Product.Sales = 0;
-            //Product.Category = selectedCategory;
-            //selectedCategory.Products.Add(Product);
-
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            //_context.Products.Add(Product);
-            await _productrepository.AddProduct(Product,CategoryId/*)selectedCategory*/);
-            //await _context.SaveChangesAsync();
+            await _productrepository.AddProduct(Product,CategoryId);
 
             return RedirectToPage("./Index");
         }

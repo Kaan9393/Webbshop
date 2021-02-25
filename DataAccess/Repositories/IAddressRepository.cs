@@ -6,7 +6,7 @@ namespace DataAccess.Repositories
 {
     public interface IAddressRepository
     {
-        Address GetAddressByeID(Guid AddressID);
+        Address GetAddressByID(Guid AddressID);
         void UpdateAddress(Address updatedAddress, Guid AddressID);
         void DeleteAddress(Guid AddressID);
         void AddAddress(AddressModel model, User user);

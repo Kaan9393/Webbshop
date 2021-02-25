@@ -15,17 +15,19 @@ namespace Kladbutiken.Pages
         private readonly IUserRepository _userRepository;
         private readonly IAddressRepository _addressRepository;
 
+        [BindProperty]
+        public UserInfoModel CustomerInfo { get; set; } = new UserInfoModel();
+
+        [BindProperty]
+        public Guid ID { get; set; }
+
+        public User LoggedInAs { get; set; }
+
         public EditModel(IUserRepository userRepository, IAddressRepository addressRepository)
         {
             _userRepository = userRepository;
             _addressRepository = addressRepository;
         }
-        [BindProperty]
-        public UserInfoModel CustomerInfo { get; set; } = new UserInfoModel();
-        [BindProperty]
-        public Guid ID { get; set; }
-
-        public User LoggedInAs { get; set; }
 
         public void OnGet()
         {
@@ -41,14 +43,17 @@ namespace Kladbutiken.Pages
                 LoggedInAs.EmailAddress = user.EmailAddress;
             }
         }
-        public async Task<IActionResult> OnPostAsync()
+
+        public IActionResult OnPost()
         {
-            
             _addressRepository.DeleteAddress(ID);
-
             return RedirectToPage("/Customer/Profile");
+        }
 
-
+        public IActionResult OnPostPersonupdate()
+        {
+            _userRepository.UpdateUser(CustomerInfo, ID);
+            return RedirectToPage("/Customer/Profile");
         }
     }
 }

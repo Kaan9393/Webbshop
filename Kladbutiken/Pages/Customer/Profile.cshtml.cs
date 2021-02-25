@@ -14,33 +14,23 @@ namespace Kladbutiken.Pages
     {
         private readonly IUserRepository _userRepository;
 
+        [BindProperty]
+        public UserInfoModel CustomerInfo { get; set; } = new UserInfoModel();
+
+        public User LoggedInAs { get; set; }
+
         public ProfileModel(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
-        [BindProperty]
-        public UserInfoModel CustomerInfo { get; set; } = new UserInfoModel();
-
-        //public User UserInfo { get; set; }
-        public User LoggedInAs { get; set; }
 
         public void OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
-
-            if (user == null)
+            if (userDetailsCookie != null)
             {
-                LoggedInAs = new User();
-                LoggedInAs.EmailAddress = "Guest";
-            }
-            else
-            {
-                LoggedInAs.EmailAddress = user.EmailAddress;
+                LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
             }
         }
-
-        
     }
 }

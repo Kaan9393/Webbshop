@@ -10,16 +10,16 @@ namespace DataAccess.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly IMainContext _mainContext;
+        private readonly IMainContext _context;
 
-        public CategoryRepository(IMainContext mainContext)
+        public CategoryRepository(IMainContext context)
         {
-            _mainContext = mainContext;
+            _context = context;
         }
 
         public IEnumerable<Category> GetAllCategorys()
         {
-            return _mainContext.Categories.AsEnumerable();
+            return _context.Categories.AsEnumerable();
         }
     }
 }

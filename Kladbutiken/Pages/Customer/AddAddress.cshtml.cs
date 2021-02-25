@@ -26,16 +26,15 @@ namespace Kladbutiken.Pages.Customer
         public void OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
+            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
         }
-        public void OnPost()
+        public IActionResult OnPost()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
+            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
 
             _addressRepository.AddAddress(Model, LoggedInAs);
+            return RedirectToPage("/Customer/Profile");
         }
     }
 }

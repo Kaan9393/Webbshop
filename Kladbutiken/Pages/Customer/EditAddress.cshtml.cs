@@ -14,23 +14,28 @@ namespace Kladbutiken.Pages.Customer
     {
         private readonly IAddressRepository _addressRepository;
 
+        [BindProperty(SupportsGet = true)]
+        public Guid ID { get; set; }
+
+        public Address Address { get; set; } = new Address();
+
+        [BindProperty]
+        public Address UpdatedAddress { get; set; } = new Address();
+
         public EditAddressModel(IAddressRepository addressRepository)
         {
             _addressRepository = addressRepository;
         }
-        [BindProperty(SupportsGet = true)]
-        public Guid ID { get; set; }
-        public Address Address { get; set; } = new Address();
-        [BindProperty]
-        public Address UpdatedAddress { get; set; } = new Address();
+
         public void OnGet()
         {
-            Address=_addressRepository.GetAddressByeID(ID);
+            Address=_addressRepository.GetAddressByID(ID);
         }
-        public void OnPost()
+
+        public IActionResult OnPost()
         {
-            //Metod i repository som våldtar Murcus i sjärten
             _addressRepository.UpdateAddress(UpdatedAddress, ID);
+            return RedirectToPage("/Customer/Profile");
         }
     }
 }

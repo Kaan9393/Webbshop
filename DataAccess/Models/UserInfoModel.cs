@@ -10,16 +10,15 @@ namespace DataAccess.Models
 {
     public class UserInfoModel
     {
-        public Guid UserID { get; set; }
-
-        [Required/*(*//*ErrorMessage = "This field is required.")*/]
+        [Required]
         public string FirstName { get; set; }
 
-        [Required/*(*//*ErrorMessage ="This field is required.")*/]
+        [Required]
         public string LastName { get; set; }
 
         [MaxLength(13, ErrorMessage = "Personnummer måste innehålla 12 siffror (YYYYMMDD-XXXX)"), MinLength(6)]
         public string SSN { get; set; }
+
         [Required]
         public string Email { get; set; }
 
@@ -27,7 +26,5 @@ namespace DataAccess.Models
         public string PhoneNumber { get; set; }
 
         public Address Address { get; set; } = new Address();
-
-
     }
 }
