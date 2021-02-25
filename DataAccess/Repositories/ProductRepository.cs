@@ -37,7 +37,7 @@ namespace DataAccess.Repositories
 
         public double GetPriceWithDiscount(double price, double discount)
         {
-            return price - (price * (discount / 100));
+            return Math.Round(price - (price * (discount / 100)), 0);
         }
 
         public async Task AddProduct(ProductAddModel productModel, Guid categoryID)

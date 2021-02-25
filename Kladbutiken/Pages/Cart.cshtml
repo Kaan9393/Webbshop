@@ -31,15 +31,19 @@
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             <h5>@product.ProductName</h5>
-                                            <p class="mb-3 text-muted text-uppercase small">Category: @product.Category.TypeName</p>
+                                            <p class="mb-3 text-muted text-uppercase small">Lager saldo: @product.StockBalance</p>
                                         </div>
                                         <div>
                                             <div class="def-number-input number-input safari_only mb-0 w-100">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                                        class="minus decrease"></button>
-                                                <input class="quantity" min="0" name="quantity" value="1" type="number">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                                        class="plus increase"></button>
+                                                <form asp-page-handler="remove" method="post">
+                                                    <button class="btn"><i class="fas fa-minus"></i></button>
+                                                    <input type="hidden" name="id" value="@product.ID" />
+                                                </form>
+                                                <input class="quantity" min="0" name="quantity" value="1" type="number" readonly>
+                                                <form asp-page-handler="add" method="post">
+                                                    <button class="btn"><i class="fas fa-plus"></i></button>
+                                                    <input type="hidden" name="id" value="@product.ID" />
+                                                </form>
                                             </div>
                                             <small id="passwordHelpBlock" class="form-text text-muted text-center">
                                                 (Note, 1 piece)
@@ -47,21 +51,20 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <a href="#!" type="button" class="card-link-secondary small text-uppercase mr-3">
-                                                <i class="fas fa-trash-alt mr-1"></i> Remove item
-                                            </a>
-                                            <a href="#!" type="button" class="card-link-secondary small text-uppercase">
-                                                <i class="fas fa-heart mr-1"></i> Move to wish list
-                                            </a>
-                                        </div>
-                                        <p class="mb-0"><span><strong id="summary">$17.99</strong></span></p>
+                                        <form asp-page-handler="remove" method="post">
+                                            <div>
+                                                <button class="card-link-secondary small text-uppercase mr-3">
+                                                    <i class="fas fa-trash-alt mr-1"></i> Ta bort från varukorg.
+                                                </button>
+                                                <input type="hidden" name="id" value="@product.ID" />
+                                            </div>
+                                        </form>
+                                        <p class="mb-0"><span><strong id="summary">@product.PriceWithDiscount :-</strong></span></p>
                                     </div>
                                 </div>
                             </div>
                     </div>
                     }
-
                     <p class="text-primary mb-0">
                         <i class="fas fa-info-circle mr-1"></i> Försena inte köpet, tillagda artiklar i din varukorg betyder inte att du bokar dem.
                     </p>
@@ -75,7 +78,7 @@
 
                     <h5 class="mb-4">Förväntad leveranstid</h5>
 
-                    <p class="mb-0">(@DateTime.Now.AddDays(3).ToShortDateString() - @DateTime.Now.AddDays(5).ToShortDateString())</p>
+                    <p class="mb-0">(@DateTime.Now.AddDays(3).ToShortDateString()) - (@DateTime.Now.AddDays(5).ToShortDateString())</p>
                 </div>
             </div>
             <!-- Card -->
@@ -120,11 +123,11 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                             <div>
                                 <strong>Totala summan</strong>
-                                <strong>
-                                    <p class="mb-0">(inklusive moms 25%)</p>
-                                </strong>
+                                <p class="mb-0">
+                                    <strong>(inklusive moms 25%)</strong>
+                                </p>
                             </div>
-                            <span><strong>@Model.TotalAmount</strong></span>
+                            <span><strong>@Model.TotalAmount :-</strong></span>
                         </li>
                     </ul>
 
@@ -133,7 +136,7 @@
                 </div>
             </div>
             <!-- Card -->
-            <!-- Card -->
+            <!-- Card DISCOUNT CODE -->
             @*<div class="mb-3">
                 <div class="pt-4">
 

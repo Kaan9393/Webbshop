@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entities
 {
@@ -10,6 +11,7 @@ namespace DataAccess.Entities
         public Guid ID { get; set; }
 
         [Required]
+        [JsonIgnore]
         public Category Category { get; set; }
 
         public string ProductName { get; set; }
