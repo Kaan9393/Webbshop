@@ -31,6 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/ContactUs">Kontakt</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/Profile">Profil</a>
+                        </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0 ml-auto">
                         <input class="form-control mr-sm-2" type="search" placeholder="Sök här. . ." aria-label="Search">
@@ -69,11 +72,11 @@
             <div>
                 @try 
 	            {	        
-                    <span class="m-0 text-left text-white">Logged in as: @Model.LoggedInAs</span>		
+                    <span class="m-0 text-left text-white">Logged in as: @Model.LoggedInAs.EmailAddress</span>		
 	            }
 	            catch (global::System.Exception)
 	            {
-
+                    //nånting 
 	            }
                 <span class="m-0 text-center text-white">Copyright &copy; Empty Hanger @DateTime.Now.Year</span>
             </div>   

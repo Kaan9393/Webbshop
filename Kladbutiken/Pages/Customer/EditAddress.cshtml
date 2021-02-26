@@ -1,0 +1,55 @@
+﻿@page
+@model Kladbutiken.Pages.Customer.EditAddressModel
+@{
+}
+<link href="~/css/CustomerStyle.css" rel="stylesheet">
+<div class="container">
+    <div class="view-account">
+        <section class="module">
+            <div class="module-inner">
+                <div class="content-panel">
+                    <h2 class="title">Redigera Adress</h2>
+                    <fieldset class="fieldset">
+                        <form method="post">
+                            <div class="form-group">
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Gatuadress</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input asp-for="UpdatedAddress.Street" class="form-control" value="@Model.Address.Street">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Postkod</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input asp-for="UpdatedAddress.PostalCode" class="form-control" value="@Model.Address.PostalCode">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Postort</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input asp-for="UpdatedAddress.State" class="form-control" value="@Model.Address.State">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Stad</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input asp-for="UpdatedAddress.City" class="form-control" value="@Model.Address.City">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Land</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input asp-for="UpdatedAddress.Country" class="form-control" value="@Model.Address.Country">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                                    <input class="btn btn-primary" type="submit" value="Spara">
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -20,7 +20,7 @@ namespace Kladbutiken.Pages
         public List<Product> AllProducts { get; set; }
         public List<Category> AllCategories { get; set; }
 
-        public string LoggedInAs { get; set; }
+        public User LoggedInAs { get; set; }
 
         [BindProperty(SupportsGet =true)]
         public string SelectedCategory { get; set; }
@@ -38,14 +38,15 @@ namespace Kladbutiken.Pages
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
             var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            if (user == null)
-            {
-                LoggedInAs = "Guest";
-            }
-            else
-            {
-                LoggedInAs = user.EmailAddress;
-            }
+            LoggedInAs = user;
+            //if (user == null)
+            //{
+            //    LoggedInAs.EmailAddress = "Guest";
+            //}
+            //else
+            //{
+            //    LoggedInAs.EmailAddress = user.EmailAddress;
+            //}
             _userRepository.CheckForAdmin();
             AllProducts = _productRepository.GetAllProducts().ToList();
             AllCategories = _categoryRepository.GetAllCategorys().ToList();

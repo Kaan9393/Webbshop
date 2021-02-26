@@ -12,7 +12,7 @@ namespace DataAccess.Repositories
         IEnumerable<Product> GetProductsByCategory(string category);
         Product GetProductById(Guid ID);
         double GetPriceWithDiscount(double price, double discount);
-        Task <int> AddProduct(ProductAddModel productModel, /*Category selectedCategory*/ Guid ID);
+        Task AddProduct(ProductAddModel productModel, Guid ID);
         IEnumerable<Category> GetAllCategorys();
     }
 }
