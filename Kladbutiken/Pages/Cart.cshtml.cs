@@ -25,6 +25,7 @@ namespace Kladbutiken.Pages
         public CartModel(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            CartList = new();
         }
         public IActionResult OnGet()
         {
@@ -41,6 +42,20 @@ namespace Kladbutiken.Pages
             if (cart != null)
             {
                 LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+            }
+
+            foreach (var product in LoggedInAs.ProductCart)
+            {
+                if (CartList.Any(c => c.Product.ID == product.ID))
+                {
+                    var cartItem = CartList.FirstOrDefault(c => c.Product.ID == product.ID);
+                    cartItem.Quantity += 1;
+                }
+                else
+                {
+                    var cartItem = new CartItemModel() { Product = product, Quantity = 1 };
+                    CartList.Add(cartItem);
+                }
             }
 
             foreach (var product in LoggedInAs.ProductCart)
