@@ -20,7 +20,8 @@ namespace Kladbutiken.Pages
             _productRepository = productRepository;
         }
 
-        public string LoggedInAs { get; set; }
+        public User LoggedInAs { get; set; }
+
         public IEnumerable<Product> AllProducts { get; set; }
 
         public IActionResult OnGet()
@@ -32,14 +33,13 @@ namespace Kladbutiken.Pages
                 return RedirectToPage("/login");
             }
 
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
+            LoggedInAs  = _userRepository.GetUserByEmail(userDetailsCookie);
 
-            if (user.Role != "Admin")
+            if (LoggedInAs.Role != "Admin")
             {
                 return RedirectToPage("/index");
             }
 
-            LoggedInAs = user.EmailAddress;
             AllProducts = _productRepository.GetAllProducts();
 
             return Page();

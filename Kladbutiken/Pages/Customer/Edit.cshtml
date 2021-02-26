@@ -85,34 +85,34 @@
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Gatuadress</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input asp-for="CustomerInfo.Address.Street" class="form-control" value="@address.Street">
+                                    <input asp-for="CustomerInfo.Address.Street" class="form-control" value="@address.Street" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Postkod</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input asp-for="CustomerInfo.Address.PostalCode" class="form-control" value="@address.PostalCode">
+                                    <input asp-for="CustomerInfo.Address.PostalCode" class="form-control" value="@address.PostalCode" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Postort</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input asp-for="CustomerInfo.Address.State" class="form-control" value="@address.State">
+                                    <input asp-for="CustomerInfo.Address.State" class="form-control" value="@address.State" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Stad</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input asp-for="CustomerInfo.Address.City" class="form-control" value="@address.City">
+                                    <input asp-for="CustomerInfo.Address.City" class="form-control" value="@address.City" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Land</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input asp-for="CustomerInfo.Address.Country" class="form-control" value="@address.Country">
+                                    <input asp-for="CustomerInfo.Address.Country" class="form-control" value="@address.Country" readonly>
                                 </div>
                             </div>
-                            <a href="./EditAddress?ID=@address.ID">Ändra</a>
+                            <a href="./EditAddress?ID=@address.ID"><button class="btn btn-primary">Ändra</button></a>
                             <form method="post">
                                 <button class="btn btn-danger">Ta bort</button>
                                 <input asp-for="ID" type="hidden" value="@address.ID">
