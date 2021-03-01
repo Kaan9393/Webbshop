@@ -47,6 +47,7 @@ namespace Kladbutiken.Pages
         public IActionResult OnPost()
         {
             _addressRepository.DeleteAddress(ID);
+
             return RedirectToPage("/Customer/Profile");
         }
 
@@ -54,6 +55,12 @@ namespace Kladbutiken.Pages
         {
             _userRepository.UpdateUser(CustomerInfo, ID);
             return RedirectToPage("/Customer/Profile");
+        }
+        public IActionResult OnPostDeleteUser()
+        {
+            Response.Cookies.Delete("UserDetails");
+            _userRepository.DeleteUser(ID);
+            return RedirectToPage("/Index");
         }
     }
 }
