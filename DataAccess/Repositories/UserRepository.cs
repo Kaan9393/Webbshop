@@ -35,7 +35,7 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public async Task UpdateUser(UserInfoModel model, Guid userID)
+        public void UpdateUser(UserInfoModel model, Guid userID)
         {
             var userToUpdate = _context.Users.Single(u => u.ID == userID);
             userToUpdate.FirstName = model.FirstName;
@@ -43,15 +43,7 @@ namespace DataAccess.Repositories
             userToUpdate.EmailAddress = model.Email;
             userToUpdate.PhoneNumber = model.PhoneNumber;
 
-            //Koppla address till user
-            /*model.Address.User = userToUpdate;
-            //Om Adressen inte finns skapa en ny
-            if (!_context.Users.Any(a=>a.Addresses.Any(a=>a.Street==model.Address.Street)))
-            {
-                _context.Addresses.Add(model.Address);
-                userToUpdate.Addresses.Add(model.Address);
-            }*/
-            await _context.SaveChangesAsync(new CancellationToken());
+            _context.SaveChanges();
         }
 
         public User LoginUser(UserLoginModel userLogin)
