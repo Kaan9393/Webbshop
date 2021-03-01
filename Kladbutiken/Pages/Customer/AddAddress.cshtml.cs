@@ -15,14 +15,17 @@ namespace Kladbutiken.Pages.Customer
         private readonly IUserRepository _userRepository;
         private readonly IAddressRepository _addressRepository;
 
+
         public AddAddressModel(IUserRepository userRepository, IAddressRepository addressRepository)
         {
             _userRepository = userRepository;
             _addressRepository = addressRepository;
         }
         public User LoggedInAs { get; set; }
+
         [BindProperty]
         public AddressModel Model { get; set; } = new AddressModel();
+
         public void OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
