@@ -51,9 +51,9 @@ namespace Kladbutiken.Pages
             return RedirectToPage("/Customer/Profile");
         }
 
-        public IActionResult OnPostPersonupdate()
+        public async Task< IActionResult > OnPostPersonupdate()
         {
-            _userRepository.UpdateUser(CustomerInfo, ID);
+            await _userRepository.UpdateUser(CustomerInfo, ID);
             return RedirectToPage("/Customer/Profile");
         }
         public IActionResult OnPostDeleteUser()

@@ -7,7 +7,7 @@ namespace DataAccess.Repositories
 {
     public interface IUserRepository
     {
-        void UpdateUser(UserInfoModel model, Guid userID);
+        Task<int> UpdateUser(UserInfoModel model, Guid userID);
         void CheckForAdmin();
         void CreateUser(UserRegisterModel model);
         User GetUserByEmail(string email);
