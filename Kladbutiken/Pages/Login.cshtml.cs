@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataAccess.Models;
 using DataAccess.Repositories;
+using DataAccess.Entities;
 
 namespace Kladbutiken.Pages
 {
     public class LoginModel : PageModel
     {
         private readonly IUserRepository _userRepository;
+        public User LoggedInAs { get; set; }
 
         public LoginModel(IUserRepository userRepository)
         {

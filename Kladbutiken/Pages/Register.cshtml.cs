@@ -1,3 +1,4 @@
+using DataAccess.Entities;
 using DataAccess.Models;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,8 @@ namespace Kladbutiken.Pages
     public class RegisterModel : PageModel
     {
         private readonly IUserRepository _userRepository;
+
+        public User LoggedInAs { get; set; }
 
         public RegisterModel(IUserRepository userRepository)
         {

@@ -31,9 +31,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/ContactUs">Kontakt</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Customer/Profile">Profil</a>
-                        </li>
+                        @if (Model.LoggedInAs != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Customer/Profile">Profil</a>
+                            </li>
+                        }
                     </ul>
                     <form class="form-inline my-2 my-lg-0 ml-auto">
                         <input class="form-control mr-sm-2" type="search" placeholder="Sök här. . ." aria-label="Search">
