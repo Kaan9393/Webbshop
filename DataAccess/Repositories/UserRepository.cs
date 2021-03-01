@@ -45,6 +45,12 @@ namespace DataAccess.Repositories
 
             _context.SaveChanges();
         }
+        public void DeleteUser(Guid userID)
+        {
+            var userToDelete= _context.Users.Include(u=>u.Addresses).Single(u => u.ID == userID);
+            _context.Users.Remove(userToDelete);
+            _context.SaveChanges();
+        }
 
         public User LoginUser(UserLoginModel userLogin)
         {
@@ -75,5 +81,6 @@ namespace DataAccess.Repositories
                 _context.SaveChanges();
             }
         }
+
     }
 }
