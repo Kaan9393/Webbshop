@@ -79,7 +79,37 @@
                     </fieldset>
                     <br />
                     <fieldset class="fieldset">
-                        
+                        <h3 class="fieldset-title">Byt Lösenord</h3>
+                        <form asp-page-handler="ChangePassword" method="post">
+                            <div class="form-group">
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Nuvarande lösenord</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input asp-for="PasswordModel.CurrentPassword" type="password" class="form-control">
+                                    <span class="text-danger" asp-validation-for="PasswordModel.CurrentPassword"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Nytt lösenord</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input asp-for="PasswordModel.NewPassword" type="password" class="form-control">
+                                    <span class="text-danger" asp-validation-for="PasswordModel.NewPassword"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Repetera lösenord</label>
+                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                    <input asp-for="PasswordModel.ConfirmPassword" type="password" class="form-control">
+                                    <span class="text-danger" asp-validation-for="PasswordModel.ConfirmPassword"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                                <button class="btn btn-primary">Spara</button>
+                                <input asp-for="ID" type="hidden" value="@Model.LoggedInAs.ID">
+                            </div>
+                        </form>
+                    </fieldset>
+                    <br />
+                    <fieldset class="fieldset">
                         <h3 class="fieldset-title">Adresser<span style="float: right; padding-right:155px;"><a href="./AddAddress">Lägg till adress</a></span></h3>
                         @foreach (var address in Model.LoggedInAs.Addresses)
                         {
@@ -113,7 +143,7 @@
                                     <input asp-for="CustomerInfo.Address.Country" class="form-control" value="@address.Country" readonly>
                                 </div>
                             </div>
-                            <a href="./EditAddress?ID=@address.ID"><button class="btn btn-primary">Ändra</button></a>
+                            <a class="btn btn-primary" href="./EditAddress?ID=@address.ID">Ändra</a>
                             <form method="post">
                                 <button class="btn btn-danger">Ta bort</button>
                                 <input asp-for="ID" type="hidden" value="@address.ID">
