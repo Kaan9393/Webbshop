@@ -13,5 +13,6 @@ namespace DataAccess.Repositories
         User GetUserByEmail(string email);
         User LoginUser(UserLoginModel userLogin);
         void DeleteUser(Guid userID);
+        void UpdatePassword(Guid userId, string newPassword);
     }
 }

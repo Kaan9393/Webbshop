@@ -7,6 +7,7 @@ using DataAccess.Models;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Kladbutiken.Pages
 {
@@ -16,7 +17,10 @@ namespace Kladbutiken.Pages
         private readonly IAddressRepository _addressRepository;
 
         [BindProperty]
-        public UserInfoModel CustomerInfo { get; set; } = new UserInfoModel();
+        public UserInfoModel CustomerInfo { get; set; } = new();
+
+        [BindProperty]
+        public ChangePasswordModel PasswordModel { get; set; } = new();
 
         [BindProperty]
         public Guid ID { get; set; }
@@ -32,16 +36,7 @@ namespace Kladbutiken.Pages
         public void OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
-            if (user == null)
-            {
-                LoggedInAs.EmailAddress = "Guest";
-            }
-            else
-            {
-                LoggedInAs.EmailAddress = user.EmailAddress;
-            }
+            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
         }
 
         public IActionResult OnPost()
@@ -56,11 +51,51 @@ namespace Kladbutiken.Pages
             _userRepository.UpdateUser(CustomerInfo, ID);
             return RedirectToPage("/Customer/Profile");
         }
+
         public IActionResult OnPostDeleteUser()
         {
             Response.Cookies.Delete("UserDetails");
             _userRepository.DeleteUser(ID);
             return RedirectToPage("/Index");
+        }
+
+        public IActionResult OnPostChangePassword()
+        {
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+            if (userDetailsCookie is null)
+            {
+                Forbid();
+            }
+
+            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+
+            var isPasswordModelValid = true;
+            var modelStateKeys = ModelState.FindKeysWithPrefix("PasswordModel");
+            foreach (var key in modelStateKeys)
+            {
+                if (key.Key.Contains("CurrentPassword"))
+                {
+                    if (PasswordModel.CurrentPassword != LoggedInAs.Password)
+                    {
+                        key.Value.ValidationState = ModelValidationState.Invalid;
+                        key.Value.Errors.Add("Fel lösenord!");
+                    }
+                }
+                if (key.Value.ValidationState == ModelValidationState.Invalid)
+                {
+                    isPasswordModelValid = false;
+                }
+            }
+
+            if (isPasswordModelValid)
+            {
+                _userRepository.UpdatePassword(ID, PasswordModel.NewPassword);
+                return RedirectToPage("/Customer/Profile");
+            }
+            else
+            {
+                return Page();
+            }
         }
     }
 }

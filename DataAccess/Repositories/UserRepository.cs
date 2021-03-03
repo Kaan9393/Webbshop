@@ -35,6 +35,13 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
+        public void UpdatePassword(Guid userId, string newPassword)
+        {
+            var user = _context.Users.Single(u => u.ID == userId);
+            user.Password = newPassword;
+            _context.SaveChanges();
+        }
+
         public void UpdateUser(UserInfoModel model, Guid userID)
         {
             var userToUpdate = _context.Users.Single(u => u.ID == userID);
