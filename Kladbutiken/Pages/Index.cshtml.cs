@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using DataAccess.Repositories;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace Kladbutiken.Pages
 {
@@ -37,16 +39,17 @@ namespace Kladbutiken.Pages
         public void OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
-            //if (user == null)
-            //{
-            //    LoggedInAs.EmailAddress = "Guest";
-            //}
-            //else
-            //{
-            //    LoggedInAs.EmailAddress = user.EmailAddress;
-            //}
+            if (userDetailsCookie != null)
+            {
+                LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+
+                var cart = HttpContext.Session.GetString("cart");
+                if (cart != null)
+                {
+                    LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                }
+            }
+
             _userRepository.CheckForAdmin();
             AllProducts = _productRepository.GetAllProducts().ToList();
             AllCategories = _categoryRepository.GetAllCategorys().ToList();

@@ -36,6 +36,18 @@ namespace Kladbutiken.Pages
         }
         public IActionResult OnGet()
         {
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+            if (userDetailsCookie != null)
+            {
+                LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+
+                var cart = HttpContext.Session.GetString("cart");
+                if (cart != null)
+                {
+                    LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                }
+            }
+
             Product = _productRepository.GetProductById(SelectedProduct);
             AllCategories = _categoryRepository.GetAllCategorys().ToList();
 
@@ -44,7 +56,6 @@ namespace Kladbutiken.Pages
             foreach (var matchedProduct in MatchingProducts)
             {
                 matchedProduct.PriceWithDiscount = _productRepository.GetPriceWithDiscount(matchedProduct.Price,matchedProduct.Discount);
-
             }
 
             Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
