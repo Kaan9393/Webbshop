@@ -16,7 +16,7 @@
                                 @*<label class="label label-info">KUNDNUMMER?</label>*@
                             </li>
                             <li class="Användarnamn"><a href="#">@Model.LoggedInAs.EmailAddress</a></li>
-                            <li class="activity">Senast inloggad: @DateTime.Now.ToShortDateString()</li>
+                            <li class="activity">Medlem sedan: @Model.LoggedInAs.RegisterDate.ToShortDateString()</li>
                         </ul>
                     </div>
                     <nav class="side-menu">
@@ -82,21 +82,21 @@
                         <h3 class="fieldset-title">Byt Lösenord</h3>
                         <form asp-page-handler="ChangePassword" method="post">
                             <div class="form-group">
-                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Nuvarande lösenord</label>
+                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Nuvarande lösenord</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <input asp-for="PasswordModel.CurrentPassword" type="password" class="form-control">
                                     <span class="text-danger" asp-validation-for="PasswordModel.CurrentPassword"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Nytt lösenord</label>
+                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Nytt lösenord</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <input asp-for="PasswordModel.NewPassword" type="password" class="form-control">
                                     <span class="text-danger" asp-validation-for="PasswordModel.NewPassword"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Repetera lösenord</label>
+                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Upprepa lösenord</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <input asp-for="PasswordModel.ConfirmPassword" type="password" class="form-control">
                                     <span class="text-danger" asp-validation-for="PasswordModel.ConfirmPassword"></span>

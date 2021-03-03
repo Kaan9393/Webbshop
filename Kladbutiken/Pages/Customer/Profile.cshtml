@@ -18,7 +18,7 @@
                                     @*<label class="label label-info">KUNDNUMMER?</label>*@
                                 </li>
                                 <li class="Användarnamn"><a href="#">@Model.LoggedInAs.EmailAddress</a></li>
-                                <li class="activity">Senast inloggad: @DateTime.Now.ToShortDateString()</li>
+                                <li class="activity">Medlem sedan: @Model.LoggedInAs.RegisterDate.ToShortDateString()</li>
                             </ul>
                         </div>
                         <nav class="side-menu">
