@@ -1,9 +1,11 @@
 ﻿using DataAccess.Entities;
+using DataAccess.Models;
+using System.Collections.Generic;
 
 namespace DataAccess.Repositories
 {
     public interface IOrderRepository
     {
-        void CreateOrder(Order order);
+        void CreateOrder(OrderModel order);
     }
 }

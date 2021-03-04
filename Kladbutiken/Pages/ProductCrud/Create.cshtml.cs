@@ -16,6 +16,17 @@ namespace Kladbutiken.Pages.ProductCrud
     {
         private readonly IProductRepository _productrepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IUserRepository _userRepository;
+
+        public CreateModel(IProductRepository productrepository, ICategoryRepository categoryRepository, IUserRepository userRepository)
+        {
+            _productrepository = productrepository;
+            _categoryRepository= categoryRepository;
+            _userRepository = userRepository;
+        }
+
+        public User LoggedInAs { get; set; }
+
 
         public List<SelectListItem> Categories { get; set; } = new();
 
@@ -25,14 +36,14 @@ namespace Kladbutiken.Pages.ProductCrud
         [BindProperty]
         public Guid CategoryId { get; set; }
 
-        public CreateModel(IProductRepository productrepository, ICategoryRepository categoryRepository)
-        {
-            _productrepository = productrepository;
-            _categoryRepository= categoryRepository;
-        }
 
         public IActionResult OnGet()
         {
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+            var user = _userRepository.GetUserByEmail(userDetailsCookie);
+            LoggedInAs = user;
+            LoggedInAs.EmailAddress = user.EmailAddress;
+
             var categories =_productrepository.GetAllCategorys().ToList();  
             foreach (var category in categories)
             {

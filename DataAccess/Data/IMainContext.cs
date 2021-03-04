@@ -1,5 +1,7 @@
 ﻿using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +16,7 @@ namespace DataAccess.Data
         DbSet<User> Users { get; set; }
         int SaveChanges();
         Task <int> SaveChangesAsync(CancellationToken token);
+        void AddRange([NotNullAttribute] IEnumerable<object> entities);
 
     }
 }

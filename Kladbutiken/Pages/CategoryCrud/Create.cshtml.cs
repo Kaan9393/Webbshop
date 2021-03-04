@@ -7,20 +7,29 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DataAccess.Data;
 using DataAccess.Entities;
+using DataAccess.Repositories;
 
 namespace Kladbutiken.Pages.CategoryCrud
 {
     public class CreateModel : PageModel
     {
         private readonly DataAccess.Data.MainContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public CreateModel(DataAccess.Data.MainContext context)
+        public CreateModel(DataAccess.Data.MainContext context, IUserRepository userRepository)
         {
             _context = context;
+            _userRepository = userRepository;
         }
+        public User LoggedInAs { get; set; }
 
         public IActionResult OnGet()
         {
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+            var user = _userRepository.GetUserByEmail(userDetailsCookie);
+            LoggedInAs = user;
+            LoggedInAs.EmailAddress = user.EmailAddress;
+
             return Page();
         }
 

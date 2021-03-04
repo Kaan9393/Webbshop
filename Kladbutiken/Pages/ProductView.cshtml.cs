@@ -44,7 +44,7 @@ namespace Kladbutiken.Pages
                 var cart = HttpContext.Session.GetString("cart");
                 if (cart != null)
                 {
-                    LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                    LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
                 }
             }
 
@@ -87,14 +87,20 @@ namespace Kladbutiken.Pages
                 var cart = HttpContext.Session.GetString("cart");
                 if (cart != null)
                 {
-                    LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                    LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
                     LoggedInAs.ProductCart.Add(Product);
-                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
+                    List<Guid> productIds = new();
+                    foreach (var product in LoggedInAs.ProductCart)
+                    {
+                        productIds.Add(product.ID);
+                    }
+                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
                 }
                 else
                 {
-                    LoggedInAs.ProductCart.Add(Product);
-                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
+                    List<Guid> productIds = new();
+                    productIds.Add(Product.ID);
+                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
                 }
             }
             else

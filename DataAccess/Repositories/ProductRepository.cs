@@ -35,6 +35,17 @@ namespace DataAccess.Repositories
             return _context.Products.Include(p => p.Category).Single(p => p.ID == ID);
         }
 
+        public List<Product> GetProductsByList(List<Guid> guids)
+        {
+            List<Product> products = new();
+            foreach (var item in guids)
+            {
+                var product =_context.Products.Single(p => p.ID == item);
+                products.Add(product);
+            }
+            return products;
+        }
+
         public double GetPriceWithDiscount(double price, double discount)
         {
             return Math.Round(price - (price * (discount / 100)), 0);
@@ -47,8 +58,11 @@ namespace DataAccess.Repositories
             var p = new Product();
             {
                 p.ProductName = productModel.ProductName;
+                p.URLImg = productModel.URLImg;
                 p.Description = productModel.Description;
+                p.StockBalance = productModel.StockBalance;
                 p.Price = productModel.Price;
+                p.Discount = productModel.Discount;
                 p.Date=DateTime.Now;
                 p.Sales= 0;
                 p.Category = selectedCategory;
