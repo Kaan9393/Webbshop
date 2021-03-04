@@ -13,7 +13,7 @@ namespace DataAccess.Entities
         [Required]
         [JsonIgnore]
         public Category Category { get; set; }
-
+        public List<Order> Orders { get; set; }
         public string ProductName { get; set; }
 
         public string URLImg { get; set; }
