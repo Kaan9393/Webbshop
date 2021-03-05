@@ -14,9 +14,9 @@ namespace DataAccess.Data
         DbSet<Order> Orders { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<CartItem> CartItem { get; set; }
         int SaveChanges();
-        Task <int> SaveChangesAsync(CancellationToken token);
-        void AddRange([NotNullAttribute] IEnumerable<object> entities);
-
+        Task<int> SaveChangesAsync(CancellationToken token);
+        void AddRange([NotNull] IEnumerable<object> entities);
     }
 }

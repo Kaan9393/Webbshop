@@ -53,12 +53,13 @@ namespace Kladbutiken.Pages
 
 
             MatchingProducts = _productRepository.GetProductsByCategory(Product.Category.TypeName).ToList();
-            foreach (var matchedProduct in MatchingProducts)
+
+            /*foreach (var matchedProduct in MatchingProducts)
             {
-                matchedProduct.PriceWithDiscount = _productRepository.GetPriceWithDiscount(matchedProduct.Price,matchedProduct.Discount);
+                matchedProduct.PriceWithDiscount = _productRepository.GetPriceWithDiscount(matchedProduct.Price, matchedProduct.Discount);
             }
 
-            Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
+            Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);*/
 
             return Page();
         }
@@ -77,12 +78,12 @@ namespace Kladbutiken.Pages
                 Product = _productRepository.GetProductById(id);
 
                 MatchingProducts = _productRepository.GetProductsByCategory(Product.Category.TypeName).ToList();
-                foreach (var matchedProduct in MatchingProducts)
+                /*foreach (var matchedProduct in MatchingProducts)
                 {
                     matchedProduct.PriceWithDiscount = _productRepository.GetPriceWithDiscount(matchedProduct.Price, matchedProduct.Discount);
                 }
 
-                Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
+                Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);*/
 
                 var cart = HttpContext.Session.GetString("cart");
                 if (cart != null)

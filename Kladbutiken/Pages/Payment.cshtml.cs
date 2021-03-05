@@ -15,19 +15,24 @@ namespace Kladbutiken.Pages
     public class PaymentModel : PageModel
     {
         public User LoggedInAs { get; set; }
-        public OrderModel Order { get; set; } = new();
+
+        public OrderModel OrderModel { get; set; } = new();
+
+        public Order Order { get; set; }
 
         private readonly IUserRepository _userRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
+        private readonly ICartItemRepository _cartItemRepository;
 
-        public PaymentModel(IUserRepository userRepository, IOrderRepository orderRepository, IProductRepository productRepository )
+        public PaymentModel(IUserRepository userRepository, IOrderRepository orderRepository, IProductRepository productRepository, ICartItemRepository cartItemRepository)
         {
             _userRepository = userRepository;
             _orderRepository = orderRepository;
             _productRepository = productRepository;
+            _cartItemRepository = cartItemRepository;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
             if (userDetailsCookie != null)
@@ -37,25 +42,27 @@ namespace Kladbutiken.Pages
                 if (cart != null)
                 {
                     LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
-                    //Order.ProductList = LoggedInAs.ProductCart;
-                    Order.User = LoggedInAs;
+                    OrderModel.User = LoggedInAs;
                     foreach (var product in LoggedInAs.ProductCart)
                     {
-                        if (Order.ProductList.Any(c => c.Product.ID == product.ID))
+                        if (OrderModel.ProductList.Any(c => c.Product.ID == product.ID))
                         {
-                            var cartItem = Order.ProductList.FirstOrDefault(c => c.Product.ID == product.ID);
+                            var cartItem = OrderModel.ProductList.FirstOrDefault(c => c.Product.ID == product.ID);
                             cartItem.Quantity += 1;
                         }
                         else
                         {
                             var cartItem = new CartItemModel() { Product = product, Quantity = 1 };
-                            Order.ProductList.Add(cartItem);
+                            OrderModel.ProductList.Add(cartItem);
                         }
                     }
-                    _orderRepository.CreateOrder(Order);
+                    Order = _orderRepository.CreateOrder(OrderModel);
+                    _cartItemRepository.CreateCartItem(OrderModel.ProductList, Order);
+
+                    HttpContext.Session.Remove("cart");
                 }
             }
-            
+            return Page();
         }
     }
 }

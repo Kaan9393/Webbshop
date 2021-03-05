@@ -40,7 +40,7 @@ namespace DataAccess.Repositories
             List<Product> products = new();
             foreach (var item in guids)
             {
-                var product =_context.Products.Single(p => p.ID == item);
+                var product =_context.Products.FirstOrDefault(p => p.ID == item);
                 products.Add(product);
             }
             return products;
@@ -55,17 +55,18 @@ namespace DataAccess.Repositories
         {
             var selectedCategory = _context.Categories.Single(c => c.ID == categoryID);
 
-            var p = new Product();
+            var p = new Product()
             {
-                p.ProductName = productModel.ProductName;
-                p.URLImg = productModel.URLImg;
-                p.Description = productModel.Description;
-                p.StockBalance = productModel.StockBalance;
-                p.Price = productModel.Price;
-                p.Discount = productModel.Discount;
-                p.Date=DateTime.Now;
-                p.Sales= 0;
-                p.Category = selectedCategory;
+                ID = Guid.NewGuid(),
+                ProductName = productModel.ProductName,
+                URLImg = productModel.URLImg,
+                Description = productModel.Description,
+                StockBalance = productModel.StockBalance,
+                Price = productModel.Price,
+                Discount = productModel.Discount,
+                Date = DateTime.Now,
+                Sales = 0,
+                Category = selectedCategory
             };
             _context.Products.Add(p);
             selectedCategory.Products.Add(p);

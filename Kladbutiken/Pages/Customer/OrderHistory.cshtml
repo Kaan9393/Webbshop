@@ -42,13 +42,15 @@
                                     else
                                         foreach (var order in Model.LoggedInAs.Orders)
                                         {
-                                            <p>@order.OrderDate</p>
-                                            <p>@order.Status</p>
-                                            foreach (var product in order.ProductList)
+                                            <h4>Order: @order.ID</h4>
+                                            <p>Datum: @order.OrderDate</p>
+                                            <p>Status: @order.Status</p>
+                                            foreach (var cartItem in order.ProductList)
                                             {
-                                                <p>@product.Product.ProductName</p>
+                                                <p>Produkt: @cartItem.Product.ProductName</p>
+                                                <p>Antal: @cartItem.Quantity</p>
                                             }
-                                    }
+                                        }
                                     <div class="col-md-10 col-sm-9 col-xs-12">
                                     </div>
                                 </div>

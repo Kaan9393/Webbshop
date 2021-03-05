@@ -8,12 +8,12 @@ namespace DataAccess.Entities
 {
     public class CartItem
     {
+
         public Guid ID { get; set; }
+
         public Product Product { get; set; }
+
         public int Quantity { get; set; }
-        public CartItem()
-        {
-            //ID = new Guid();
-        }
+
     }
 }

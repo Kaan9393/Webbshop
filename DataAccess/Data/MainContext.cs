@@ -10,30 +10,22 @@ namespace DataAccess.Data
 
     public class MainContext : DbContext, IMainContext
     {
-        /*private string ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=webbshop;Trusted_Connection=True;";*/
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<CartItem> CartItem { get; set; }
 
 
         public MainContext(DbContextOptions<MainContext> options) : base(options)
         {
-            /*var builder = new ConfigurationBuilder();
-            builder.AddJsonFile("appsettings.json", optional: false);
-            var configuration = builder.Build();
-            //ConnectionString = configuration.GetConnectionString("Default");*/
         }
-
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(ConnectionString);
-        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasIndex(x => x.EmailAddress).IsUnique();
+            modelBuilder.Entity<Order>().HasMany(o => o.ProductList).WithOne();
         }
 
     }

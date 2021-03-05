@@ -39,7 +39,7 @@ namespace Kladbutiken
             services.AddScoped<DataAccess.Repositories.ICategoryRepository, DataAccess.Repositories.CategoryRepository>();
             services.AddScoped<DataAccess.Repositories.IAddressRepository, DataAccess.Repositories.AddressRepository>();
             services.AddScoped<DataAccess.Repositories.IOrderRepository, DataAccess.Repositories.OrderRepository>();
-
+            services.AddScoped<DataAccess.Repositories.ICartItemRepository, DataAccess.Repositories.CartItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
