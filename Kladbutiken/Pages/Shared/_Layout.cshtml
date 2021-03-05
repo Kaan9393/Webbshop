@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     <link href="css/shop-homepage.css" rel="stylesheet">
-    <style>a.dropdown-item:hover{background-color: darkgray}</style>
+    <style>a.dropdown-item:hover{background-color: dimgray}
+        body.font-family{font-family:sans-serif;}
+    </style>
 </head>
-<body>
+<body class="font-family">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
@@ -64,8 +66,8 @@
                                         <i class="far fa-user"></i>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #343a40 !important">
-                                         <a class="dropdown-item" href="/Customer/Profile" style="color: white"><b>Min sida</b></a>
-                                         <a class="dropdown-item" href="/LogOut" style="color: white"><b>Logga ut @Model.LoggedInAs.FirstName</b></a>
+                                         <a class="dropdown-item" href="/Customer/Profile" style="color: azure"><b>Min sida</b></a>
+                                         <a class="dropdown-item" href="/LogOut" style="color: azure"><b>Logga ut @Model.LoggedInAs.FirstName</b></a>
                                     </div>
                                 </div>
 

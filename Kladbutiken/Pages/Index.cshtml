@@ -3,6 +3,13 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<style>
+    a.list-group-item:hover {
+        background-color: dimgray !important; /*color:darkgray !important;*/ font-weight:800; text-decoration:none !important;
+    }
+    a.list-group-item{margin-bottom:4px;}
+</style>
+
 
 <div class="container">
 
@@ -10,15 +17,19 @@
 
         <div class="col-lg-3">
 
-            <h2 class="my-4">Kategorier</h2>
-            @foreach (var category in Model.AllCategories)
-            {
-                <div class="list-group">
-                    <a href="?SelectedCategory=@category.TypeName" class="list-group-item">@category.TypeName</a>
+            <h2 class="my-4" style="text-align:center">Kategorier</h2>
+            <div class="list-group">
+                @if (Model.SelectedCategory != null)
+                {
+                    <a class="list-group-item"  href="/" style="background-color: #343a40; border: none !important; color: azure;">Alla varor</a>
+                }
+                @foreach (var category in Model.AllCategories)
+                {
+                    <a class="list-group-item" href="?SelectedCategory=@category.TypeName" style="background-color: #343a40; border: none !important; color: azure;">@category.TypeName</a>
                     @*<a href="#" class="list-group-item">T-Shirt</a>
-                    <a href="#" class="list-group-item">Byxor</a>*@
-                </div>
-            }
+            <a href="#" class="list-group-item">Byxor</a>*@
+                }
+            </div>
 
 
         </div>
