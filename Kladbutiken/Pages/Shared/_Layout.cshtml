@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     <link href="css/shop-homepage.css" rel="stylesheet">
-    <style>a.dropdown-item:hover{background-color: darkgray}</style>
+    <style>
+        a.dropdown-item:hover{background-color: dimgray}
+        body.font-family{font-family:sans-serif;}
+    </style>
 </head>
 <body>
     <header>
@@ -97,16 +100,16 @@
     <div style="bottom: 0; position: fixed; width: 100%; margin-top: 50px;">
         <footer class="py-2 bg-dark">
             <div>
-                @try 
-	            {	        
-                    <span class="m-0 text-left text-white">Logged in as: @Model.LoggedInAs.EmailAddress</span>		
+                @try
+	            {
+                    <span class="m-0 text-left text-white">Logged in as: @Model.LoggedInAs.EmailAddress</span>
 	            }
 	            catch (global::System.Exception)
 	            {
-                    //nånting 
+                    //nånting
 	            }
                 <span class="m-0 text-center text-white">Copyright &copy; Empty Hanger @DateTime.Now.Year</span>
-            </div>   
+            </div>
         </footer>
     </div>
 
