@@ -14,5 +14,6 @@ namespace DataAccess.Repositories
         double GetPriceWithDiscount(double price, double discount);
         Task AddProduct(ProductAddModel productModel, Guid ID);
         IEnumerable<Category> GetAllCategorys();
+        List<Product> GetProductsByList(List<Guid> guids);
     }
 }

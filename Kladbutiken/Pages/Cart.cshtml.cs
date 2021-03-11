@@ -15,6 +15,7 @@ namespace Kladbutiken.Pages
     public class CartModel : PageModel
     {
         private readonly IUserRepository _userRepository;
+        private readonly IProductRepository _productRepository;
 
         public List<CartItemModel> CartList { get; set; }
 
@@ -22,9 +23,10 @@ namespace Kladbutiken.Pages
 
         public double TotalAmount { get; set; }
 
-        public CartModel(IUserRepository userRepository)
+        public CartModel(IUserRepository userRepository, IProductRepository productRepository)
         {
             _userRepository = userRepository;
+            _productRepository = productRepository;
             CartList = new();
         }
         public IActionResult OnGet()
@@ -41,7 +43,8 @@ namespace Kladbutiken.Pages
             var cart = HttpContext.Session.GetString("cart");
             if (cart != null)
             {
-                LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                var productIds = JsonSerializer.Deserialize<List<Guid>>(cart);
+                LoggedInAs.ProductCart = _productRepository.GetProductsByList(productIds);
             }
 
             foreach (var product in LoggedInAs.ProductCart)
@@ -80,13 +83,19 @@ namespace Kladbutiken.Pages
             var cart = HttpContext.Session.GetString("cart");
             if (cart != null)
             {
-                LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
             }
 
             var product = LoggedInAs.ProductCart.FirstOrDefault(p => p.ID == id);
             LoggedInAs.ProductCart.Remove(product);
 
-            HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
+            List<Guid> productIds = new();
+            foreach (var item in LoggedInAs.ProductCart)
+            {
+                productIds.Add(item.ID);
+            }
+
+            HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
 
             return RedirectToPage("/Cart");
         }
@@ -105,13 +114,19 @@ namespace Kladbutiken.Pages
             var cart = HttpContext.Session.GetString("cart");
             if (cart != null)
             {
-                LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
             }
 
             var product = LoggedInAs.ProductCart.FirstOrDefault(p => p.ID == id);
             LoggedInAs.ProductCart.Add(product);
 
-            HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
+            List<Guid> productIds = new();
+            foreach (var item in LoggedInAs.ProductCart)
+            {
+                productIds.Add(item.ID);
+            }
+
+            HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
 
             return RedirectToPage("/Cart");
         }

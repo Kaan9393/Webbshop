@@ -44,6 +44,7 @@ namespace DataAccess.Repositories
 
             var address = new Address
             {
+                ID = Guid.NewGuid(),
                 City = model.City,
                 Country = model.Country,
                 PostalCode = model.PostalCode,

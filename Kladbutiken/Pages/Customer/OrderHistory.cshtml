@@ -16,13 +16,13 @@
                                     @Model.LoggedInAs.FirstName @Model.LoggedInAs.LastName
                                 </li>
                                 <li class="Användarnamn"><a href="#">@Model.LoggedInAs.EmailAddress</a></li>
-                                <li class="activity">Senast inloggad: @DateTime.Now.ToShortDateString()</li>
+                                <li class="activity">Medlem sedan: @Model.LoggedInAs.RegisterDate.ToShortDateString()</li>
                             </ul>
                         </div>
                         <nav class="side-menu">
                             <ul class="nav">
-                                <li class="active"><a href="/Customer/Profile"><span class="fa fa-user"></span> Min sida</a></li>
-                                <li><a href="/Customer/OrderHistory"><span class="fas fa-clipboard-list"></span> Orderhistorik</a></li>
+                                <li><a href="/Customer/Profile"><span class="fa fa-user"></span> Min sida</a></li>
+                                <li class="active"><a href="/Customer/OrderHistory"><span class="fas fa-clipboard-list"></span> Orderhistorik</a></li>
                                 <li><a href="/Customer/Edit"><span class="fa fa-cog"></span> Settings</a></li>
                             </ul>
                         </nav>
@@ -42,13 +42,15 @@
                                     else
                                         foreach (var order in Model.LoggedInAs.Orders)
                                         {
-                                            <p>@order.OrderDate</p>
-                                            <p>@order.Status</p>
-                                            foreach (var product in order.ProductList)
+                                            <h4>Order: @order.ID</h4>
+                                            <p>Datum: @order.OrderDate</p>
+                                            <p>Status: @order.Status</p>
+                                            foreach (var cartItem in order.ProductList)
                                             {
-                                                <p>@product.ProductName</p>
+                                                <p>Produkt: @cartItem.Product.ProductName</p>
+                                                <p>Antal: @cartItem.Quantity</p>
                                             }
-                                    }
+                                        }
                                     <div class="col-md-10 col-sm-9 col-xs-12">
                                     </div>
                                 </div>
