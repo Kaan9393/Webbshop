@@ -28,10 +28,5 @@ namespace DataAccess.Entities
         [MaxLength(50)]
         public string Country { get; set; }
 
-        public Address()
-        {
-            ID = Guid.NewGuid();
-        }
-
     }
 }

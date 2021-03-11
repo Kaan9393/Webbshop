@@ -13,14 +13,21 @@ namespace DataAccess.Entities
         [Required]
         [JsonIgnore]
         public Category Category { get; set; }
-        public List<Order> Orders { get; set; }
+
         public string ProductName { get; set; }
 
         public string URLImg { get; set; }
 
         [DataType(DataType.Currency)]
         public double Price { get; set; }
-        public double PriceWithDiscount { get; set; }
+
+        public double PriceWithDiscount 
+        {
+            get
+            {
+                return Math.Round(Price - (Price * (Discount / 100)), 0);
+            }
+        }
 
         public int StockBalance { get; set; }
 
@@ -32,10 +39,5 @@ namespace DataAccess.Entities
 
         public int Sales { get; set; }
 
-        public Product()
-        {
-            ID = Guid.NewGuid();
-            PriceWithDiscount = Price;
-        }
     }
 }

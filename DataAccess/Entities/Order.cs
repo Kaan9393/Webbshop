@@ -17,12 +17,12 @@ namespace DataAccess.Entities
 
         public string Status { get; set; } //Koppla till enum.
 
-        public List<Product> ProductList { get; set; }
+        public List<CartItem> ProductList { get; set; } = new();
 
-        public Order()
+        /*public Order()
         {
             ID = Guid.NewGuid();
             ProductList = new();
-        }
+        }*/
     }
 }

@@ -9,7 +9,7 @@ namespace DataAccess.Entities
     {
         public Guid ID { get; set; }
 
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; } = new();
 
         [Required]
         [MaxLength(50)]
@@ -18,7 +18,7 @@ namespace DataAccess.Entities
         public Category()
         {
             ID = Guid.NewGuid();
-            Products = new();
+            
         }
     }
 }

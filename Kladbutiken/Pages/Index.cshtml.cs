@@ -54,11 +54,11 @@ namespace Kladbutiken.Pages
             AllProducts = _productRepository.GetAllProducts().ToList();
             AllCategories = _categoryRepository.GetAllCategorys().ToList();
             AllSelectedProducts = _productRepository.GetProductsByCategory(SelectedCategory).ToList();
-            foreach (var product in AllProducts)
+            /*foreach (var product in AllProducts)
             {
                 product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(product.Price, product.Discount);
 
-            }
+            }*/
         }
         
     }

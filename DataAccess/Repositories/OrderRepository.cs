@@ -1,26 +1,34 @@
 ﻿using DataAccess.Data;
 using DataAccess.Entities;
-using Microsoft.EntityFrameworkCore;
+using DataAccess.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly IMainContext _mainContext;
+        private readonly IMainContext _context;
 
-        public OrderRepository(IMainContext mainContext)
+        public OrderRepository(IMainContext context)
         {
-            _mainContext = mainContext;
+            _context = context;
         }
-        public void CreateOrder(Order order)
+        
+        public Order CreateOrder(OrderModel order)
         {
-            _mainContext.Orders.Attach(order).State = EntityState.Modified; 
-            _mainContext.SaveChanges();
+            var user = _context.Users.Single(u => u.ID == order.User.ID);
+
+            Order newOrder = new()
+            {
+                ID = Guid.NewGuid(),
+                Status = "Skickad",
+                OrderDate = DateTime.Now,
+            };
+            user.Orders.Add(newOrder);
+            var returnOrder =_context.Orders.Add(newOrder);
+            _context.SaveChanges();
+            return returnOrder.Entity;
         }
     }
 }

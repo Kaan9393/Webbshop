@@ -16,13 +16,12 @@ namespace Kladbutiken.Pages.CategoryCrud
         private readonly DataAccess.Data.MainContext _context;
         private readonly IUserRepository _userRepository;
 
-        public string LoggedInAs { get; set; }
-
         public IndexModel(DataAccess.Data.MainContext context, IUserRepository userRepository)
         {
             _context = context;
             _userRepository = userRepository;
         }
+        public User LoggedInAs { get; set; }
 
         public IList<Category> Category { get;set; }
 
@@ -37,13 +36,14 @@ namespace Kladbutiken.Pages.CategoryCrud
             }
 
             var user = _userRepository.GetUserByEmail(userDetailsCookie);
+            LoggedInAs = user;
 
             if (user.Role != "Admin")
             {
                 return RedirectToPage("/index");
             }
 
-            LoggedInAs = user.EmailAddress;
+            LoggedInAs.EmailAddress = user.EmailAddress;
 
             return Page();
         }

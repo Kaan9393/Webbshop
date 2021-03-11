@@ -44,7 +44,7 @@ namespace Kladbutiken.Pages
                 var cart = HttpContext.Session.GetString("cart");
                 if (cart != null)
                 {
-                    LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                    LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
                 }
             }
 
@@ -53,12 +53,13 @@ namespace Kladbutiken.Pages
 
 
             MatchingProducts = _productRepository.GetProductsByCategory(Product.Category.TypeName).ToList();
-            foreach (var matchedProduct in MatchingProducts)
+
+            /*foreach (var matchedProduct in MatchingProducts)
             {
-                matchedProduct.PriceWithDiscount = _productRepository.GetPriceWithDiscount(matchedProduct.Price,matchedProduct.Discount);
+                matchedProduct.PriceWithDiscount = _productRepository.GetPriceWithDiscount(matchedProduct.Price, matchedProduct.Discount);
             }
 
-            Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
+            Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);*/
 
             return Page();
         }
@@ -77,24 +78,30 @@ namespace Kladbutiken.Pages
                 Product = _productRepository.GetProductById(id);
 
                 MatchingProducts = _productRepository.GetProductsByCategory(Product.Category.TypeName).ToList();
-                foreach (var matchedProduct in MatchingProducts)
+                /*foreach (var matchedProduct in MatchingProducts)
                 {
                     matchedProduct.PriceWithDiscount = _productRepository.GetPriceWithDiscount(matchedProduct.Price, matchedProduct.Discount);
                 }
 
-                Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);
+                Product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(Product.Price, Product.Discount);*/
 
                 var cart = HttpContext.Session.GetString("cart");
                 if (cart != null)
                 {
-                    LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                    LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
                     LoggedInAs.ProductCart.Add(Product);
-                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
+                    List<Guid> productIds = new();
+                    foreach (var product in LoggedInAs.ProductCart)
+                    {
+                        productIds.Add(product.ID);
+                    }
+                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
                 }
                 else
                 {
-                    LoggedInAs.ProductCart.Add(Product);
-                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(LoggedInAs.ProductCart));
+                    List<Guid> productIds = new();
+                    productIds.Add(Product.ID);
+                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
                 }
             }
             else

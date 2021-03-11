@@ -66,7 +66,7 @@ namespace DataAccess.Repositories
 
         public User GetUserByEmail(string email)
         {
-            return _context.Users.Include(x=>x.Addresses).FirstOrDefault(u => u.EmailAddress == email);
+            return _context.Users.Include(x=>x.Addresses).Include(u => u.Orders).ThenInclude(o => o.ProductList).ThenInclude(c => c.Product).FirstOrDefault(u => u.EmailAddress == email);
         }
 
         public void CheckForAdmin()
@@ -75,7 +75,7 @@ namespace DataAccess.Repositories
 
             if (admin is null)
             {
-                User user = new User
+                var user = new User
                 {
                     Role = "Admin",
                     FirstName = "Admin",
@@ -84,6 +84,7 @@ namespace DataAccess.Repositories
                     Password = "adminpassword",
                     RegisterDate = DateTime.Now
                 };
+
                 _context.Users.Add(user);
                 _context.SaveChanges();
             }

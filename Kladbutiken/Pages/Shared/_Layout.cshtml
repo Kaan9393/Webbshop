@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     <link href="css/shop-homepage.css" rel="stylesheet">
+    <style>a.dropdown-item:hover{background-color: darkgray}</style>
 </head>
 <body>
     <header>
@@ -57,11 +58,21 @@
                         <li class="nav-item ml-3;">
                             @if (Model.LoggedInAs != null)
                             {
-                                <a class="nav-link" href="/Customer/Profile">
-                                    <span style="color:azure; font-size:25px;" title="@Model.LoggedInAs.FirstName sida">
+                            @*<a class="nav-link" href="/Customer/Profile">*@
+                                <div class="dropdown-container: position-relative">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:25px; background-color: #343a40 !important; border: none !important;">
                                         <i class="far fa-user"></i>
-                                    </span>
-                                </a>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #343a40 !important">
+                                         <a class="dropdown-item" href="/Customer/Profile" style="color: white"><b>Min sida</b></a>
+                                         <a class="dropdown-item" href="/LogOut" style="color: white"><b>Logga ut @Model.LoggedInAs.FirstName</b></a>
+                                    </div>
+                                </div>
+
+                                @*<span style="color:azure; font-size:25px;" title="@Model.LoggedInAs.FirstName sida">
+            <i class="far fa-user"></i>
+        </span>*@
+                            @*</a>*@
                             }
                             else
                             {

@@ -16,7 +16,7 @@ namespace Kladbutiken.Pages.ProductCrud
         private readonly DataAccess.Data.MainContext _context;
         private readonly IUserRepository _userRepository;
 
-        public string LoggedInAs { get; set; }
+        public User LoggedInAs { get; set; }
 
         public IndexModel(DataAccess.Data.MainContext context, IUserRepository userRepository)
         {
@@ -37,13 +37,14 @@ namespace Kladbutiken.Pages.ProductCrud
             }
 
             var user = _userRepository.GetUserByEmail(userDetailsCookie);
+            LoggedInAs = user;
 
             if (user.Role != "Admin")
             {
                 return RedirectToPage("/index");
             }
 
-            LoggedInAs = user.EmailAddress;
+            LoggedInAs.EmailAddress = user.EmailAddress;
 
             return Page();
         }

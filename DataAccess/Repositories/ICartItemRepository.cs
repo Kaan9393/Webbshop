@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace DataAccess.Repositories
 {
-    public interface IOrderRepository
+    public interface ICartItemRepository
     {
-        Order CreateOrder(OrderModel order);
+        void CreateCartItem(List<CartItemModel> productList, Order order);
     }
 }
