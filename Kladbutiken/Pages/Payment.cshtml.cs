@@ -52,17 +52,20 @@ namespace Kladbutiken.Pages
                         }
                         else
                         {
-                            var cartItem = new CartItemModel() { Product = product, Quantity = 1 };
+                            var cartItem = new CartItemModel { Product = product, Quantity = 1 };
                             OrderModel.ProductList.Add(cartItem);
                         }
                     }
                     Order = _orderRepository.CreateOrder(OrderModel);
                     _cartItemRepository.CreateCartItem(OrderModel.ProductList, Order);
+                    
+                    HttpContext.Session.SetString("cart", JsonSerializer.Serialize(new List<Guid>()));
+                    LoggedInAs.ProductCart.Clear();
 
-                    HttpContext.Session.Remove("cart");
+                    return Page();
                 }
             }
-            return Page();
+            return RedirectToPage("/cart");
         }
     }
 }

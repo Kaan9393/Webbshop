@@ -21,13 +21,12 @@ namespace Kladbutiken.Pages
 
         public List<Product> AllProducts { get; set; }
         public List<Category> AllCategories { get; set; }
-
+        public List<Product> AllSelectedProducts { get; set; }
         public User LoggedInAs { get; set; }
 
         [BindProperty(SupportsGet =true)]
         public string SelectedCategory { get; set; }
-        public List<Product> AllSelectedProducts { get; set; }
-        //public double PriceWithDiscount { get; set; }
+        
         public IndexModel(ILogger<IndexModel> logger, IUserRepository userRepository, IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _logger = logger;
@@ -46,7 +45,7 @@ namespace Kladbutiken.Pages
                 var cart = HttpContext.Session.GetString("cart");
                 if (cart != null)
                 {
-                    LoggedInAs.ProductCart = JsonSerializer.Deserialize<List<Product>>(cart);
+                    LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
                 }
             }
 
@@ -54,11 +53,6 @@ namespace Kladbutiken.Pages
             AllProducts = _productRepository.GetAllProducts().ToList();
             AllCategories = _categoryRepository.GetAllCategorys().ToList();
             AllSelectedProducts = _productRepository.GetProductsByCategory(SelectedCategory).ToList();
-            /*foreach (var product in AllProducts)
-            {
-                product.PriceWithDiscount = _productRepository.GetPriceWithDiscount(product.Price, product.Discount);
-
-            }*/
         }
         
     }
