@@ -135,10 +135,24 @@
                                     <strong>(inklusive moms 25%)</strong>
                                 </p>
                             </div>
-                            <span><strong>@Model.TotalAmount :-</strong></span>
+                            @if (Model.TotalAmount >= 500)
+                            {
+                                <span><strong>@Model.TotalAmount :-</strong></span>
+                            }
+                            else
+                            {
+                                <span><strong>@(Model.TotalAmount + 69) :-</strong></span>
+                            }
                         </li>
                     </ul>
-                    <a href="/Payment" class="btn btn-primary btn-block">Betala </a>
+                    @if (Model.CartList.Count == 0)
+                    {
+                        <a href="/Payment" class="btn btn-primary btn-block disabled">Betala </a>
+                    }
+                    else
+                    {
+                        <a href="/Payment" class="btn btn-primary btn-block">Betala </a>
+                    }
                 </div>
             </div>
             <!-- Card -->
