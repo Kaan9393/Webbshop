@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using DataAccess.Models;
 using DataAccess.Entities;
 using DataAccess.Repositories;
@@ -112,21 +111,18 @@ namespace Kladbutiken.Pages
             LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
 
             var cart = HttpContext.Session.GetString("cart");
+
             if (cart != null)
             {
                 LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
+
+                var product = LoggedInAs.ProductCart.FirstOrDefault(p => p.ID == id);
+                LoggedInAs.ProductCart.Add(product);
+
+                List<Guid> productIds = LoggedInAs.ProductCart.Select(p => p.ID).ToList();
+
+                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
             }
-
-            var product = LoggedInAs.ProductCart.FirstOrDefault(p => p.ID == id);
-            LoggedInAs.ProductCart.Add(product);
-
-            List<Guid> productIds = new();
-            foreach (var item in LoggedInAs.ProductCart)
-            {
-                productIds.Add(item.ID);
-            }
-
-            HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
 
             return RedirectToPage("/Cart");
         }

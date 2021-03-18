@@ -88,10 +88,10 @@ namespace Kladbutiken.Pages
                 var cart = HttpContext.Session.GetString("cart");
                 if (cart != null)
                 {
-                    LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
-                    LoggedInAs.ProductCart.Add(Product);
+                    var productCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
+                    productCart.Add(Product);
                     List<Guid> productIds = new();
-                    foreach (var product in LoggedInAs.ProductCart)
+                    foreach (var product in productCart)
                     {
                         productIds.Add(product.ID);
                     }
