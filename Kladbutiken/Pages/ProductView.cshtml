@@ -3,21 +3,33 @@
 @{
 
 }
+<style>
+    a.list-group-item:hover {
+        background-color: dimgray !important;
+        font-weight: 800;
+        text-decoration: none !important;
+    }
 
+    a.list-group-item {
+        margin-bottom: 4px;
+    }
+</style>
 <div class="container">
 
     <div class="row">
 
         <div class="col-lg-3">
-            <h3 class="my-4">@Model.Product.Category.TypeName</h3>
+            <h2 class="my-4" style="text-align:center">@Model.Product.Category.TypeName</h2>
             <div class="list-group">
+                <a class="list-group-item" href="/" style="background-color: #343a40; border: none !important; color: azure;">Alla varor</a>
+
                 @foreach (var category in Model.AllCategories)
-	            {
-		            @if (Model.Product.Category.TypeName != category.TypeName)
-	                {
-                        <a href=".?SelectedCategory=@category.TypeName" class="list-group-item">@category.TypeName</a>	 
-	                }
-	            }
+                {
+                    @if (Model.Product.Category.TypeName != category.TypeName)
+                    {
+                        <a class="list-group-item" href=".?SelectedCategory=@category.TypeName" style="background-color: #343a40; border: none !important; color: azure;">@category.TypeName</a>
+                    }
+                }
 
             </div>
         </div>
