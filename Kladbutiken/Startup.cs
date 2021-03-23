@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,14 +26,30 @@ namespace Kladbutiken
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
+
             services.AddMemoryCache();
+
+            services.AddCookiePolicy(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+            });
+
+            /*services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+            });*/
+
             services.AddDbContext<DataAccess.Data.MainContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
+
             services.AddScoped<DataAccess.Data.IMainContext, DataAccess.Data.MainContext>();
             services.AddScoped<DataAccess.Repositories.IUserRepository, DataAccess.Repositories.UserRepository>();
             services.AddScoped<DataAccess.Repositories.IProductRepository, DataAccess.Repositories.ProductRepository>();
@@ -59,6 +76,7 @@ namespace Kladbutiken
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
