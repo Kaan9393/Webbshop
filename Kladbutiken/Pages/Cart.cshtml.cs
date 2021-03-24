@@ -23,8 +23,10 @@ namespace Kladbutiken.Pages
 
         public double TotalAmount { get; set; }
 
-        [BindProperty]
         public Address AddressChoice { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public Guid? AdressID { get; set; }
 
         public CartModel(IUserRepository userRepository, IProductRepository productRepository)
         {
@@ -35,14 +37,17 @@ namespace Kladbutiken.Pages
         public IActionResult OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-
+            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+            OnLoad();
             if (userDetailsCookie == null)
             {
                 return RedirectToPage("/login");
             }
-
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
-            OnLoad();
+            if (AdressID!=null)
+            {
+                AddressChoice = LoggedInAs.Addresses.FirstOrDefault(a=>a.ID==AdressID);
+            }
+           
             return Page();
         }
 
@@ -104,24 +109,6 @@ namespace Kladbutiken.Pages
 
             return RedirectToPage("/Cart");
         }
-
-        public async Task<IActionResult> OnPostChoiceOfAddressAsync()
-        {
-            var userDetailsCookie = Request.Cookies["UserDetails"];
-
-            if (userDetailsCookie == null)
-            {
-                return RedirectToPage("/login");
-            }
-
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
-
-            OnLoad();
-            AddressChoice = LoggedInAs.Addresses.FirstOrDefault(a => a.ID == AddressChoice.ID);
-            //AddressChoice = await _addressRepository.GetAddressByID(AddressChoice.ID);
-            return Page();
-        }
-
         public void OnLoad()
         {
             var cart = HttpContext.Session.GetString("cart");
