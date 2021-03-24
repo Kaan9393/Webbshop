@@ -26,19 +26,15 @@ namespace Kladbutiken.Pages
         public IActionResult OnPost()
         {
             var user = _userRepository.LoginUser(UserLoginModel);
-            if (user == null)
+
+            if (user is null)
             {
                 return RedirectToPage("/login");
             }
-            else/* if (user.Role == "Admin")*/
-            {
-                Response.Cookies.Append("UserDetails", user.EmailAddress);
-                return RedirectToPage("/admin");
-            }
-            //else
-            //{
 
-            //}
+            Response.Cookies.Append("UserDetails", user.EmailAddress);
+
+            return RedirectToPage(user.Role == "Admin" ? "/admin" : "/index");
         }
     }
 }
