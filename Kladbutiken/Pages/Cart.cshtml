@@ -2,7 +2,13 @@
 @model Kladbutiken.Pages.CartModel
 @{
 }
-
+<head>
+    <style>
+        button.dropdown-item:hover {
+            background-color: dimgray !important;
+        }
+    </style>
+</head>
 <!--Section: Block Content-->
 <div class="container">
 
@@ -124,7 +130,7 @@
                             }
                             else
                             {
-                                <span>Det fattas @(500 - Model.TotalAmount) :- till gratis frakt!</span>
+                                <span>(Det fattas @(500 - Model.TotalAmount) :- till gratis frakt!)</span>
                                 <span>69 :-</span>
                             }
                         </li>
@@ -135,7 +141,11 @@
                                     <strong>(inklusive moms 25%)</strong>
                                 </p>
                             </div>
-                            @if (Model.TotalAmount >= 500)
+                            @if (Model.TotalAmount == 0)
+                            {
+                                <span><strong>0 :-</strong></span>
+                            }
+                            else if (Model.TotalAmount >= 500)
                             {
                                 <span><strong>@Model.TotalAmount :-</strong></span>
                             }
@@ -145,7 +155,47 @@
                             }
                         </li>
                     </ul>
-                    @if (Model.CartList.Count == 0)
+                    <div class="dropdown-container: position-relative">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:15px; width:250px; background-color: #343a40 !important; border: none !important;">
+                            Leveransadress
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #343a40 !important">
+                            @if (Model.LoggedInAs.Addresses.Count == 0)
+                            {
+                                <a class="dropdown-item" style="color: white" href="./Customer/AddAddress"><b>Lägg till adress</b></a>
+                            }
+                            else
+                            {
+                                @foreach (var address in Model.LoggedInAs.Addresses)
+                                {
+                                    <form asp-page-handler="ChoiceOfAddress" method="post">
+                                        <input type="hidden" asp-for="@Model.AddressChoice.ID" value="@address.ID" />
+                                        <button class="dropdown-item" style="color: white" type="submit">@address.Street, @address.PostalCode, @address.State</button>
+                                    </form>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div>
+                        @if (Model.AddressChoice != null)
+                        {
+                            <br />
+                            <p>Vald leveransadress:</p>
+                            <hr />
+                            <ul style="list-style-type: none">
+                                <li>@Model.LoggedInAs.FirstName @Model.LoggedInAs.LastName</li>
+                                <li>@Model.AddressChoice.Street</li>
+                                <li>@Model.AddressChoice.PostalCode, @Model.AddressChoice.State</li>
+                                <li>@Model.AddressChoice.City</li>
+                                <li>@Model.AddressChoice.Country</li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <br />
+                        }
+                    </div>
+                    @if (Model.CartList.Count == 0 || Model.AddressChoice == null)
                     {
                         <a href="/Payment" class="btn btn-primary btn-block disabled">Betala </a>
                     }

@@ -9,11 +9,14 @@
     <link href="css/shop-homepage.css" rel="stylesheet">
     <style>
         a.dropdown-item:hover {
-            background-color: dimgray
+            background-color: dimgray !important
         }
-
         body.font-family {
             font-family: sans-serif;
+        }
+        a.link {
+            color: white !important;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -35,10 +38,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/AboutUs">Om oss</a>
+                            <a class="nav-link" href="/">Om oss</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/ContactUs">Kontakt</a>
+                            <a class="nav-link" href="/">Kontakt</a>
                         </li>
                         @*@if (Model.LoggedInAs != null)
                             {
@@ -49,7 +52,7 @@
                     </ul>
                     <form class="form-inline my-2 my-lg-0 ml-auto">
                         <input class="form-control mr-sm-2" type="search" placeholder="Sök här. . ." aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" title="Sök">Sök</button>
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit" title="Sök">Sök</button>
                     </form>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item mt-2 mr-3">
@@ -105,16 +108,23 @@
 
     <div style="bottom: 0; position: fixed; width: 100%; margin-top: 50px;">
         <footer class="py-2 bg-dark">
-            <div>
-                @try
-                {
-                    <span class="m-0 text-left text-white">Logged in as: @Model.LoggedInAs.EmailAddress</span>
-                }
-                catch (global::System.Exception)
-                {
-                    //nånting
-                }
-                <span class="m-0 text-center text-white">Copyright &copy; Empty Hanger @DateTime.Now.Year</span>
+            <div class="row">
+                <div class="col-md-4">
+                    @try
+                    {
+                        <p class="m-0 pl-2 text-left text-white"><a class="link" href="/Customer/Profile">Logged in as: @Model.LoggedInAs.EmailAddress</a></p>
+                    }
+                    catch (global::System.Exception)
+                    {
+                        //nånting
+                    }
+                </div>
+                <div class="col-md-4">
+                    <p class="m-0 text-center text-white">Copyright &copy; Empty Hanger @DateTime.Now.Year</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="m-0 pr-2 text-right text-white"><a class="link" href="/Privacy">Sekretess & säkerhet</a></p>
+                </div>
             </div>
         </footer>
     </div>

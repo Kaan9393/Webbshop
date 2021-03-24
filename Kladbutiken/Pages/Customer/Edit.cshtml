@@ -144,11 +144,13 @@
                                     <input asp-for="CustomerInfo.Address.Country" class="form-control" value="@address.Country" readonly>
                                 </div>
                             </div>
-                            <a class="btn btn-primary" href="./EditAddress?ID=@address.ID">Ändra</a>
-                            <form method="post">
-                                <button class="btn btn-danger">Ta bort</button>
-                                <input asp-for="ID" type="hidden" value="@address.ID">
-                            </form>
+                                <form method="post">
+                            <p>
+                                <a class="btn btn-primary" href="./EditAddress?ID=@address.ID">Ändra</a>
+                                    <button class="btn btn-danger">Ta bort</button>
+                                    <input asp-for="ID" type="hidden" value="@address.ID">
+                            </p>
+                                </form>
                         }
                     </fieldset>
                     <hr>

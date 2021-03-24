@@ -19,6 +19,8 @@ namespace Kladbutiken.Pages
 
         public User LoggedInAs { get; set; }
 
+        public int AddressNumber { get; set; }
+
         public ProfileModel(IUserRepository userRepository)
         {
             _userRepository = userRepository;

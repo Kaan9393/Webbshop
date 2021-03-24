@@ -91,9 +91,11 @@
                             <br />
                             <fieldset class="fieldset">
                                 <h3 class="fieldset-title">Adresser</h3>
-                                
+                                    
                                     @foreach (var address in Model.LoggedInAs.Addresses)
                                     {
+
+                                        <p><strong>Adress @(Model.AddressNumber +=1)</strong></p>
                                         <div class="form-group">
                                             <label class="col-md-2  col-sm-3 col-xs-12 control-label">Gatuadress</label>
                                             <div class="col-md-10 col-sm-9 col-xs-12">
@@ -124,6 +126,7 @@
                                                 <input asp-for="CustomerInfo.Address.Country" class="form-control" value="@address.Country" readonly>
                                             </div>
                                         </div>
+                                        <br />
                                     }
                             </fieldset>
                             <hr>

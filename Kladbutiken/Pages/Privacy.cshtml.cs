@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,12 +9,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Kladbutiken.Pages
 {
-    public class AboutUsModel : PageModel
+    public class PrivacyModel : PageModel
     {
-        private readonly ILogger<AboutUsModel> _logger;
+        private readonly ILogger<PrivacyModel> _logger;
         public User LoggedInAs { get; set; }
 
-        public AboutUsModel(ILogger<AboutUsModel> logger)
+        public PrivacyModel(ILogger<PrivacyModel> logger)
         {
             _logger = logger;
         }
