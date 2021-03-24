@@ -38,17 +38,17 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Om oss</a>
+                            <a class="nav-link" href="/AboutUs">Om oss</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Kontakt</a>
+                            <a class="nav-link" href="/ContactUs">Kontakt</a>
                         </li>
-                        @*@if (Model.LoggedInAs != null)
+                        @if (Model.LoggedInAs != null && Model.LoggedInAs.EmailAddress == "admin@emptyhanger.net")
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/Customer/Profile">Profil</a>
+                                    <a class="nav-link" href="/Admin">Admin</a>
                                 </li>
-                            }*@
+                            }
                     </ul>
                     <form class="form-inline my-2 my-lg-0 ml-auto">
                         <input class="form-control mr-sm-2" type="search" placeholder="Sök här. . ." aria-label="Search">
@@ -110,13 +110,9 @@
         <footer class="py-2 bg-dark">
             <div class="row">
                 <div class="col-md-4">
-                    @try
+                    @if (Model.LoggedInAs != null)
                     {
-                        <p class="m-0 pl-2 text-left text-white"><a class="link" href="/Customer/Profile">Logged in as: @Model.LoggedInAs.EmailAddress</a></p>
-                    }
-                    catch (global::System.Exception)
-                    {
-                        //nånting
+                        <p class="m-0 pl-2 text-left text-white"><a class="link" href="/Customer/Profile">Inloggad som: @Model.LoggedInAs.FirstName</a></p>
                     }
                 </div>
                 <div class="col-md-4">

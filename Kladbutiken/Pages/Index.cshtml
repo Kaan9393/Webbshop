@@ -21,7 +21,6 @@
     <div class="row">
 
         <div class="col-lg-3">
-
             <h2 class="my-4" style="text-align:center">Kategorier</h2>
             <div class="list-group">
                 @if (Model.SelectedCategory != null)
@@ -31,12 +30,8 @@
                 @foreach (var category in Model.AllCategories)
                 {
                     <a class="list-group-item" href="?SelectedCategory=@category.TypeName" style="background-color: #343a40; border: none !important; color: azure;">@category.TypeName</a>
-                    @*<a href="#" class="list-group-item">T-Shirt</a>
-                        <a href="#" class="list-group-item">Byxor</a>*@
                 }
             </div>
-
-
         </div>
         @if (Model.SelectedCategory == null)
         {
