@@ -8,8 +8,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     <link href="css/shop-homepage.css" rel="stylesheet">
     <style>
-        a.dropdown-item:hover{background-color: dimgray}
-        body.font-family{font-family:sans-serif;}
+        a.dropdown-item:hover {
+            background-color: dimgray !important
+        }
+
+        body.font-family {
+            font-family: sans-serif;
+        }
+
+        a.link {
+            color: white !important;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -30,21 +40,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/AboutUs">Om oss</a>
+                            <a class="nav-link" href="/">Om oss</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/ContactUs">Kontakt</a>
+                            <a class="nav-link" href="/">Kontakt</a>
                         </li>
                         @*@if (Model.LoggedInAs != null)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Customer/Profile">Profil</a>
-                            </li>
-                        }*@
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Customer/Profile">Profil</a>
+                                </li>
+                            }*@
                     </ul>
                     <form class="form-inline my-2 my-lg-0 ml-auto">
                         <input class="form-control mr-sm-2" type="search" placeholder="Sök här. . ." aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" title="Sök">Sök</button>
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit" title="Sök">Sök</button>
                     </form>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item mt-2 mr-3">
@@ -61,21 +71,21 @@
                         <li class="nav-item ml-3;">
                             @if (Model.LoggedInAs != null)
                             {
-                            @*<a class="nav-link" href="/Customer/Profile">*@
+                                @*<a class="nav-link" href="/Customer/Profile">*@
                                 <div class="dropdown-container: position-relative">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:25px; background-color: #343a40 !important; border: none !important;">
                                         <i class="far fa-user"></i>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #343a40 !important">
-                                         <a class="dropdown-item" href="/Customer/Profile" style="color: white"><b>Min sida</b></a>
-                                         <a class="dropdown-item" href="/LogOut" style="color: white"><b>Logga ut @Model.LoggedInAs.FirstName</b></a>
+                                        <a class="dropdown-item" href="/Customer/Profile" style="color: white"><b>Min sida</b></a>
+                                        <a class="dropdown-item" href="/LogOut" style="color: white"><b>Logga ut @Model.LoggedInAs.FirstName</b></a>
                                     </div>
                                 </div>
 
                                 @*<span style="color:azure; font-size:25px;" title="@Model.LoggedInAs.FirstName sida">
-            <i class="far fa-user"></i>
-        </span>*@
-                            @*</a>*@
+                                        <i class="far fa-user"></i>
+                                    </span>*@
+                                @*</a>*@
                             }
                             else
                             {
@@ -99,16 +109,23 @@
 
     <div style="bottom: 0; position: fixed; width: 100%; margin-top: 50px;">
         <footer class="py-2 bg-dark">
-            <div>
-                @try
-	            {
-                    <span class="m-0 text-left text-white">Logged in as: @Model.LoggedInAs.EmailAddress</span>
-	            }
-	            catch (global::System.Exception)
-	            {
-                    //nånting
-	            }
-                <span class="m-0 text-center text-white">Copyright &copy; Empty Hanger @DateTime.Now.Year</span>
+            <div class="row">
+                <div class="col-md-4">
+                    @try
+                    {
+                        <p class="m-0 pl-2 text-left text-white"><a class="link" href="/Customer/Profile">Logged in as: @Model.LoggedInAs.EmailAddress</a></p>
+                    }
+                    catch (global::System.Exception)
+                    {
+                        //nånting
+                    }
+                </div>
+                <div class="col-md-4">
+                    <p class="m-0 text-center text-white">Copyright &copy; Empty Hanger @DateTime.Now.Year</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="m-0 pr-2 text-right text-white"><a class="link" href="/Privacy">Sekretess & säkerhet</a></p>
+                </div>
             </div>
         </footer>
     </div>

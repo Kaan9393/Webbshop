@@ -8,6 +8,7 @@ using DataAccess.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace Kladbutiken.Pages
 {
@@ -21,6 +22,9 @@ namespace Kladbutiken.Pages
         public User LoggedInAs { get; set; }
 
         public double TotalAmount { get; set; }
+
+        [BindProperty]
+        public Address AddressChoice { get; set; }
 
         public CartModel(IUserRepository userRepository, IProductRepository productRepository)
         {
@@ -38,33 +42,7 @@ namespace Kladbutiken.Pages
             }
 
             LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
-
-            var cart = HttpContext.Session.GetString("cart");
-            if (cart != null)
-            {
-                var productIds = JsonSerializer.Deserialize<List<Guid>>(cart);
-                LoggedInAs.ProductCart = _productRepository.GetProductsByList(productIds);
-            }
-
-            foreach (var product in LoggedInAs.ProductCart)
-            {
-                if (CartList.Any(c => c.Product.ID == product.ID))
-                {
-                    var cartItem = CartList.FirstOrDefault(c => c.Product.ID == product.ID);
-                    cartItem.Quantity += 1;
-                }
-                else
-                {
-                    var cartItem = new CartItemModel() { Product = product, Quantity = 1 };
-                    CartList.Add(cartItem);
-                }
-            }
-
-            foreach (var product in LoggedInAs.ProductCart)
-            {
-                TotalAmount += product.PriceWithDiscount;
-            }
-
+            OnLoad();
             return Page();
         }
 
@@ -125,6 +103,52 @@ namespace Kladbutiken.Pages
             }
 
             return RedirectToPage("/Cart");
+        }
+
+        public async Task<IActionResult> OnPostChoiceOfAddressAsync()
+        {
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+
+            if (userDetailsCookie == null)
+            {
+                return RedirectToPage("/login");
+            }
+
+            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+
+            OnLoad();
+            AddressChoice = LoggedInAs.Addresses.FirstOrDefault(a => a.ID == AddressChoice.ID);
+            //AddressChoice = await _addressRepository.GetAddressByID(AddressChoice.ID);
+            return Page();
+        }
+
+        public void OnLoad()
+        {
+            var cart = HttpContext.Session.GetString("cart");
+            if (cart != null)
+            {
+                var productIds = JsonSerializer.Deserialize<List<Guid>>(cart);
+                LoggedInAs.ProductCart = _productRepository.GetProductsByList(productIds);
+            }
+
+            foreach (var product in LoggedInAs.ProductCart)
+            {
+                if (CartList.Any(c => c.Product.ID == product.ID))
+                {
+                    var cartItem = CartList.FirstOrDefault(c => c.Product.ID == product.ID);
+                    cartItem.Quantity += 1;
+                }
+                else
+                {
+                    var cartItem = new CartItemModel() { Product = product, Quantity = 1 };
+                    CartList.Add(cartItem);
+                }
+            }
+
+            foreach (var product in LoggedInAs.ProductCart)
+            {
+                TotalAmount += product.PriceWithDiscount;
+            }
         }
     }
 }
