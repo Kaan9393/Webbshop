@@ -16,5 +16,6 @@ namespace DataAccess.Repositories
         IEnumerable<Category> GetAllCategorys();
         List<Product> GetProductsByList(List<Guid> guids);
         void UpdateSaldo(OrderModel orderModel);
+        List<Product> GetMostSoldProducts();
     }
 }

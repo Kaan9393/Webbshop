@@ -26,7 +26,8 @@ namespace Kladbutiken.Pages
 
         [BindProperty(SupportsGet =true)]
         public string SelectedCategory { get; set; }
-        
+        public List<Product> TopSalesTop5 { get; set; }
+
         public IndexModel(ILogger<IndexModel> logger, IUserRepository userRepository, IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _logger = logger;
@@ -48,7 +49,18 @@ namespace Kladbutiken.Pages
                     LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
                 }
             }
+            try
+            {
+                TopSalesTop5 = _productRepository.GetMostSoldProducts();
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            
             _userRepository.CheckForAdmin();
             AllProducts = _productRepository.GetAllProducts().ToList();
             AllCategories = _categoryRepository.GetAllCategorys().ToList();

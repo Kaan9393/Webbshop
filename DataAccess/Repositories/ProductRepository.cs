@@ -86,8 +86,14 @@ namespace DataAccess.Repositories
                 {
                     var saldo = products.Single(p => p.ID == item.Product.ID);
                     saldo.StockBalance -= item.Quantity;
+                    saldo.Sales += item.Quantity;
                 }
             }
+            _context.SaveChanges();
+        }
+        public List<Product> GetMostSoldProducts()
+        {
+            return _context.Products.OrderByDescending(p=>p.Sales).Take(3).ToList();
         }
     }
 }
