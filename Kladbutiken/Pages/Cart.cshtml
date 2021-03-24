@@ -168,11 +168,15 @@
                             {
                                 @foreach (var address in Model.LoggedInAs.Addresses)
                                 {
-                                    <form asp-page-handler="ChoiceOfAddress" method="post">
+                                    <a class="dropdown-item" style="color: white" href="?adressid=@address.ID"><b>@address.Street, @address.PostalCode, @address.State</b></a>
+
+                                    @*<form asp-page-handler="ChoiceOfAddress" method="post">
                                         <input type="hidden" asp-for="@Model.AddressChoice.ID" value="@address.ID" />
                                         <button class="dropdown-item" style="color: white" type="submit">@address.Street, @address.PostalCode, @address.State</button>
-                                    </form>
+                                    </form>*@
                                 }
+                                <a class="dropdown-item" style="color: white" href="./Customer/AddAddress"><b>Lägg till adress</b></a>
+
                             }
                         </div>
                     </div>
