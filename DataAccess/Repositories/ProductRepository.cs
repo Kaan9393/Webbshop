@@ -77,6 +77,18 @@ namespace DataAccess.Repositories
         {
             return _context.Categories.AsEnumerable();
         }
+        public void UpdateSaldo(OrderModel orderModel)
+        {
+            var products = _context.Products.ToList();
+            foreach (var product in products)
+            {
+                foreach (var item in orderModel.ProductList)
+                {
+                    var saldo = products.Single(p => p.ID == item.Product.ID);
+                    saldo.StockBalance -= item.Quantity;
+                }
+            }
+        }
     }
 }
 

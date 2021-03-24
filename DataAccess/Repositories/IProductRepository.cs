@@ -15,5 +15,6 @@ namespace DataAccess.Repositories
         Task AddProduct(ProductAddModel productModel, Guid ID);
         IEnumerable<Category> GetAllCategorys();
         List<Product> GetProductsByList(List<Guid> guids);
+        void UpdateSaldo(OrderModel orderModel);
     }
 }

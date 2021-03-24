@@ -28,7 +28,11 @@ namespace DataAccess.Repositories
             user.Orders.Add(newOrder);
             var returnOrder =_context.Orders.Add(newOrder);
             _context.SaveChanges();
+
+
             return returnOrder.Entity;
+
         }
+        
     }
 }

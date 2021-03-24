@@ -57,6 +57,8 @@ namespace Kladbutiken.Pages
                         }
                     }
                     Order = _orderRepository.CreateOrder(OrderModel);
+                    _productRepository.UpdateSaldo(OrderModel);
+
                     _cartItemRepository.CreateCartItem(OrderModel.ProductList, Order);
                     
                     HttpContext.Session.SetString("cart", JsonSerializer.Serialize(new List<Guid>()));
