@@ -43,12 +43,21 @@
                                         <div class="def-number-input number-input safari_only mb-0 w-100">
                                             <form asp-page-handler="remove" method="post">
                                                 <button class="btn"><i class="fas fa-minus"></i></button>
-                                                <input type="hidden" name="id" value="@cartItem.Product.ID" />
+                                                  <input type="hidden" name="id" value="@cartItem.Product.ID" />
                                             </form>
-                                            <input class="quantity" min="0" name="quantity" value="@cartItem.Quantity" type="number" readonly>
+                                            <input class="quantity" name="quantity" value="@cartItem.Quantity" type="number" readonly>
                                             <form asp-page-handler="add" method="post">
-                                                <button class="btn"><i class="fas fa-plus"></i></button>
-                                                <input type="hidden" name="id" value="@cartItem.Product.ID" />
+                                                @if (cartItem.Quantity == cartItem.Product.StockBalance)
+                                                {
+                                                    <button class="btn" disabled><i class="fas fa-plus"></i></button>
+                                                    <label class="text-danger">Lagersaldo uppnått</label>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn"><i class="fas fa-plus"></i></button>
+                                                    <input type="hidden" name="id" value="@cartItem.Product.ID" />
+                                                }
+
                                             </form>
                                         </div>
                                         <small id="passwordHelpBlock" class="form-text text-muted text-center">

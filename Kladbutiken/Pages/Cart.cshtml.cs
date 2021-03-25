@@ -33,6 +33,7 @@ namespace Kladbutiken.Pages
             _userRepository = userRepository;
             _productRepository = productRepository;
             CartList = new();
+            
         }
         public IActionResult OnGet()
         {
@@ -101,6 +102,7 @@ namespace Kladbutiken.Pages
 
                 var product = LoggedInAs.ProductCart.FirstOrDefault(p => p.ID == id);
                 LoggedInAs.ProductCart.Add(product);
+
 
                 List<Guid> productIds = LoggedInAs.ProductCart.Select(p => p.ID).ToList();
 
