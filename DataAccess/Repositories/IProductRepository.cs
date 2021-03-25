@@ -17,5 +17,7 @@ namespace DataAccess.Repositories
         List<Product> GetProductsByList(List<Guid> guids);
         void UpdateSaldo(OrderModel orderModel);
         List<Product> GetMostSoldProducts();
+        List<Product> GetLatestArrivals();
+        List<Product> GetDiscountedProducts();
     }
 }

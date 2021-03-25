@@ -13,26 +13,28 @@
     a.list-group-item {
         margin-bottom: 4px;
     }
+    div.categoryList {
+        position: fixed !important;
+        z-index: 100 !important;
+    }
 </style>
 <div class="container">
 
     <div class="row">
 
-        <div class="col-lg-3">
+        <div class="col-lg-2 mr-2 categoryList">
             <h2 class="my-4" style="text-align:center">@Model.Product.Category.TypeName</h2>
             <div class="list-group">
                 <a class="list-group-item" href="/" style="background-color: #343a40; border: none !important; color: azure;">Alla varor</a>
 
                 @foreach (var category in Model.AllCategories)
                 {
-                    @if (Model.Product.Category.TypeName != category.TypeName)
-                    {
-                        <a class="list-group-item" href=".?SelectedCategory=@category.TypeName" style="background-color: #343a40; border: none !important; color: azure;">@category.TypeName</a>
-                    }
+                    <a class="list-group-item" href=".?SelectedCategory=@category.TypeName" style="background-color: #343a40; border: none !important; color: azure;">@category.TypeName</a>
                 }
 
             </div>
         </div>
+        <div class="col-lg-3"></div>
 
         <div class="col-lg-9">
 
@@ -62,10 +64,10 @@
                         <div class="center mb-3">
                             <div class="buttons d-flex flex-row">
                                 <form asp-page-handler="add" method="post">
-                                     <button class="btn btn-success cart-button px-5"><span class="dot"></span>Lägg i kundkorgen </button>
+                                    <button class="btn btn-success cart-button px-5"><span class="dot"></span>Lägg i kundkorgen </button>
                                     <input type="hidden" name="id" value="@Model.Product.ID" />
                                 </form>
-                           </div>
+                            </div>
                         </div>
                         <span>Lagersaldo: </span>
                         <span class="text-warning">@Model.Product.StockBalance</span>
@@ -105,13 +107,12 @@
                                 </div>
                                 <div class="card-footer">
                                     <small class="text-muted">@product.Category.TypeName</small>
-                                    @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
                                 </div>
                             </div>
                         </div>
                     }
                 </div>
-                
+
             </div>
             <!-- /.card -->
 
