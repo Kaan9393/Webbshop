@@ -80,15 +80,14 @@ namespace DataAccess.Repositories
         public void UpdateSaldo(OrderModel orderModel)
         {
             var products = _context.Products.ToList();
-            foreach (var product in products)
-            {
+
                 foreach (var item in orderModel.ProductList)
                 {
-                    var saldo = products.Single(p => p.ID == item.Product.ID);
+                    var saldo = products.FirstOrDefault(p => p.ID == item.Product.ID);
                     saldo.StockBalance -= item.Quantity;
                     saldo.Sales += item.Quantity;
                 }
-            }
+            
             _context.SaveChanges();
         }
         public List<Product> GetMostSoldProducts()
