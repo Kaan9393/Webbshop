@@ -69,11 +69,12 @@
                     </a>
                 </div>
 
+                <div class="row justify-content-center"><h2>Ståfräs</h2></div>
                 <div class="row">
 
 
 
-                    @foreach (var product in Model.AllProducts)
+                    @*@foreach (var product in Model.AllProducts)
                     {
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
@@ -98,7 +99,35 @@
                                 </div>
                                 <div class="card-footer">
                                     <small class="text-muted">@product.Category.TypeName</small>
-                                    @* <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>*@
+                                </div>
+                            </div>
+                        </div>
+                    }*@
+                    @foreach (var product in Model.TopSalesTop5)
+                    {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
+                                    </h4>
+                                    <h5>
+                                        @if (product.PriceWithDiscount != product.Price)
+                                        {
+                                            <span><s>@product.Price</s> :-</span>
+
+                                            <span class="text-danger">@Math.Round(product.PriceWithDiscount, 0) :-</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@product.Price :-</span>
+                                        }
+                                    </h5>
+                                    <p class="card-text">@product.Description</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">@product.Category.TypeName</small>
                                 </div>
                             </div>
                         </div>
