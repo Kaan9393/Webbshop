@@ -24,9 +24,15 @@ namespace Kladbutiken.Pages
         public List<Product> AllSelectedProducts { get; set; }
         public User LoggedInAs { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public bool FullProductView { get; set; }
+
         [BindProperty(SupportsGet =true)]
         public string SelectedCategory { get; set; }
         public List<Product> TopSalesTop5 { get; set; }
+        public List<Product> LatestArrivals { get; set; }
+        public List<Product> DiscountedProducts { get; set; }
+
 
         public IndexModel(ILogger<IndexModel> logger, IUserRepository userRepository, IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
@@ -52,6 +58,8 @@ namespace Kladbutiken.Pages
             try
             {
                 TopSalesTop5 = _productRepository.GetMostSoldProducts();
+                LatestArrivals = _productRepository.GetLatestArrivals();
+                DiscountedProducts = _productRepository.GetDiscountedProducts();
 
             }
             catch (Exception)

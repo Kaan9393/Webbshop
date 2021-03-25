@@ -94,6 +94,14 @@ namespace DataAccess.Repositories
         {
             return _context.Products.OrderByDescending(p=>p.Sales).Take(3).ToList();
         }
+        public List<Product> GetLatestArrivals()
+        {
+            return _context.Products.OrderByDescending(p => p.Date).Take(3).ToList();
+        }
+        public List<Product> GetDiscountedProducts()
+        {
+            return _context.Products.OrderByDescending(p => p.Discount).Take(3).ToList();
+        }
     }
 }
 
