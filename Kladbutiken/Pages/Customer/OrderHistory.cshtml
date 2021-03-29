@@ -43,6 +43,10 @@
                                     {
                                         foreach (var order in Model.LoggedInAs.Orders.OrderByDescending(o => o.OrderDate))
                                         {
+                                            @if (order.OrderDate.AddDays(5) <= DateTime.Now)
+                                            {
+                                                order.Status = "Levererad";
+                                            }
                                             <h4>Order: @order.OrderNumber</h4>
                                             <p>Datum: @order.OrderDate</p>
                                             <p>Status: @order.Status</p>

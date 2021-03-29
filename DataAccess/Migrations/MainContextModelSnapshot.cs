@@ -104,6 +104,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("OrderNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
@@ -136,9 +139,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("float");
 
                     b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<double>("PriceWithDiscount")
                         .HasColumnType("float");
 
                     b.Property<string>("ProductName")
