@@ -11,12 +11,18 @@
         a.dropdown-item:hover {
             background-color: dimgray !important
         }
+
         body.font-family {
             font-family: sans-serif;
         }
+
         a.link {
             color: white !important;
             text-decoration: none;
+        }
+
+        li.nav-item:hover {
+            color: white !important;
         }
     </style>
 </head>
@@ -31,7 +37,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="/">
                                 Startsida
                                 <span class="sr-only">(current)</span>
@@ -44,11 +50,11 @@
                             <a class="nav-link" href="/ContactUs">Kontakt</a>
                         </li>
                         @if (Model.LoggedInAs != null && Model.LoggedInAs.EmailAddress == "admin@emptyhanger.net")
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Admin">Admin</a>
-                                </li>
-                            }
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Admin">Admin</a>
+                            </li>
+                        }
                     </ul>
                     <form class="form-inline my-2 my-lg-0 ml-auto">
                         <input class="form-control mr-sm-2" type="search" placeholder="Sök här. . ." aria-label="Search">

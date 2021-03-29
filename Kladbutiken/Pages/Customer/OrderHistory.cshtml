@@ -40,9 +40,10 @@
                                         <p>Det finns inga ordrar</p>
                                     }
                                     else
-                                        foreach (var order in Model.LoggedInAs.Orders)
+                                    {
+                                        foreach (var order in Model.LoggedInAs.Orders.OrderByDescending(o => o.OrderDate))
                                         {
-                                            <h4>Order: @order.ID</h4>
+                                            <h4>Order: @order.OrderNumber</h4>
                                             <p>Datum: @order.OrderDate</p>
                                             <p>Status: @order.Status</p>
                                             foreach (var cartItem in order.ProductList)
@@ -50,7 +51,9 @@
                                                 <p>Produkt: @cartItem.Product.ProductName</p>
                                                 <p>Antal: @cartItem.Quantity</p>
                                             }
+                                            <hr />
                                         }
+                                    }
                                     <div class="col-md-10 col-sm-9 col-xs-12">
                                     </div>
                                 </div>
