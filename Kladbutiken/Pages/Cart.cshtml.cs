@@ -26,6 +26,15 @@ namespace Kladbutiken.Pages
         public Address AddressChoice { get; set; }
 
         [BindProperty(SupportsGet = true)]
+        public int ShipmentChoice { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int PaymentChoice { get; set; }
+
+        [BindProperty]
+        public PaymentModel PaymentModel { get; set; }
+
+        [BindProperty(SupportsGet = true)]
         public Guid? AdressID { get; set; }
 
         public CartModel(IUserRepository userRepository, IProductRepository productRepository)
@@ -38,12 +47,12 @@ namespace Kladbutiken.Pages
         public IActionResult OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
-            OnLoad();
             if (userDetailsCookie == null)
             {
                 return RedirectToPage("/login");
             }
+            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+            LoadCart();
             if (AdressID!=null)
             {
                 AddressChoice = LoggedInAs.Addresses.FirstOrDefault(a=>a.ID==AdressID);
@@ -111,7 +120,7 @@ namespace Kladbutiken.Pages
 
             return RedirectToPage("/Cart");
         }
-        public void OnLoad()
+        public void LoadCart()
         {
             var cart = HttpContext.Session.GetString("cart");
             if (cart != null)

@@ -24,61 +24,61 @@
 
                     <h5 class="mb-4">Varukorg (<span>@Model.LoggedInAs.ProductCart.Count()</span> varor)</h5>
                     @foreach (var cartItem in Model.CartList)
-                    { 
-                    <div class="row mb-4">
-                        <div class="col-md-5 col-lg-3 col-xl-3">
-                            <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
-                                <img class="img-fluid w-100"
-                                        src="@cartItem.Product.URLImg" alt="Sample">
-                            </div>
-                        </div>
-                        <div class="col-md-7 col-lg-9 col-xl-9">
-                            <div>
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h5>@cartItem.Product.ProductName</h5>
-                                        <p class="mb-3 text-muted text-uppercase small">Lager saldo: @cartItem.Product.StockBalance</p>
-                                    </div>
-                                    <div>
-                                        <div class="def-number-input number-input safari_only mb-0 w-100">
-                                            <form asp-page-handler="remove" method="post">
-                                                <button class="btn"><i class="fas fa-minus"></i></button>
-                                                  <input type="hidden" name="id" value="@cartItem.Product.ID" />
-                                            </form>
-                                            <input class="quantity" name="quantity" value="@cartItem.Quantity" type="number" readonly>
-                                            <form asp-page-handler="add" method="post">
-                                                @if (cartItem.Quantity == cartItem.Product.StockBalance)
-                                                {
-                                                    <button class="btn" disabled><i class="fas fa-plus"></i></button>
-                                                    <label class="text-danger">Lagersaldo uppnått</label>
-                                                }
-                                                else
-                                                {
-                                                    <button class="btn"><i class="fas fa-plus"></i></button>
-                                                    <input type="hidden" name="id" value="@cartItem.Product.ID" />
-                                                }
-
-                                            </form>
-                                        </div>
-                                        <small id="passwordHelpBlock" class="form-text text-muted text-center">
-                                            (Note, 1 piece)
-                                        </small>
-                                    </div>
+                    {
+                        <div class="row mb-4">
+                            <div class="col-md-5 col-lg-3 col-xl-3">
+                                <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                                    <img class="img-fluid w-100"
+                                         src="@cartItem.Product.URLImg" alt="Sample">
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <form asp-page-handler="remove" method="post">
+                            </div>
+                            <div class="col-md-7 col-lg-9 col-xl-9">
+                                <div>
+                                    <div class="d-flex justify-content-between">
                                         <div>
-                                            <button class="card-link-secondary small text-uppercase mr-3">
-                                                <i class="fas fa-trash-alt mr-1"></i> Ta bort från varukorg.
-                                            </button>
-                                            <input type="hidden" name="id" value="@cartItem.Product.ID" />
+                                            <h5>@cartItem.Product.ProductName</h5>
+                                            <p class="mb-3 text-muted text-uppercase small">Lager saldo: @cartItem.Product.StockBalance</p>
                                         </div>
-                                    </form>
-                                    <p class="mb-0"><span><strong id="summary">@cartItem.Product.PriceWithDiscount :-</strong></span></p>
+                                        <div>
+                                            <div class="def-number-input number-input safari_only mb-0 w-100">
+                                                <form asp-page-handler="remove" method="post">
+                                                    <button class="btn"><i class="fas fa-minus"></i></button>
+                                                    <input type="hidden" name="id" value="@cartItem.Product.ID" />
+                                                </form>
+                                                <input class="quantity" name="quantity" value="@cartItem.Quantity" type="number" readonly>
+                                                <form asp-page-handler="add" method="post">
+                                                    @if (cartItem.Quantity == cartItem.Product.StockBalance)
+                                                    {
+                                                        <button class="btn" disabled><i class="fas fa-plus"></i></button>
+                                                        <label class="text-danger">Lagersaldo uppnått</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn"><i class="fas fa-plus"></i></button>
+                                                        <input type="hidden" name="id" value="@cartItem.Product.ID" />
+                                                    }
+
+                                                </form>
+                                            </div>
+                                            <small id="passwordHelpBlock" class="form-text text-muted text-center">
+                                                (Note, 1 piece)
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <form asp-page-handler="remove" method="post">
+                                            <div>
+                                                <button class="card-link-secondary small text-uppercase mr-3">
+                                                    <i class="fas fa-trash-alt mr-1"></i> Ta bort från varukorg.
+                                                </button>
+                                                <input type="hidden" name="id" value="@cartItem.Product.ID" />
+                                            </div>
+                                        </form>
+                                        <p class="mb-0"><span><strong id="summary">@cartItem.Product.PriceWithDiscount :-</strong></span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     }
                     <p class="text-primary mb-0">
                         <i class="fas fa-info-circle mr-1"></i> Försena inte köpet, tillagda artiklar i din varukorg betyder inte att du bokar dem.
@@ -164,48 +164,107 @@
                             }
                         </li>
                     </ul>
-                    <div class="dropdown-container: position-relative">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:15px; width:250px; background-color: #343a40 !important; border: none !important;">
-                            Leveransadress
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #343a40 !important">
-                            @if (Model.LoggedInAs.Addresses.Count == 0)
-                            {
-                                <a class="dropdown-item" style="color: white" href="./Customer/AddAddress"><b>Lägg till adress</b></a>
-                            }
-                            else
-                            {
-                                @foreach (var address in Model.LoggedInAs.Addresses)
+                    <div class="row justify-content-center">
+                        <div class="dropdown-container: position-relative">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:15px; width:250px; background-color: #343a40 !important; border: none !important;">
+                                Leveransadress
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #343a40 !important">
+                                @if (Model.LoggedInAs.Addresses.Count == 0)
                                 {
-                                    <a class="dropdown-item" style="color: white" href="?adressid=@address.ID"><b>@address.Street, @address.PostalCode, @address.State</b></a>
-
-                                    @*<form asp-page-handler="ChoiceOfAddress" method="post">
-                                        <input type="hidden" asp-for="@Model.AddressChoice.ID" value="@address.ID" />
-                                        <button class="dropdown-item" style="color: white" type="submit">@address.Street, @address.PostalCode, @address.State</button>
-                                    </form>*@
+                                    <a class="dropdown-item" style="color: white" href="./Customer/AddAddress"><b>Lägg till adress</b></a>
                                 }
-                                <a class="dropdown-item" style="color: white" href="./Customer/AddAddress"><b>Lägg till adress</b></a>
+                                else
+                                {
+                                    @foreach (var address in Model.LoggedInAs.Addresses)
+                                    {
+                                        <a class="dropdown-item" style="color: white" href="?adressid=@address.ID"><b>@address.Street, @address.PostalCode, @address.State</b></a>
 
-                            }
+                                        @*<form asp-page-handler="ChoiceOfAddress" method="post">
+                                                <input type="hidden" asp-for="@Model.AddressChoice.ID" value="@address.ID" />
+                                                <button class="dropdown-item" style="color: white" type="submit">@address.Street, @address.PostalCode, @address.State</button>
+                                            </form>*@
+                                    }
+                                    <a class="dropdown-item" style="color: white" href="./Customer/AddAddress"><b>Lägg till adress</b></a>
+
+                                }
+                            </div>
                         </div>
                     </div>
                     <div>
                         @if (Model.AddressChoice != null)
                         {
                             <br />
-                            <strong><p>Vald leveransadress:</p></strong>
+                            <div class="row justify-content-center">
+                                <strong><p>Vald leveransadress:</p></strong>
+                            </div>
                             <hr />
-                            <ul style="list-style-type: none">
-                                <li>@Model.LoggedInAs.FirstName @Model.LoggedInAs.LastName</li>
-                                <li>@Model.AddressChoice.Street</li>
-                                <li>@Model.AddressChoice.PostalCode, @Model.AddressChoice.State</li>
-                                <li>@Model.AddressChoice.City</li>
-                                <li>@Model.AddressChoice.Country</li>
-                            </ul>
+                            <div class="row">
+                                <ul style="list-style-type: none">
+                                    <li>@Model.LoggedInAs.FirstName @Model.LoggedInAs.LastName</li>
+                                    <li>@Model.AddressChoice.Street</li>
+                                    <li>@Model.AddressChoice.PostalCode, @Model.AddressChoice.State</li>
+                                    <li>@Model.AddressChoice.City</li>
+                                    <li>@Model.AddressChoice.Country</li>
+                                </ul>
+                            </div>
                         }
                         else
                         {
                             <br />
+                        }
+                    </div>
+                    <div>
+                        @if (Model.AddressChoice != null)
+                        {
+                            <br />
+                            <div class="row justify-content-center">
+                                <strong>Leveranssätt:</strong>
+                            </div>
+                            <hr />
+                            <div class="container">
+                                <div role="group" aria-label="Basic radio toggle button group">
+                                    <div class="row justify-content-center">
+                                        <div class="mr-5 justify-content-center">
+                                            @if (Model.ShipmentChoice == 1)
+                                            {
+                                                <a href="?adressID=@Model.AddressChoice.ID&ShipmentChoice=1" class="btn btn-outline-dark active" title="(Leverans inom 1-3 arbetsdagar)">
+                                                    Standard
+                                                </a>
+                                                <br />
+                                                <div class="row justify-content-center"><p><strong>+0 :-</strong></p></div>
+                                            }
+                                            else
+                                            {
+                                                <a href="?adressID=@Model.AddressChoice.ID&ShipmentChoice=1" class="btn btn-outline-dark" title="(Leverans inom 1-3 arbetsdagar)">
+                                                    Standard
+                                                </a>
+                                                <br />
+                                                <div class="row justify-content-center"><p><strong>+0 :-</strong></p></div>
+                                            }
+                                        </div>
+                                        <div class="ml-5 justify-content-center">
+                                            @if (Model.ShipmentChoice == 2)
+                                            {
+                                                <a href="?adressID=@Model.AddressChoice.ID&ShipmentChoice=2" class="btn btn-outline-dark active " title="(Leverans inom 24 timmar)">
+                                                    Express
+                                                </a>
+                                                <br />
+                                                <div class="row justify-content-center"><p><strong>+120 :-</strong></p></div>
+
+                                            }
+                                            else
+                                            {
+                                                <a href="?adressID=@Model.AddressChoice.ID&ShipmentChoice=2" class="btn btn-outline-dark" title="(Leverans inom 24 timmar)">
+                                                    Express
+                                                </a>
+                                                <br />
+                                                <div class="row justify-content-center"><p><strong>+120 :-</strong></p></div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         }
                     </div>
                     @if (Model.CartList.Count == 0 || Model.AddressChoice == null)
@@ -221,24 +280,24 @@
             <!-- Card -->
             <!-- Card DISCOUNT CODE -->
             @*<div class="mb-3">
-                <div class="pt-4">
+                    <div class="pt-4">
 
-                    <a class="dark-grey-text d-flex justify-content-between" data-toggle="collapse" href="#collapseExample"
-                       aria-expanded="false" aria-controls="collapseExample">
-                        Add a discount code (optional)
-                        <span><i class="fas fa-chevron-down pt-1"></i></span>
-                    </a>
+                        <a class="dark-grey-text d-flex justify-content-between" data-toggle="collapse" href="#collapseExample"
+                           aria-expanded="false" aria-controls="collapseExample">
+                            Add a discount code (optional)
+                            <span><i class="fas fa-chevron-down pt-1"></i></span>
+                        </a>
 
-                    <div class="collapse" id="collapseExample">
-                        <div class="mt-3">
-                            <div class="md-form md-outline mb-0">
-                                <input type="text" id="discount-code" class="form-control font-weight-light"
-                                       placeholder="Enter discount code">
+                        <div class="collapse" id="collapseExample">
+                            <div class="mt-3">
+                                <div class="md-form md-outline mb-0">
+                                    <input type="text" id="discount-code" class="form-control font-weight-light"
+                                           placeholder="Enter discount code">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
             <!-- Card -->
 
         </div>
