@@ -26,9 +26,11 @@ namespace DataAccess.Repositories
                 OrderDate = DateTime.Now,
             };
             newOrder.OrderNumber = $"{newOrder.ID}{newOrder.OrderDate}".GetHashCode().ToString();
+
             if (newOrder.OrderNumber.First()=='-')
             {
                 newOrder.OrderNumber= newOrder.OrderNumber.Remove(0,1);
+
             }
             user.Orders.Add(newOrder);
             var returnOrder =_context.Orders.Add(newOrder);

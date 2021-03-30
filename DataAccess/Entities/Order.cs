@@ -11,6 +11,8 @@ namespace DataAccess.Entities
         public Guid ID { get; set; }
         public string OrderNumber { get; set; }
 
+        public string OrderNumber { get; set; }
+
         [Required]
         public User User { get; set; }
 
