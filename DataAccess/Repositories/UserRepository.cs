@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DataAccess.Utils;
 
 namespace DataAccess.Repositories
 {
@@ -21,15 +22,17 @@ namespace DataAccess.Repositories
 
         public void CreateUser(UserRegisterModel model)
         {
+            var salt = PasswordHasher.SaltGenerator();
+
             User user = new User
             {
                 Role = "Customer",
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 EmailAddress = model.Email,
-                Password = model.Password,
-                RegisterDate = DateTime.Now,
-                
+                Salt = salt,
+                Password = PasswordHasher.HashPassword(model.Password, salt),
+                RegisterDate = DateTime.Now
             };
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -37,8 +40,10 @@ namespace DataAccess.Repositories
 
         public void UpdatePassword(Guid userId, string newPassword)
         {
+            var salt = PasswordHasher.SaltGenerator();
             var user = _context.Users.Single(u => u.ID == userId);
-            user.Password = newPassword;
+            user.Salt = salt;
+            user.Password = PasswordHasher.HashPassword(newPassword, salt);
             _context.SaveChanges();
         }
 
@@ -61,7 +66,13 @@ namespace DataAccess.Repositories
 
         public User LoginUser(UserLoginModel userLogin)
         {
-            return _context.Users.FirstOrDefault(u => u.EmailAddress == userLogin.UserName && u.Password == userLogin.Password);
+            var user = _context.Users.FirstOrDefault(u => u.EmailAddress == userLogin.UserName);
+
+            if (user == null) return null;
+
+            var loginPassword = PasswordHasher.HashPassword(userLogin.Password, user.Salt);
+
+            return loginPassword.Equals(user.Password) ? user : null;
         }
 
         public User GetUserByEmail(string email)
@@ -75,13 +86,16 @@ namespace DataAccess.Repositories
 
             if (admin is null)
             {
+                var salt = PasswordHasher.SaltGenerator();
+
                 var user = new User
                 {
                     Role = "Admin",
                     FirstName = "Admin",
                     LastName = "Adminsson",
                     EmailAddress = "admin@emptyhanger.net",
-                    Password = "adminpassword",
+                    Salt = salt,
+                    Password = PasswordHasher.HashPassword("adminpassword", salt),
                     RegisterDate = DateTime.Now
                 };
 

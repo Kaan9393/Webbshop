@@ -18,6 +18,8 @@ namespace DataAccess.Entities
         [MinLength(8,ErrorMessage ="Lösenordet måste innehålla minst 8 och max 50 tecken"),MaxLength(50)]
         public string Password { get; set; }
 
+        public byte[] Salt { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string FirstName { get; set; }
