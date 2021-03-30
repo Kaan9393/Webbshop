@@ -9,7 +9,6 @@ namespace DataAccess.Entities
     public class Order
     {
         public Guid ID { get; set; }
-        public string OrderNumber { get; set; }
 
         public string OrderNumber { get; set; }
 
