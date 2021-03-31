@@ -32,10 +32,10 @@ namespace Kladbutiken.Pages
         public int PaymentChoice { get; set; }
 
         [BindProperty]
-        public PaymentModel PaymentModel { get; set; }
+        public CartPaymentModel PaymentModel { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public Guid? AdressID { get; set; }
+        public Guid? AddressID { get; set; }
 
         public CartModel(IUserRepository userRepository, IProductRepository productRepository)
         {
@@ -53,9 +53,9 @@ namespace Kladbutiken.Pages
             }
             LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
             LoadCart();
-            if (AdressID!=null)
+            if (AddressID!=null)
             {
-                AddressChoice = LoggedInAs.Addresses.FirstOrDefault(a=>a.ID==AdressID);
+                AddressChoice = LoggedInAs.Addresses.FirstOrDefault(a=>a.ID==AddressID);
             }
            
             return Page();

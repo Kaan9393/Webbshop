@@ -6,6 +6,7 @@ using DataAccess.Entities;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using DataAccess.Enums;
 
 namespace Kladbutiken.Pages.Customer
 {
@@ -14,6 +15,8 @@ namespace Kladbutiken.Pages.Customer
         private readonly IUserRepository _userRepository;
 
         public User LoggedInAs { get; set; }
+        public Shipment Shipment { get; set; }
+        public string Fraktsätt { get; set; }
 
         public OrderHistoryModel(IUserRepository userRepository)
         {

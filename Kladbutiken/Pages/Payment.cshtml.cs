@@ -14,6 +14,16 @@ namespace Kladbutiken.Pages
 {
     public class PaymentModel : PageModel
     {
+        [BindProperty(SupportsGet = true)]
+        public Guid AddressID { get; set; }
+
+        public Address Address { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int ShipmentChoice { get; set; }
+        
+        [BindProperty(SupportsGet = true)]
+        public int PaymentChoice { get; set; }
         public User LoggedInAs { get; set; }
 
         public OrderModel OrderModel { get; set; } = new();
@@ -56,6 +66,9 @@ namespace Kladbutiken.Pages
                             OrderModel.ProductList.Add(cartItem);
                         }
                     }
+                    OrderModel.PaymentChoice = PaymentChoice;
+                    OrderModel.ShipmentChoice = ShipmentChoice;
+                    OrderModel.ShippingAddress = LoggedInAs.Addresses.FirstOrDefault(a => a.ID == AddressID);
                     Order = _orderRepository.CreateOrder(OrderModel);
                     _productRepository.UpdateSaldo(OrderModel);
 

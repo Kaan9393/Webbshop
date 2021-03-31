@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    class PaymentModel
+    public class CartPaymentModel
     {
         [Required]
         public Address AddressChoice { get; set; }

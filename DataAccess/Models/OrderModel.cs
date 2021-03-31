@@ -17,5 +17,11 @@ namespace DataAccess.Models
 
         public List<CartItemModel> ProductList { get; set; } = new List<CartItemModel>();
 
+        public Address ShippingAddress { get; set; }
+
+        public int ShipmentChoice { get; set; }
+
+        public int PaymentChoice { get; set; }
+
     }
 }
