@@ -21,6 +21,12 @@ namespace DataAccess.Entities
 
         public List<CartItem> ProductList { get; set; } = new();
 
+        public string Address { get; set; }
+
+        public int ShipmentChoice { get; set; }
+
+        public int PaymentChoice { get; set; }
+
         /*public Order()
         {
             ID = Guid.NewGuid();
