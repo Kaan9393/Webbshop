@@ -50,6 +50,8 @@
                                             <h4>Order: @order.OrderNumber</h4>
                                             <p>Datum: @order.OrderDate</p>
                                             <p>Status: @order.Status</p>
+                                            @*<p>Leveranssätt: @Model.Shipment</p>*@
+                                            <p>Leveransadress: @order.Address</p>
                                             foreach (var cartItem in order.ProductList)
                                             {
                                                 <p>Produkt: @cartItem.Product.ProductName</p>

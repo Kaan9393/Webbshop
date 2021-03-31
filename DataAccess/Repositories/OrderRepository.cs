@@ -24,6 +24,10 @@ namespace DataAccess.Repositories
                 ID = Guid.NewGuid(),
                 Status = "Skickad",
                 OrderDate = DateTime.Now,
+                ShipmentChoice = order.ShipmentChoice,
+                PaymentChoice = order.PaymentChoice,
+                Address = $"{order.ShippingAddress.Street},{order.ShippingAddress.PostalCode},{order.ShippingAddress.City}"
+            
             };
             newOrder.OrderNumber = $"{newOrder.ID}{newOrder.OrderDate}".GetHashCode().ToString();
 

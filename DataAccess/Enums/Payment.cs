@@ -8,6 +8,6 @@ namespace DataAccess.Enums
 {
     public enum Payment
     {
-        Visa=0, Amex=1, Mastercard=2, Paypal=3
+        Visa=1, Amex=2, Mastercard=3, Paypal=4
     }
 }
