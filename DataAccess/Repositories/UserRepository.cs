@@ -54,7 +54,7 @@ namespace DataAccess.Repositories
         }
         public void DeleteUser(Guid userID)
         {
-            var userToDelete= _context.Users.Include(u=>u.Addresses).Include(u => u.ProductCart).Include(u => u.Orders).Single(u => u.ID == userID);
+            var userToDelete= _context.Users.Include(u=>u.Addresses).Include(u => u.ProductCart).Include(u => u.Orders).ThenInclude(u => u.ProductList).Single(u => u.ID == userID);
             _context.Users.Remove(userToDelete);
             _context.SaveChanges();
         }
