@@ -104,5 +104,19 @@ namespace DataAccess.Repositories
             }
         }
 
+        public void UpdateUsersWithoutSalt()
+        {
+            var users = _context.Users.Where(u => u.Salt == null).ToList();
+
+            foreach (var user in users)
+            {
+                var salt = PasswordHasher.SaltGenerator();
+                user.Salt = salt;
+                user.Password = PasswordHasher.HashPassword(user.Password, salt);
+            }
+
+            _context.SaveChanges();
+        }
+
     }
 }
