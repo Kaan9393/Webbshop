@@ -70,6 +70,7 @@ namespace Kladbutiken.Pages
 
             
             _userRepository.CheckForAdmin();
+            _userRepository.UpdateUsersWithoutSalt();
             AllProducts = _productRepository.GetAllProducts().ToList();
             AllCategories = _categoryRepository.GetAllCategorys().ToList();
             AllSelectedProducts = _productRepository.GetProductsByCategory(SelectedCategory).ToList();
