@@ -21,5 +21,10 @@ namespace DataAccess.Repositories
         {
             return _context.Categories.AsEnumerable();
         }
+
+        public IEnumerable<Category> GetCategoriesBySearch(string search)
+        {
+            return _context.Categories.Where(c => c.TypeName.Contains(search));
+        }
     }
 }

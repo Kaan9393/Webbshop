@@ -1,0 +1,118 @@
+﻿@page
+@model Kladbutiken.Pages.SearchPageModel
+@{
+}
+<style>
+    a.list-group-item:hover {
+        background-color: dimgray !important;
+        font-weight: 800;
+        text-decoration: none !important;
+    }
+
+    a.list-group-item {
+        margin-bottom: 4px;
+    }
+
+    div.categoryList {
+        position: fixed !important;
+        z-index: 100 !important;
+        width: 270px;
+    }
+</style>
+<div class="container">
+    <div class="row justify-content-center">
+        @if ((Model.CategoryOutput.Count + Model.ProductOutput.Count) == 1)
+        {
+            <h2 class="my-4">Sökresultat: @(Model.CategoryOutput.Count + Model.ProductOutput.Count) träff, "@Model.SearchInput"</h2>
+        }
+        else
+        {
+            <h2 class="my-4">Sökresultat: @(Model.CategoryOutput.Count + Model.ProductOutput.Count) träffar, "@Model.SearchInput"</h2>
+        }
+    </div>
+    <div class="row">
+        <div class="categoryList">
+            @if (Model.CategoryOutput.Count == 0)
+            {
+                <h3 class="my-4 justify-content-center" style="text-align:center">Inga kategoriträffar!</h3>
+                <hr />
+            }
+            else
+            {
+                @if (Model.CategoryOutput.Count == 1)
+                {
+                    <h3 class="my-4 justify-content-center" style="text-align:center">Kategorier, @Model.CategoryOutput.Count träff</h3>
+                }
+                else
+                {
+                    <h3 class="my-4 justify-content-center" style="text-align:center">Kategorier, @Model.CategoryOutput.Count träffar</h3>
+                }
+                <hr />
+                <div class="list-group">
+                    <div class="card justify-content-center">
+                        @foreach (var category in Model.CategoryOutput)
+                        {
+                            <a class="list-group-item" href=".?SelectedCategory=@category.TypeName" style="background-color: #343a40; border: none !important; color: azure;">@category.TypeName</a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-9">
+            @if (Model.ProductOutput.Count == 0)
+            {
+                <h3 class="my-4 justify-content-center" style="text-align:center">Inga produktträffar!</h3>
+                <hr />
+            }
+            else
+            {
+                @if (Model.ProductOutput.Count == 1)
+                {
+                    <h3 class="my-4 justify-content-center" style="text-align:center">Produkter, @Model.CategoryOutput.Count träff</h3>
+                }
+                else
+                {
+                    <h3 class="my-4 justify-content-center" style="text-align:center">Produkter, @Model.ProductOutput.Count träffar</h3>
+                }
+                <hr />
+                <div class="row justify-content-center">
+                    @foreach (var product in Model.ProductOutput)
+                    {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="/ProductView?SelectedProduct=@product.ID"><img class="card-img-top" src="@product.URLImg" alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="/ProductView?SelectedProduct=@product.ID">@product.ProductName</a>
+                                    </h4>
+                                    <h5>
+                                        @if (product.PriceWithDiscount != product.Price)
+                                        {
+                                            <span><s>@product.Price</s> :-</span>
+
+                                            <span class="text-danger">@Math.Round(product.PriceWithDiscount, 0) :-</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@product.Price :-</span>
+                                        }
+                                    </h5>
+                                    <p class="card-text">@product.Description</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">@product.Category.TypeName</small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        @*Kategorisökningen ska visa produkter, inte kategorinamn...*@
+    </div>
+    <div class="row justify-content-center">
+        <a href="/">Tillbaka till startsidan</a>
+    </div>
+</div>
