@@ -19,5 +19,7 @@ namespace DataAccess.Repositories
         List<Product> GetMostSoldProducts();
         List<Product> GetLatestArrivals();
         List<Product> GetDiscountedProducts();
+        IEnumerable<Product> GetProductsBySearch(string search);
+        IEnumerable<Product> GetCategoriesBySearch(string search);
     }
 }

@@ -20,6 +20,16 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
+        public IEnumerable<Product> GetProductsBySearch(string search)
+        {
+            //return _context.Products.Where(p => p.ProductName.Contains(search)).Include(p => p.Category.TypeName.Contains(search));
+            return _context.Products.Where(p => p.ProductName.Contains(search));
+        }
+        public IEnumerable<Product> GetCategoriesBySearch(string search)
+        {
+            return _context.Products.Where(c => c.Category.TypeName.Contains(search));
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             return _context.Products.Include(p => p.Category).AsEnumerable();
