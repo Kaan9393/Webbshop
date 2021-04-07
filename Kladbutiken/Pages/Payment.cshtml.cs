@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccess.Entities;
 using DataAccess.Models;
 using DataAccess.Repositories;
+using Kladbutiken.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,9 +15,13 @@ namespace Kladbutiken.Pages
 {
     public class PaymentModel : PageModel
     {
-        [BindProperty(SupportsGet = true)]
-        public Guid AddressID { get; set; }
+        private readonly IOrderRepository _orderRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly ICartItemRepository _cartItemRepository;
 
+        public User LoggedInAs { get; set; }
+        public OrderModel OrderModel { get; set; } = new();
+        public Order Order { get; set; }
         public Address Address { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -24,41 +29,34 @@ namespace Kladbutiken.Pages
         
         [BindProperty(SupportsGet = true)]
         public int PaymentChoice { get; set; }
-        public User LoggedInAs { get; set; }
 
-        public OrderModel OrderModel { get; set; } = new();
+        [BindProperty(SupportsGet = true)]
+        public Guid AddressID { get; set; }
 
-        public Order Order { get; set; }
 
-        private readonly IUserRepository _userRepository;
-        private readonly IOrderRepository _orderRepository;
-        private readonly IProductRepository _productRepository;
-        private readonly ICartItemRepository _cartItemRepository;
-
-        public PaymentModel(IUserRepository userRepository, IOrderRepository orderRepository, IProductRepository productRepository, ICartItemRepository cartItemRepository)
+        public PaymentModel(IOrderRepository orderRepository, IProductRepository productRepository, ICartItemRepository cartItemRepository)
         {
-            _userRepository = userRepository;
             _orderRepository = orderRepository;
             _productRepository = productRepository;
             _cartItemRepository = cartItemRepository;
         }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
+            var cart = HttpContext.Session.GetString("cart");
             if (userDetailsCookie != null)
             {
-                LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
-                var cart = HttpContext.Session.GetString("cart");
+                LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
+                
                 if (cart != null)
                 {
-                    LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
                     OrderModel.User = LoggedInAs;
                     foreach (var product in LoggedInAs.ProductCart)
                     {
                         if (OrderModel.ProductList.Any(c => c.Product.ID == product.ID))
                         {
                             var cartItem = OrderModel.ProductList.FirstOrDefault(c => c.Product.ID == product.ID);
-                            cartItem.Quantity += 1;
+                            if (cartItem != null) cartItem.Quantity += 1;
                         }
                         else
                         {

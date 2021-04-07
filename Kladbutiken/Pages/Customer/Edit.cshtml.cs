@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using DataAccess.Entities;
 using DataAccess.Models;
 using DataAccess.Repositories;
+using Kladbutiken.Utils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -33,10 +35,16 @@ namespace Kladbutiken.Pages
             _addressRepository = addressRepository;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+            var cart = HttpContext.Session.GetString("cart");
+            if (userDetailsCookie == null)
+            {
+                RedirectToPage("/login");
+            }
+
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
         }
 
         public IActionResult OnPost()
@@ -59,15 +67,15 @@ namespace Kladbutiken.Pages
             return RedirectToPage("/Index");
         }
 
-        public IActionResult OnPostChangePassword()
+        public async Task<IActionResult> OnPostChangePassword()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            if (userDetailsCookie is null)
+            if (userDetailsCookie == null)
             {
-                Forbid();
+                RedirectToPage("/login");
             }
 
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+            LoggedInAs = await UserCookieHandler.GetUserByCookie(userDetailsCookie);
 
             var isPasswordModelValid = true;
             var modelStateKeys = ModelState.FindKeysWithPrefix("PasswordModel");

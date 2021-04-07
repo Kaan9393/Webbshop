@@ -55,7 +55,7 @@ namespace DataAccess.Repositories
         {
             var selectedCategory = _context.Categories.Single(c => c.ID == categoryID);
 
-            var p = new Product()
+            var p = new Product
             {
                 ID = Guid.NewGuid(),
                 ProductName = productModel.ProductName,
@@ -84,8 +84,11 @@ namespace DataAccess.Repositories
                 foreach (var item in orderModel.ProductList)
                 {
                     var saldo = products.FirstOrDefault(p => p.ID == item.Product.ID);
-                    saldo.StockBalance -= item.Quantity;
-                    saldo.Sales += item.Quantity;
+                    if (saldo != null)
+                    {
+                        saldo.StockBalance -= item.Quantity;
+                        saldo.Sales += item.Quantity;
+                    }
                 }
             
             _context.SaveChanges();

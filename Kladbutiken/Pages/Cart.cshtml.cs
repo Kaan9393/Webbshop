@@ -4,25 +4,19 @@ using System.Linq;
 using System.Text.Json;
 using DataAccess.Models;
 using DataAccess.Entities;
-using DataAccess.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
+using Kladbutiken.Utils;
 
 namespace Kladbutiken.Pages
 {
     public class CartModel : PageModel
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IProductRepository _productRepository;
-
-        public List<CartItemModel> CartList { get; set; }
-
+        public List<CartItemModel> CartList { get; set; } = new();
         public User LoggedInAs { get; set; }
-
         public double TotalAmount { get; set; }
-
         public Address AddressChoice { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -31,28 +25,20 @@ namespace Kladbutiken.Pages
         [BindProperty(SupportsGet = true)]
         public int PaymentChoice { get; set; }
 
-        [BindProperty]
-        public CartPaymentModel PaymentModel { get; set; }
-
         [BindProperty(SupportsGet = true)]
         public Guid? AddressID { get; set; }
 
-        public CartModel(IUserRepository userRepository, IProductRepository productRepository)
-        {
-            _userRepository = userRepository;
-            _productRepository = productRepository;
-            CartList = new();
-            
-        }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
             if (userDetailsCookie == null)
             {
                 return RedirectToPage("/login");
             }
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoadCart();
+
+            LoggedInAs = await UserCookieHandler.GetUserByCookie(userDetailsCookie);
+            await LoadCart();
+
             if (AddressID!=null)
             {
                 AddressChoice = LoggedInAs.Addresses.FirstOrDefault(a=>a.ID==AddressID);
@@ -61,72 +47,58 @@ namespace Kladbutiken.Pages
             return Page();
         }
 
-        public IActionResult OnPostRemove(Guid id)
+        public async Task<IActionResult> OnPostRemove(Guid id)
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-
+            var cart = HttpContext.Session.GetString("cart");
             if (userDetailsCookie == null)
             {
                 return RedirectToPage("/login");
             }
 
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
 
-            var cart = HttpContext.Session.GetString("cart");
             if (cart != null)
             {
-                LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
+                var product = LoggedInAs.ProductCart.FirstOrDefault(p => p.ID == id);
+                LoggedInAs.ProductCart.Remove(product);
+
+                var productIds = LoggedInAs.ProductCart.Select(item => item.ID).ToList();
+                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds)); 
             }
-
-            var product = LoggedInAs.ProductCart.FirstOrDefault(p => p.ID == id);
-            LoggedInAs.ProductCart.Remove(product);
-
-            List<Guid> productIds = new();
-            foreach (var item in LoggedInAs.ProductCart)
-            {
-                productIds.Add(item.ID);
-            }
-
-            HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
 
             return RedirectToPage("/Cart");
         }
 
-        public IActionResult OnPostAdd(Guid id)
+        public async Task<IActionResult> OnPostAdd(Guid id)
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-
+            var cart = HttpContext.Session.GetString("cart");
             if (userDetailsCookie == null)
             {
                 return RedirectToPage("/login");
             }
 
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
-
-            var cart = HttpContext.Session.GetString("cart");
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
 
             if (cart != null)
             {
-                LoggedInAs.ProductCart = _productRepository.GetProductsByList(JsonSerializer.Deserialize<List<Guid>>(cart));
-
                 var product = LoggedInAs.ProductCart.FirstOrDefault(p => p.ID == id);
                 LoggedInAs.ProductCart.Add(product);
 
-
-                List<Guid> productIds = LoggedInAs.ProductCart.Select(p => p.ID).ToList();
-
+                var productIds = LoggedInAs.ProductCart.Select(p => p.ID).ToList();
                 HttpContext.Session.SetString("cart", JsonSerializer.Serialize(productIds));
             }
 
             return RedirectToPage("/Cart");
         }
-        public void LoadCart()
+
+        private async Task LoadCart()
         {
             var cart = HttpContext.Session.GetString("cart");
             if (cart != null)
             {
-                var productIds = JsonSerializer.Deserialize<List<Guid>>(cart);
-                LoggedInAs.ProductCart = _productRepository.GetProductsByList(productIds);
+                LoggedInAs.ProductCart = await UserCookieHandler.GetProductCartByCookie(cart);
             }
 
             foreach (var product in LoggedInAs.ProductCart)
@@ -134,11 +106,11 @@ namespace Kladbutiken.Pages
                 if (CartList.Any(c => c.Product.ID == product.ID))
                 {
                     var cartItem = CartList.FirstOrDefault(c => c.Product.ID == product.ID);
-                    cartItem.Quantity += 1;
+                    if (cartItem != null) cartItem.Quantity += 1;
                 }
                 else
                 {
-                    var cartItem = new CartItemModel() { Product = product, Quantity = 1 };
+                    var cartItem = new CartItemModel { Product = product, Quantity = 1 };
                     CartList.Add(cartItem);
                 }
             }

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using DataAccess.Entities;
 using DataAccess.Models;
 using DataAccess.Repositories;
+using Kladbutiken.Utils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -15,7 +17,6 @@ namespace Kladbutiken.Pages.Customer
         private readonly IUserRepository _userRepository;
         private readonly IAddressRepository _addressRepository;
 
-
         public AddAddressModel(IUserRepository userRepository, IAddressRepository addressRepository)
         {
             _userRepository = userRepository;
@@ -24,19 +25,30 @@ namespace Kladbutiken.Pages.Customer
         public User LoggedInAs { get; set; }
 
         [BindProperty]
-        public AddressModel Model { get; set; } = new AddressModel();
+        public AddressModel Model { get; set; } = new();
 
-        public void OnGet()
+        public async Task OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+            var cart = HttpContext.Session.GetString("cart");
+            if (userDetailsCookie == null)
+            {
+                RedirectToPage("/login");
+            }
+
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+            if (userDetailsCookie == null)
+            {
+                RedirectToPage("/login");
+            }
 
+            LoggedInAs = await UserCookieHandler.GetUserByCookie(userDetailsCookie);
             _addressRepository.AddAddress(Model, LoggedInAs);
+
             return RedirectToPage("/Customer/Profile");
         }
     }
