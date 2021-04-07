@@ -6,6 +6,6 @@ namespace DataAccess.Repositories
 {
     public interface ICartItemRepository
     {
-        void CreateCartItem(List<CartItemModel> productList, Order order);
+        List<CartItem> CreateCartItem(List<CartItemModel> productList);
     }
 }

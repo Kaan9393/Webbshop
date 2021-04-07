@@ -47,6 +47,7 @@ namespace Kladbutiken
             services.AddDbContext<DataAccess.Data.MainContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
+                options.EnableSensitiveDataLogging();
             });
 
             services.AddScoped<DataAccess.Data.IMainContext, DataAccess.Data.MainContext>();

@@ -14,31 +14,31 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].URLImg)
+                @Html.DisplayNameFor(model => model.Products[0].URLImg)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].Price)
+                @Html.DisplayNameFor(model => model.Products[0].Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].StockBalance)
+                @Html.DisplayNameFor(model => model.Products[0].StockBalance)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].Discount)
+                @Html.DisplayNameFor(model => model.Products[0].Discount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].Description)
+                @Html.DisplayNameFor(model => model.Products[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].Date)
+                @Html.DisplayNameFor(model => model.Products[0].Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].Sales)
+                @Html.DisplayNameFor(model => model.Products[0].Sales)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Product) {
+@foreach (var item in Model.Products) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.URLImg)

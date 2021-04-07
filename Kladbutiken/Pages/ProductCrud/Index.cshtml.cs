@@ -1,50 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Data;
 using DataAccess.Entities;
-using DataAccess.Repositories;
+using Kladbutiken.Utils;
+using Microsoft.AspNetCore.Http;
 
 namespace Kladbutiken.Pages.ProductCrud
 {
     public class IndexModel : PageModel
     {
-        private readonly DataAccess.Data.MainContext _context;
-        private readonly IUserRepository _userRepository;
+        private readonly MainContext _context;
 
+        public IList<Product> Products { get;set; }
         public User LoggedInAs { get; set; }
 
-        public IndexModel(DataAccess.Data.MainContext context, IUserRepository userRepository)
+        public IndexModel(MainContext context)
         {
             _context = context;
-            _userRepository = userRepository;
         }
-
-        public IList<Product> Product { get;set; }
-
+        
         public async Task<IActionResult> OnGetAsync()
         {
-            Product = await _context.Products.ToListAsync();
-            var userDetailsCookie = Request.Cookies["UserDetails"];
+            Products = await _context.Products.ToListAsync();
 
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+            var cart = HttpContext.Session.GetString("cart");
             if (userDetailsCookie == null)
             {
                 return RedirectToPage("/login");
             }
 
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
 
-            if (user.Role != "Admin")
+            if (LoggedInAs.Role != "Admin")
             {
                 return RedirectToPage("/index");
             }
-
-            LoggedInAs.EmailAddress = user.EmailAddress;
 
             return Page();
         }
