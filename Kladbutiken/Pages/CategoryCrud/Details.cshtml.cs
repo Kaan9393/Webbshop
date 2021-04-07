@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Repositories;
+using Microsoft.AspNetCore.Http;
+using Kladbutiken.Utils;
 
 namespace Kladbutiken.Pages.CategoryCrud
 {
@@ -26,19 +28,23 @@ namespace Kladbutiken.Pages.CategoryCrud
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
-            var userDetailsCookie = Request.Cookies["UserDetails"];
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
-            LoggedInAs.EmailAddress = user.EmailAddress;
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            Category = await _context.Categories.FirstOrDefaultAsync(m => m.ID == id);
+            var cart = HttpContext.Session.GetString("cart");
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+            if (userDetailsCookie == null)
+            {
+                return RedirectToPage("/login");
+            }
+            
 
-            if (Category == null)
+            //Category = await _context.Categories.FirstOrDefaultAsync(m => m.ID == id);
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
+
+            if (LoggedInAs.Role != "Admin")
             {
                 return NotFound();
             }
