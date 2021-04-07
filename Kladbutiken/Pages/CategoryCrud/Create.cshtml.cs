@@ -8,27 +8,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Repositories;
+using Kladbutiken.Utils;
 
 namespace Kladbutiken.Pages.CategoryCrud
 {
     public class CreateModel : PageModel
     {
         private readonly DataAccess.Data.MainContext _context;
-        private readonly IUserRepository _userRepository;
 
-        public CreateModel(DataAccess.Data.MainContext context, IUserRepository userRepository)
+        public CreateModel(MainContext context)
         {
             _context = context;
-            _userRepository = userRepository;
         }
         public User LoggedInAs { get; set; }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult>OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
-            LoggedInAs.EmailAddress = user.EmailAddress;
+            LoggedInAs = await UserCookieHandler.GetUserByCookie(userDetailsCookie);
 
             return Page();
         }
