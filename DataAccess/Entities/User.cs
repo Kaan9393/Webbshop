@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entities
 {
@@ -16,8 +17,10 @@ namespace DataAccess.Entities
 
         [Required]
         [MinLength(8,ErrorMessage ="Lösenordet måste innehålla minst 8 och max 50 tecken"),MaxLength(50)]
+        [JsonIgnore]
         public string Password { get; set; }
 
+        [JsonIgnore]
         public byte[] Salt { get; set; }
 
         [Required]

@@ -7,6 +7,8 @@ using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataAccess.Enums;
+using Kladbutiken.Utils;
+using Microsoft.AspNetCore.Http;
 
 namespace Kladbutiken.Pages.Customer
 {
@@ -22,12 +24,13 @@ namespace Kladbutiken.Pages.Customer
         {
             _userRepository = userRepository;
         }
-        public void OnGet()
+        public async Task OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
+            var cart = HttpContext.Session.GetString("cart");
             if (userDetailsCookie != null)
             {
-                LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+                LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
             }
         }
     }

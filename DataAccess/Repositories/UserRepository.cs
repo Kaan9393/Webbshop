@@ -3,10 +3,7 @@ using DataAccess.Entities;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using DataAccess.Utils;
 
 namespace DataAccess.Repositories
@@ -103,20 +100,6 @@ namespace DataAccess.Repositories
                 _context.SaveChanges();
             }
         }
-
-        public void UpdateUsersWithoutSalt()
-        {
-            var users = _context.Users.Where(u => u.Salt == null).ToList();
-
-            foreach (var user in users)
-            {
-                var salt = PasswordHasher.SaltGenerator();
-                user.Salt = salt;
-                user.Password = PasswordHasher.HashPassword(user.Password, salt);
-            }
-
-            _context.SaveChanges();
-        }
-
+        
     }
 }

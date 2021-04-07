@@ -14,6 +14,5 @@ namespace DataAccess.Repositories
         User LoginUser(UserLoginModel userLogin);
         void DeleteUser(Guid userID);
         void UpdatePassword(Guid userId, string newPassword);
-        void UpdateUsersWithoutSalt();
     }
 }

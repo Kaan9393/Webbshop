@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entities
 {
@@ -13,6 +14,7 @@ namespace DataAccess.Entities
         public string OrderNumber { get; set; }
 
         [Required]
+        [JsonIgnore]
         public User User { get; set; }
 
         public DateTime OrderDate { get; set; }

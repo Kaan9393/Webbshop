@@ -11,17 +11,10 @@ namespace Kladbutiken.Pages
 {
     public class LogOutModel : PageModel
     {
-        private readonly IUserRepository _userRepository;
-
-        public LogOutModel(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
-
-        public User LoggedInAs { get; set; }
         public IActionResult OnGet()
         {
             Response.Cookies.Delete("UserDetails");
+            HttpContext.Session.Remove("cart");
 
             return RedirectToPage("/index");
         }
