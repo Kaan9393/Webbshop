@@ -14,7 +14,6 @@ namespace Kladbutiken.Pages
 {
     public class SearchPageModel : PageModel
     {
-        private readonly ILogger<SearchPageModel> _logger;
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
@@ -33,10 +32,9 @@ namespace Kladbutiken.Pages
 
         public List<Product> ProductOutput { get; set; }
 
-        public List<Category> CategoryOutput { get; set; }
-        public SearchPageModel(ILogger<SearchPageModel> logger, IUserRepository userRepository, IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public List<Product> CategoryOutput { get; set; }
+        public SearchPageModel(IUserRepository userRepository, IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
-            _logger = logger;
             _userRepository = userRepository;
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
@@ -56,9 +54,8 @@ namespace Kladbutiken.Pages
             }
 
             ProductOutput = _productRepository.GetProductsBySearch(SearchInput).ToList();
-            CategoryOutput = _categoryRepository.GetCategoriesBySearch(SearchInput).ToList();
+            CategoryOutput = _productRepository.GetCategoriesBySearch(SearchInput).ToList();
 
-            _userRepository.CheckForAdmin();
             AllProducts = _productRepository.GetAllProducts().ToList();
             AllCategories = _categoryRepository.GetAllCategorys().ToList();
             AllSelectedProducts = _productRepository.GetProductsByCategory(SelectedCategory).ToList();
