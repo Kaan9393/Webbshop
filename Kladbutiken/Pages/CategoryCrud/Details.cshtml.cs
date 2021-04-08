@@ -40,15 +40,21 @@ namespace Kladbutiken.Pages.CategoryCrud
                 return RedirectToPage("/login");
             }
             
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
+            if (LoggedInAs.Role != "Admin")
+            {
+                return RedirectToPage("/index");
+            }
 
             Category = await _context.Categories.FirstOrDefaultAsync(m => m.ID == id);
-            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
-
             if (Category == null)
             {
                 return NotFound();
             }
+
+
             return Page();
+
         }
     }
 }
