@@ -47,13 +47,7 @@ namespace DataAccess.Repositories
 
         public List<Product> GetProductsByList(List<Guid> guids)
         {
-            List<Product> products = new();
-            foreach (var item in guids)
-            {
-                var product =_context.Products.FirstOrDefault(p => p.ID == item);
-                products.Add(product);
-            }
-            return products;
+            return guids.Select(item => _context.Products.FirstOrDefault(p => p.ID == item)).ToList();
         }
 
         public double GetPriceWithDiscount(double price, double discount)
@@ -89,23 +83,19 @@ namespace DataAccess.Repositories
         }
         public void UpdateSaldo(OrderModel orderModel)
         {
-            var products = _context.Products.ToList();
+            foreach (var item in orderModel.ProductList)
+            {
+                item.Product.Sales += item.Quantity;
+                item.Product.StockBalance -= item.Quantity;
 
-                foreach (var item in orderModel.ProductList)
-                {
-                    var saldo = products.FirstOrDefault(p => p.ID == item.Product.ID);
-                    if (saldo != null)
-                    {
-                        saldo.StockBalance -= item.Quantity;
-                        saldo.Sales += item.Quantity;
-                    }
-                }
-            
+                _context.Products.Attach(item.Product).State = EntityState.Modified;
+            }
+
             _context.SaveChanges();
         }
         public List<Product> GetMostSoldProducts()
         {
-            return _context.Products.OrderByDescending(p=>p.Sales).Take(3).ToList();
+            return _context.Products.OrderByDescending(p => p.Sales).Take(3).ToList();
         }
         public List<Product> GetLatestArrivals()
         {

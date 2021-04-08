@@ -3,6 +3,7 @@ using DataAccess.Entities;
 using DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
@@ -15,7 +16,7 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public void CreateCartItem(List<CartItemModel> productList, Order order)
+        public List<CartItem> CreateCartItem(List<CartItemModel> productList)
         {
             List<CartItem> cartItems = new();
 
@@ -29,10 +30,10 @@ namespace DataAccess.Repositories
                 };
                 cartItems.Add(cartItem);
             }
-
-            order.ProductList = cartItems;
+            
             _context.CartItem.AddRange(cartItems);
             _context.SaveChanges();
+            return cartItems;
         }
     }
 }

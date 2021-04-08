@@ -47,7 +47,7 @@ namespace Kladbutiken.Pages
             if (userDetailsCookie != null)
             {
                 LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
-                
+
                 if (cart != null)
                 {
                     OrderModel.User = LoggedInAs;
@@ -70,7 +70,7 @@ namespace Kladbutiken.Pages
                     Order = _orderRepository.CreateOrder(OrderModel);
                     _productRepository.UpdateSaldo(OrderModel);
 
-                    _cartItemRepository.CreateCartItem(OrderModel.ProductList, Order);
+                    Order.ProductList = _cartItemRepository.CreateCartItem(OrderModel.ProductList);
                     
                     HttpContext.Session.SetString("cart", JsonSerializer.Serialize(new List<Guid>()));
                     LoggedInAs.ProductCart.Clear();
