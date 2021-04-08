@@ -8,17 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Repositories;
+using Kladbutiken.Utils;
+using Microsoft.AspNetCore.Http;
 
 namespace Kladbutiken.Pages.CategoryCrud
 {
     public class DeleteModel : PageModel
     {
-        private readonly DataAccess.Data.MainContext _context;
-        private readonly IUserRepository _userRepository;
-        public DeleteModel(DataAccess.Data.MainContext context, IUserRepository userRepository)
+        private readonly MainContext _context;
+        public DeleteModel(MainContext context)
         {
             _context = context;
-            _userRepository = userRepository;
         }
         public User LoggedInAs { get; set; }
 
@@ -28,9 +28,17 @@ namespace Kladbutiken.Pages.CategoryCrud
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
-            LoggedInAs.EmailAddress = user.EmailAddress;
+            if (userDetailsCookie == null)
+            {
+                return RedirectToPage("/login");
+            }
+            var cart = HttpContext.Session.GetString("cart");
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
+
+            if (LoggedInAs.Role != "Admin")
+            {
+                return RedirectToPage("/index");
+            }
 
             if (id == null)
             {
