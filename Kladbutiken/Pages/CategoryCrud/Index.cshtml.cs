@@ -8,42 +8,39 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Repositories;
+using Microsoft.AspNetCore.Http;
+using Kladbutiken.Utils;
 
 namespace Kladbutiken.Pages.CategoryCrud
 {
     public class IndexModel : PageModel
     {
         private readonly DataAccess.Data.MainContext _context;
-        private readonly IUserRepository _userRepository;
 
-        public IndexModel(DataAccess.Data.MainContext context, IUserRepository userRepository)
+        public IndexModel(DataAccess.Data.MainContext context)
         {
             _context = context;
-            _userRepository = userRepository;
         }
         public User LoggedInAs { get; set; }
 
-        public IList<Category> Category { get;set; }
+        public IList<Category> Categories { get;set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Category = await _context.Categories.ToListAsync();
+            Categories = await _context.Categories.ToListAsync();
+            var cart = HttpContext.Session.GetString("cart");
             var userDetailsCookie = Request.Cookies["UserDetails"];
-
             if (userDetailsCookie == null)
             {
                 return RedirectToPage("/login");
             }
 
-            var user = _userRepository.GetUserByEmail(userDetailsCookie);
-            LoggedInAs = user;
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
 
-            if (user.Role != "Admin")
+            if (LoggedInAs.Role != "Admin")
             {
                 return RedirectToPage("/index");
             }
-
-            LoggedInAs.EmailAddress = user.EmailAddress;
 
             return Page();
         }
