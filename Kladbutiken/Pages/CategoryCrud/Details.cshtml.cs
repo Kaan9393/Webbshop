@@ -41,7 +41,7 @@ namespace Kladbutiken.Pages.CategoryCrud
             }
             
 
-            //Category = await _context.Categories.FirstOrDefaultAsync(m => m.ID == id);
+            Category = await _context.Categories.FirstOrDefaultAsync(m => m.ID == id);
             LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
 
             if (LoggedInAs.Role != "Admin")
