@@ -9,12 +9,13 @@ using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Repositories;
 using Kladbutiken.Utils;
+using Microsoft.AspNetCore.Http;
 
 namespace Kladbutiken.Pages.CategoryCrud
 {
     public class CreateModel : PageModel
     {
-        private readonly DataAccess.Data.MainContext _context;
+        private readonly MainContext _context;
 
         public CreateModel(MainContext context)
         {
@@ -25,7 +26,12 @@ namespace Kladbutiken.Pages.CategoryCrud
         public async Task<IActionResult>OnGet()
         {
             var userDetailsCookie = Request.Cookies["UserDetails"];
-            LoggedInAs = await UserCookieHandler.GetUserByCookie(userDetailsCookie);
+            if (userDetailsCookie == null)
+            {
+                return RedirectToPage("Login");
+            }
+            var cart = HttpContext.Session.GetString("cart");
+            LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie,cart);
 
             return Page();
         }
