@@ -35,6 +35,11 @@ namespace Kladbutiken.Pages.CategoryCrud
             var cart = HttpContext.Session.GetString("cart");
             LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
 
+            if (LoggedInAs.Role != "Admin")
+            {
+                return RedirectToPage("/index");
+            }
+
             if (id == null)
             {
                 return NotFound();
