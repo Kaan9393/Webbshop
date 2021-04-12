@@ -2,7 +2,9 @@
 using DataAccess.Entities;
 using DataAccess.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
@@ -26,8 +28,7 @@ namespace DataAccess.Repositories
                 OrderDate = DateTime.Now,
                 ShipmentChoice = order.ShipmentChoice,
                 PaymentChoice = order.PaymentChoice,
-                Address = $"{order.ShippingAddress.Street},{order.ShippingAddress.PostalCode},{order.ShippingAddress.City}"
-            
+                Address = $"{order.ShippingAddress.Street}, {order.ShippingAddress.PostalCode}, {order.ShippingAddress.City}"
             };
             newOrder.OrderNumber = $"{newOrder.ID}{newOrder.OrderDate}".GetHashCode().ToString();
 
@@ -36,13 +37,20 @@ namespace DataAccess.Repositories
                 newOrder.OrderNumber= newOrder.OrderNumber.Remove(0,1);
 
             }
+
             user.Orders.Add(newOrder);
             var returnOrder =_context.Orders.Add(newOrder);
             _context.SaveChanges();
 
-
             return returnOrder.Entity;
+        }
 
+        public void UpdateOrderProductList(Order order, List<CartItem> productList)
+        {
+            order.ProductList = productList;
+            _context.Orders.Attach(order).State = EntityState.Modified;
+
+            _context.SaveChanges();
         }
         
     }
