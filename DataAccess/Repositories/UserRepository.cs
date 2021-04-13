@@ -35,6 +35,14 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
+        public bool ComparePassword(Guid userId, string passwordToCompare)
+        {
+            var user = _context.Users.Single(u => u.ID == userId);
+            var hashedPasswordToCompare = PasswordHasher.HashPassword(passwordToCompare, user.Salt);
+
+            return user.Password.Equals(hashedPasswordToCompare);
+        }
+
         public void UpdatePassword(Guid userId, string newPassword)
         {
             var salt = PasswordHasher.SaltGenerator();

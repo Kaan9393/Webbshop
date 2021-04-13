@@ -83,7 +83,7 @@ namespace Kladbutiken.Pages
             {
                 if (key.Key.Contains("CurrentPassword"))
                 {
-                    if (PasswordModel.CurrentPassword != LoggedInAs.Password)
+                    if (!_userRepository.ComparePassword(ID, PasswordModel.CurrentPassword))
                     {
                         key.Value.ValidationState = ModelValidationState.Invalid;
                         key.Value.Errors.Add("Fel lösenord!");
@@ -100,10 +100,8 @@ namespace Kladbutiken.Pages
                 _userRepository.UpdatePassword(ID, PasswordModel.NewPassword);
                 return RedirectToPage("/Customer/Profile");
             }
-            else
-            {
-                return Page();
-            }
+
+            return Page();
         }
     }
 }
