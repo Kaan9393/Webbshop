@@ -16,6 +16,11 @@ namespace DataAccess.Repositories
         {
             _context = context;
         }
+
+        public List<Order> GetOrderByStatus(string status)
+        {
+            return _context.Orders.Where(o => o.Status.Equals(status)).ToList();
+        }
         
         public Order CreateOrder(OrderModel order)
         {

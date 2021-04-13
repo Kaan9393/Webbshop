@@ -15,29 +15,44 @@ namespace Kladbutiken.Pages.AdminOrder
     {
 
         private readonly IUserRepository _userRepository;
-        private readonly IProductRepository _productRepository;
-        private readonly IMainContext _context;
+        private readonly IOrderRepository _orderRepository;
 
         public User LoggedInAs { get; set; }
-
-        public OrderDeliveryCheckModel(IUserRepository userRepository, IProductRepository productRepository, IMainContext context)
-        {
-            _userRepository = userRepository;
-            _productRepository = productRepository;
-            _context = context;
-        }
-
-
         public List<Order> AllOrders { get; set; }
+
+        [BindProperty(SupportsGet = true)]
         public string OrderStatus { get; set; }
 
-
-        public List<Order> GetOrders()
+        public OrderDeliveryCheckModel(IUserRepository userRepository, IOrderRepository orderRepository)
         {
-           
+            _userRepository = userRepository;
+            _orderRepository = orderRepository;
         }
-        public void OnGet()
+
+        public IActionResult OnGet()
         {
+            var userDetailsCookie = Request.Cookies["UserDetails"];
+
+            if (userDetailsCookie == null)
+            {
+                return RedirectToPage("/login");
+            }
+
+            LoggedInAs = _userRepository.GetUserByEmail(userDetailsCookie);
+
+            if (LoggedInAs.Role != "Admin")
+            {
+                return RedirectToPage("/index");
+            }
+
+            if (OrderStatus is null)
+            {
+                return NotFound();
+            }
+
+            AllOrders = _orderRepository.GetOrderByStatus(OrderStatus);
+
+            return Page();
         }
     }
 }
