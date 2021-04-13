@@ -23,6 +23,9 @@ namespace Kladbutiken.Pages.AdminOrder
         [BindProperty(SupportsGet = true)]
         public string OrderStatus { get; set; }
 
+        [BindProperty]
+        public Guid OrderId { get; set; }
+
         public OrderDeliveryCheckModel(IUserRepository userRepository, IOrderRepository orderRepository)
         {
             _userRepository = userRepository;
@@ -53,6 +56,17 @@ namespace Kladbutiken.Pages.AdminOrder
             AllOrders = _orderRepository.GetOrderByStatus(OrderStatus);
 
             return Page();
+        }
+
+        public IActionResult OnPostProceed()
+        {
+            _orderRepository.UpdateOrderStatus(OrderId);
+            return Redirect($"/AdminOrder/OrderDeliveryCheck?orderstatus={OrderStatus}");
+        }
+        public IActionResult OnPostCancel()
+        {
+            _orderRepository.CancelOrder(OrderId);
+            return Redirect($"/AdminOrder/OrderDeliveryCheck?orderstatus={OrderStatus}");
         }
     }
 }

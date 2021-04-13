@@ -29,7 +29,7 @@ namespace DataAccess.Repositories
             Order newOrder = new()
             {
                 ID = Guid.NewGuid(),
-                Status = "Skickad",
+                Status = "Mottagen",
                 OrderDate = DateTime.Now,
                 ShipmentChoice = order.ShipmentChoice,
                 PaymentChoice = order.PaymentChoice,
@@ -57,6 +57,29 @@ namespace DataAccess.Repositories
 
             _context.SaveChanges();
         }
-        
+
+        public void UpdateOrderStatus(Guid orderId)
+        {
+            var orderToUpdate = _context.Orders.FirstOrDefault(o => o.ID == orderId);
+            switch (orderToUpdate.Status)
+            {
+                case "Mottagen":
+                    orderToUpdate.Status = "Behandlas";
+                    break;
+                case "Behandlas":
+                    orderToUpdate.Status = "Skickad";
+                    break;
+                default:
+                    break;
+            }
+            _context.SaveChanges();
+        }
+
+        public void CancelOrder(Guid orderId)
+        {
+            var orderToCancel = _context.Orders.FirstOrDefault(o => o.ID == orderId);
+            orderToCancel.Status = "Avbruten";
+            _context.SaveChanges();
+        }
     }
 }
