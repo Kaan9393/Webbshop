@@ -2,38 +2,42 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAccess.Data;
 using DataAccess.Entities;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Kladbutiken.Pages.AdminOrder
 {
-    public class OrderDeliveryCheckModel : PageModel
+    public class OrderDetailViewModel : PageModel
     {
-
         private readonly IUserRepository _userRepository;
         private readonly IOrderRepository _orderRepository;
 
         public User LoggedInAs { get; set; }
-        public List<Order> AllOrders { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string OrderStatus { get; set; }
+        [BindProperty]
+        public Order SelectedOrder { get; set; }
 
         [BindProperty(SupportsGet =true)]
         public Guid OrderId { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string OrderStatus { get; set; }
+        [BindProperty]
+        public double TotalPrice { get; set; }
 
-        public OrderDeliveryCheckModel(IUserRepository userRepository, IOrderRepository orderRepository)
+        public OrderDetailViewModel(IUserRepository userRepository, IOrderRepository orderRepository)
         {
             _userRepository = userRepository;
             _orderRepository = orderRepository;
         }
-
         public IActionResult OnGet()
         {
+            SelectedOrder = _orderRepository.GetOrderById(OrderId);
+            foreach (var item in SelectedOrder.ProductList)
+            {
+                TotalPrice += item.Product.Price;
+            }
+
             var userDetailsCookie = Request.Cookies["UserDetails"];
 
             if (userDetailsCookie == null)
@@ -48,25 +52,18 @@ namespace Kladbutiken.Pages.AdminOrder
                 return RedirectToPage("/index");
             }
 
-            if (OrderStatus is null)
-            {
-                return NotFound();
-            }
-
-            AllOrders = _orderRepository.GetOrderByStatus(OrderStatus);
-
+            
             return Page();
         }
-
         public IActionResult OnPostProceed()
         {
             _orderRepository.UpdateOrderStatus(OrderId);
-            return Redirect($"/AdminOrder/OrderDeliveryCheck?orderstatus={OrderStatus}");
+            return Redirect($"/AdminOrder/OrderDetailView?orderId={OrderId}");
         }
         public IActionResult OnPostCancel()
         {
             _orderRepository.CancelOrder(OrderId);
-            return Redirect($"/AdminOrder/OrderDeliveryCheck?orderstatus={OrderStatus}");
+            return Redirect($"/AdminOrder/OrderDetailView?orderId={OrderId}");
         }
     }
 }

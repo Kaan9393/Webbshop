@@ -1,0 +1,97 @@
+﻿@page
+@model Kladbutiken.Pages.AdminOrder.OrderDetailViewModel
+@using DataAccess.Enums;
+@{
+
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="mt-5">
+            <div class="card my-4">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    Kund : @Model.SelectedOrder.User.EmailAddress
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <h3>Ordernummer: @Model.SelectedOrder.OrderNumber</h3>
+            </div>
+            <div class="card">
+                <div @*class="table-responsive table-striped table-hover"*@>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        
+                        <thead>
+                            <tr>
+                                <th>LeveransAddress</th>
+                                <th>Datum</th>
+                                <th>Betalsätt</th>
+                                <th>Fraktsätt</th>
+                                <th>Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@Model.SelectedOrder.Address</td>
+                                <td>@Model.SelectedOrder.OrderDate.ToShortDateString()</td>
+                                <td>@((Payment)Model.SelectedOrder.PaymentChoice)</td>
+                                <td>@((Shipment)Model.SelectedOrder.ShipmentChoice)</td>
+                                <td>@Model.SelectedOrder.Status</td>
+
+                                @if (Model.SelectedOrder.Status == "Mottagen" || Model.SelectedOrder.Status == "Behandlas")
+                                {
+                                    <td>
+                                        <form method="post" asp-page-handler="proceed">
+                                            <input type="hidden" asp-for="OrderId" value="@Model.SelectedOrder.ID" />
+                                            <input type="hidden" asp-for="OrderStatus" value="@Model.OrderStatus" />
+                                            <button class="btn-info">Ändra status</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="post" asp-page-handler="cancel">
+                                            <input type="hidden" asp-for="OrderId" value="@Model.SelectedOrder.ID" />
+                                            <input type="hidden" asp-for="OrderStatus" value="@Model.OrderStatus" />
+                                            <button class="btn-danger">Avbryt</button>
+                                        </form>
+                                    </td>
+                                }
+
+                            </tr>
+                            <tr>
+                                <th><h6>Produkter</h6></th>
+                            </tr>
+                        @foreach (var product in Model.SelectedOrder.ProductList)
+                        {
+                            <tr>
+
+                                <td>
+                                    <p>Produktnamn: @product.Product.ProductName</p>
+                                </td>
+                                <td>
+                                    <p>Antal: @product.Quantity</p>
+
+                                </td>
+                                <td>
+
+                                    <p>pris: @product.Product.Price</p>
+                                </td>
+                                <td>
+                                    <img src="@product.Product.URLImg" style="width:100px" />
+
+                                </td>
+
+                            </tr>
+                        }
+                        <tr>
+                            <td>Total summa: @Model.TotalPrice :-</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

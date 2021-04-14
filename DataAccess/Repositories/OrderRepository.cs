@@ -19,7 +19,7 @@ namespace DataAccess.Repositories
 
         public List<Order> GetOrderByStatus(string status)
         {
-            return _context.Orders.Where(o => o.Status.Equals(status)).ToList();
+            return _context.Orders.Include(o=>o.User).Where(o => o.Status.Equals(status)).ToList();
         }
         
         public Order CreateOrder(OrderModel order)
@@ -81,5 +81,9 @@ namespace DataAccess.Repositories
             orderToCancel.Status = "Avbruten";
             _context.SaveChanges();
         }
+        public Order GetOrderById(Guid orderId)
+        {
+            return _context.Orders.Include(o=>o.User).Include(o=>o.ProductList).ThenInclude(p=>p.Product).FirstOrDefault(o => o.ID==orderId);
+        }
     }
-}
+} 

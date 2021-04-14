@@ -12,5 +12,6 @@ namespace DataAccess.Repositories
         List<Order> GetOrderByStatus(string status);
         void UpdateOrderStatus(Guid Id);
         void CancelOrder(Guid orderId);
+        Order GetOrderById(Guid orderId);
     }
 }
