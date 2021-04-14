@@ -58,32 +58,27 @@
 
                             </tr>
                             <tr>
-                                <th><h6>Produkter</h6></th>
+                                <th><h6><strong>Produkter</strong></h6></th>
                             </tr>
                         @foreach (var product in Model.SelectedOrder.ProductList)
                         {
                             <tr>
-
                                 <td>
                                     <p>Produktnamn: @product.Product.ProductName</p>
                                 </td>
                                 <td>
                                     <p>Antal: @product.Quantity</p>
-
                                 </td>
                                 <td>
-
                                     <p>pris: @product.Product.Price</p>
                                 </td>
                                 <td>
                                     <img src="@product.Product.URLImg" style="width:100px" />
-
                                 </td>
-
                             </tr>
                         }
                         <tr>
-                            <td>Total summa: @Model.TotalPrice :-</td>
+                            <td><strong>Total summa: @Model.TotalPrice :-</strong></td>
                         </tr>
 
                         </tbody>
