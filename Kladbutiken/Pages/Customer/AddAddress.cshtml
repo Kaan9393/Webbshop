@@ -11,6 +11,7 @@
                     <h2 class="title">Ny Adress</h2>
                     <fieldset class="fieldset">
                         <form method="post">
+                            <input type="hidden" asp-for="Model.UserId" value="@Model.LoggedInAs.ID"/>
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Gatuadress</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">

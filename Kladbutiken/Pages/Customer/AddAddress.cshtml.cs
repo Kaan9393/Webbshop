@@ -14,12 +14,10 @@ namespace Kladbutiken.Pages.Customer
 {
     public class AddAddressModel : PageModel
     {
-        private readonly IUserRepository _userRepository;
         private readonly IAddressRepository _addressRepository;
 
-        public AddAddressModel(IUserRepository userRepository, IAddressRepository addressRepository)
+        public AddAddressModel(IAddressRepository addressRepository)
         {
-            _userRepository = userRepository;
             _addressRepository = addressRepository;
         }
         public User LoggedInAs { get; set; }
@@ -38,16 +36,9 @@ namespace Kladbutiken.Pages.Customer
 
             LoggedInAs = await UserCookieHandler.GetUserAndCartByCookies(userDetailsCookie, cart);
         }
-        public async Task<IActionResult> OnPost()
+        public IActionResult OnPost()
         {
-            var userDetailsCookie = Request.Cookies["UserDetails"];
-            if (userDetailsCookie == null)
-            {
-                RedirectToPage("/login");
-            }
-
-            LoggedInAs = await UserCookieHandler.GetUserByCookie(userDetailsCookie);
-            _addressRepository.AddAddress(Model, LoggedInAs);
+            _addressRepository.AddAddress(Model);
 
             return RedirectToPage("/Customer/Profile");
         }

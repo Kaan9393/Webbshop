@@ -10,7 +10,7 @@ namespace DataAccess.Models
 {
     public class AddressModel
     {
-        public User User { get; set; }
+        public Guid UserId { get; set; }
 
         [MaxLength(50)]
         public string Street { get; set; }

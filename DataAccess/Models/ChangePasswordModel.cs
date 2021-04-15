@@ -15,7 +15,7 @@ namespace DataAccess.Models
         [Required(ErrorMessage = "Detta fältet krävs.")]
         public string NewPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Detta fältet krävs.")]
         [Compare("NewPassword", ErrorMessage = "Lösenorden matchar inte.")]
         public string ConfirmPassword { get; set; }
     }

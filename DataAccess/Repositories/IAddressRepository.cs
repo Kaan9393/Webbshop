@@ -9,6 +9,6 @@ namespace DataAccess.Repositories
         Address GetAddressByID(Guid AddressID);
         void UpdateAddress(Address updatedAddress, Guid AddressID);
         void DeleteAddress(Guid AddressID);
-        void AddAddress(AddressModel model, User user);
+        void AddAddress(AddressModel model);
     }
 }

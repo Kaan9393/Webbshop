@@ -39,8 +39,9 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public void AddAddress(AddressModel model, User userToAddToAddress)
+        public void AddAddress(AddressModel model)
         {
+            var userToAddToAddress = _context.Users.Single(u => u.ID == model.UserId);
 
             var address = new Address
             {

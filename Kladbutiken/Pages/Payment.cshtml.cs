@@ -70,8 +70,9 @@ namespace Kladbutiken.Pages
                     Order = _orderRepository.CreateOrder(OrderModel);
                     _productRepository.UpdateSaldo(OrderModel);
 
-                    Order.ProductList = _cartItemRepository.CreateCartItem(OrderModel.ProductList);
-                    
+                    var productList = _cartItemRepository.CreateCartItem(OrderModel.ProductList);
+                    _orderRepository.UpdateOrderProductList(Order, productList);
+
                     HttpContext.Session.SetString("cart", JsonSerializer.Serialize(new List<Guid>()));
                     LoggedInAs.ProductCart.Clear();
 
