@@ -17,9 +17,9 @@
                 <h3>Ordernummer: @Model.SelectedOrder.OrderNumber</h3>
             </div>
             <div class="card">
-                <div @*class="table-responsive table-striped table-hover"*@>
+                <div class="table-hover">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        
+
                         <thead>
                             <tr>
                                 <th>LeveransAddress</th>
@@ -60,30 +60,29 @@
                             <tr>
                                 <th><h6><strong>Produkter</strong></h6></th>
                             </tr>
-                        @foreach (var product in Model.SelectedOrder.ProductList)
-                        {
+                            @foreach (var product in Model.SelectedOrder.ProductList)
+                            {
+                                <tr>
+                                    <td>
+                                        <p>Produktnamn: @product.Product.ProductName</p>
+                                    </td>
+                                    <td>
+                                        <p>Antal: @product.Quantity</p>
+                                    </td>
+                                    <td>
+                                        <p>Pris: @product.Product.PriceWithDiscount</p>
+                                    </td>
+                                    <td>
+                                        <img src="@product.Product.URLImg" style="width:100px" />
+                                    </td>
+                                </tr>
+                            }
                             <tr>
-                                <td>
-                                    <p>Produktnamn: @product.Product.ProductName</p>
-                                </td>
-                                <td>
-                                    <p>Antal: @product.Quantity</p>
-                                </td>
-                                <td>
-                                    <p>pris: @product.Product.Price</p>
-                                </td>
-                                <td>
-                                    <img src="@product.Product.URLImg" style="width:100px" />
-                                </td>
+                                <td><strong>Total summa: @Model.TotalPrice :-</strong></td>
                             </tr>
-                        }
-                        <tr>
-                            <td><strong>Total summa: @Model.TotalPrice :-</strong></td>
-                        </tr>
 
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
