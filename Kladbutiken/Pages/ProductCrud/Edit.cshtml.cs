@@ -49,8 +49,6 @@ namespace Kladbutiken.Pages.ProductCrud
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             _context.Attach(Product).State = EntityState.Modified;

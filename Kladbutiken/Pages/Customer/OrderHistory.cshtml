@@ -33,8 +33,7 @@
                             <fieldset class="fieldset">
                                 <h3 class="fieldset-title">Mina beställningar</h3>
                                 <div class="form-group">
-                                    @* Börja med ORDER LISTAN HÄR *@
-                                    @*<label class="col-md-2  col-sm-3 col-xs-12 control-label">Telefonnummer</label>*@
+                                   
                                     @if (Model.LoggedInAs.Orders.Count() == 0)
                                     {
                                         <p>Det finns inga ordrar</p>
@@ -43,10 +42,7 @@
                                     {
                                         foreach (var order in Model.LoggedInAs.Orders.OrderByDescending(o => o.OrderDate))
                                         {
-                                            @if (order.OrderDate.AddDays(5) <= DateTime.Now)
-                                            {
-                                                order.Status = "Levererad";
-                                            }
+                                            
                                             <h4>Order: @order.OrderNumber</h4>
                                             <p>Datum: @order.OrderDate</p>
                                             <p>Status: @order.Status</p>

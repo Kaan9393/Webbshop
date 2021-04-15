@@ -15,7 +15,6 @@
                             <ul class="meta list list-unstyled">
                                 <li class="name">
                                     @Model.LoggedInAs.FirstName @Model.LoggedInAs.LastName
-                                    @*<label class="label label-info">KUNDNUMMER?</label>*@
                                 </li>
                                 <li class="Användarnamn"><a href="#">@Model.LoggedInAs.EmailAddress</a></li>
                                 <li class="activity">Medlem sedan: @Model.LoggedInAs.RegisterDate.ToShortDateString()</li>
@@ -26,11 +25,6 @@
                                 <li class="active"><a href="/Customer/Profile"><span class="fa fa-user"></span> Min sida</a></li>
                                 <li><a href="/Customer/OrderHistory"><span class="fas fa-clipboard-list"></span> Orderhistorik</a></li>
                                 <li><a href="/Customer/Edit"><span class="fa fa-cog"></span> Settings</a></li>
-                                <!-- Fler sidomeny val-->
-                                @*<li><a href="#"><span class="fa fa-credit-card"></span> Billing</a></li>
-                            <li><a href="#"><span class="fa fa-envelope"></span> Messages</a></li>
-                            <li><a href="user-drive.html"><span class="fa fa-th"></span> Drive</a></li>
-                            <li><a href="#"><span class="fa fa-clock-o"></span> Reminders</a></li>*@
                             </ul>
                         </nav>
                     </div>
@@ -39,40 +33,6 @@
                         <form class="form-horizontal">
                             <fieldset class="fieldset">
                                 <h3 class="fieldset-title">Personuppgifter</h3>
-                                                    @*<div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Användarnamn</label>
-                                <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="email" class="form-control" value="MODEL.E-MAIL">
-                                </div>
-                            </div>*@
-                                                    @*<div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Förnamn</label>
-                                <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <span type="text" class="form-control" value="@Model.LoggedInAs.FirstName" readonly></span>
-                                </div>
-                            </div>*@
-                                @*<div>
-                                    <ul>
-                                        <p style="text-emphasis:filled">Namn</p>
-                                        @Model.LoggedInAs.FirstName @Model.LoggedInAs.LastName
-                                        <br />
-                                        @Model.LoggedInAs.EmailAddress
-                                    </ul>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 col-sm-3 col-xs-12 control-label">Efternamn</label>
-                                    <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input asp-for="CustomerInfo.LastName" type="text" class="form-control" value="@Model.LoggedInAs.LastName" readonly>
-
-                                    </div>
-                                </div>*@
-                                @*<div class="form-group">
-                                    <label class="col-md-2  col-sm-3 col-xs-12 control-label">E-mail</label>
-                                    <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input asp-for="CustomerInfo.Email" type="email" class="form-control" value="@Model.LoggedInAs.EmailAddress" readonly>
-                                        <p class="help-block">Det här är även ditt användarnamn</p>
-                                    </div>
-                                </div>*@
                                 <div class="form-group">
                                     <label class="col-md-2  col-sm-3 col-xs-12 control-label">Telefonnummer</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
@@ -130,11 +90,6 @@
                                     }
                             </fieldset>
                             <hr>
-                            @*<div class="form-group">
-                                <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
-                                    <input class="btn btn-primary" type="submit" value="Update Profile">
-                                </div>
-                            </div>*@
                         </form>
                     </div>
                 </div>
