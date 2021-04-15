@@ -35,7 +35,7 @@ namespace Kladbutiken.Pages.AdminOrder
             SelectedOrder = _orderRepository.GetOrderById(OrderId);
             foreach (var item in SelectedOrder.ProductList)
             {
-                TotalPrice += item.Product.Price;
+                TotalPrice += item.Product.PriceWithDiscount;
             }
 
             var userDetailsCookie = Request.Cookies["UserDetails"];
